@@ -12,8 +12,8 @@ import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
 
-import components.RoundJButton;
 import components.RoundJTextField;
+import java.awt.Rectangle;
 
 public class TelaCliente extends JFrame {
 
@@ -51,10 +51,24 @@ public class TelaCliente extends JFrame {
 		contentPane.setLayout(null);
 		
 		JButton btnNewButton = new JButton("Próximo");
-		btnNewButton.setFont(new Font("Tahoma", Font.PLAIN, 15));
-		btnNewButton.setBounds(984, 561, 133, 53);
-		btnNewButton.setBorder(new RoundJButton(50));
+		btnNewButton.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		btnNewButton.setBorder(null);
+		btnNewButton.setBounds(new Rectangle(10, 10, 10, 10));
+		btnNewButton.setBackground(Color.WHITE);
+		btnNewButton.setForeground(Color.BLACK);
+		btnNewButton.setBounds(993, 569, 114, 38);
 		contentPane.add(btnNewButton);
+		btnNewButton.setRolloverEnabled(true);
+		
+		RoundJTextField txtfSenha1 = new RoundJTextField(0);
+		txtfSenha1.setHorizontalAlignment(SwingConstants.CENTER);
+		txtfSenha1.setBounds(678, 253, 439, 53);
+		contentPane.add(txtfSenha1);
+		
+		RoundJTextField txtfSenha2 = new RoundJTextField(0);
+		txtfSenha2.setHorizontalAlignment(SwingConstants.CENTER);
+		txtfSenha2.setBounds(678, 374, 439, 53);
+		contentPane.add(txtfSenha2);
 		
 		
 		JLabel lblNewLabel_1_1 = new JLabel("Confirme sua senha:");
@@ -66,21 +80,13 @@ public class TelaCliente extends JFrame {
 		contentPane.add(lblNewLabel_1);
 		
 		JLabel lblNewLabel = new JLabel("");
+		lblNewLabel.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		lblNewLabel.setBorder(null);
+		lblNewLabel.setBackground(new Color(240, 240, 240));
 		lblNewLabel.setHorizontalAlignment(SwingConstants.CENTER);
 		lblNewLabel.setIcon(new ImageIcon("C:\\Users\\caua_m_vieira\\Desktop\\telas caua\\telaCliente.png"));
 		lblNewLabel.setBounds(0, 0, 1162, 654);
 		contentPane.add(lblNewLabel);
-		
-		RoundJTextField txtfSenha1 = new RoundJTextField(0);
-		txtfSenha1.setHorizontalAlignment(SwingConstants.CENTER);
-		txtfSenha1.setBounds(678, 253, 439, 53);
-		
-		contentPane.add(txtfSenha1);
-		
-		RoundJTextField txtfSenha2 = new RoundJTextField(0);
-		txtfSenha2.setHorizontalAlignment(SwingConstants.CENTER);
-		txtfSenha2.setBounds(678, 374, 439, 53);
-		contentPane.add(txtfSenha2);
 
 	}
 }
