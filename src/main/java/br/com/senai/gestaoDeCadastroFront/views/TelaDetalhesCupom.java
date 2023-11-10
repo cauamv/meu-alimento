@@ -1,4 +1,5 @@
-package views;
+package br.com.senai.gestaoDeCadastroFront.views;
+
 
 import java.awt.Color;
 import java.awt.EventQueue;
@@ -12,11 +13,10 @@ import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
 
-import components.RoundJTextField;
 import java.awt.Rectangle;
 import java.awt.FlowLayout;
 
-public class TelaCupom extends JFrame {
+public class TelaDetalhesCupom extends JFrame {
 
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
@@ -28,7 +28,7 @@ public class TelaCupom extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					TelaCupom frame = new TelaCupom();
+					TelaDetalhesCupom frame = new TelaDetalhesCupom();
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -40,7 +40,7 @@ public class TelaCupom extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public TelaCupom() {
+	public TelaDetalhesCupom() {
 		setResizable(false);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 1177, 693);
@@ -130,7 +130,7 @@ public class TelaCupom extends JFrame {
 		fundo.setBorder(null);
 		fundo.setBackground(new Color(240, 240, 240));
 		fundo.setHorizontalAlignment(SwingConstants.CENTER);
-		fundo.setIcon(new ImageIcon(TelaCupom.class.getResource("/img/telaCupom.png")));
+		fundo.setIcon(new ImageIcon(TelaDetalhesCupom.class.getResource("/img/telaCupom.png")));
 		fundo.setBounds(0, 0, 1162, 654);
 		contentPane.add(fundo);
 

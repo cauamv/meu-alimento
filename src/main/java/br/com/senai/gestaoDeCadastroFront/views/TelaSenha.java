@@ -1,8 +1,9 @@
-package views;
+package br.com.senai.gestaoDeCadastroFront.views;
 
 import java.awt.Color;
 import java.awt.EventQueue;
 import java.awt.Font;
+import java.awt.Rectangle;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -12,8 +13,7 @@ import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
 
-import components.RoundJTextField;
-import java.awt.Rectangle;
+import br.com.senai.gestaoDeCadastroFront.components.RoundJTextField;
 
 public class TelaSenha extends JFrame {
 
@@ -37,9 +37,6 @@ public class TelaSenha extends JFrame {
 		});
 	}
 
-	/**
-	 * Create the frame.
-	 */
 	public TelaSenha() {
 		setResizable(false);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);

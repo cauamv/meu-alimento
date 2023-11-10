@@ -1,4 +1,4 @@
-package components.table;
+package br.com.senai.gestaoDeCadastroFront.components.table;
 
 import javax.swing.table.AbstractTableModel;
 

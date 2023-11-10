@@ -1,4 +1,4 @@
-import views.TelaCupons;
+package br.com.senai.gestaoDeCadastroFront;
 
 public class InitApp {
 
@@ -6,5 +6,4 @@ public class InitApp {
 		
 
 	}
-
 }

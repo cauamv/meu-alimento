@@ -1,4 +1,5 @@
-package views;
+package br.com.senai.gestaoDeCadastroFront.views;
+
 
 import java.awt.Color;
 import java.awt.Dimension;
@@ -17,7 +18,8 @@ import javax.swing.JTable;
 import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
 
-import components.table.CupomTableModel;
+import br.com.senai.gestaoDeCadastroFront.components.table.CupomTableModel;
+
 
 public class TelaCupons extends JFrame {
 
