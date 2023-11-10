@@ -1,4 +1,4 @@
-import telasCaua.TelaCupons;
+import views.TelaCupons;
 
 public class InitApp {
 
