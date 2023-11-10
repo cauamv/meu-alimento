@@ -15,11 +15,11 @@ import javax.swing.border.EmptyBorder;
 import components.RoundJTextField;
 import java.awt.Rectangle;
 
-public class TelaCliente extends JFrame {
+public class TelaSenha extends JFrame {
 
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
-	private final JLabel lblNewLabel_1 = new JLabel("Digite sua senha:");
+	private final JLabel digiteSuaSenha = new JLabel("Digite sua senha:");
 
 	/**
 	 * Launch the application.
@@ -28,7 +28,7 @@ public class TelaCliente extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					TelaCliente frame = new TelaCliente();
+					TelaSenha frame = new TelaSenha();
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -40,7 +40,7 @@ public class TelaCliente extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public TelaCliente() {
+	public TelaSenha() {
 		setResizable(false);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 1177, 693);
@@ -50,15 +50,15 @@ public class TelaCliente extends JFrame {
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 		
-		JButton btnNewButton = new JButton("Próximo");
-		btnNewButton.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		btnNewButton.setBorder(null);
-		btnNewButton.setBounds(new Rectangle(10, 10, 10, 10));
-		btnNewButton.setBackground(Color.WHITE);
-		btnNewButton.setForeground(Color.BLACK);
-		btnNewButton.setBounds(993, 569, 114, 38);
-		contentPane.add(btnNewButton);
-		btnNewButton.setRolloverEnabled(true);
+		JButton btnProximo = new JButton("Próximo");
+		btnProximo.setFont(new Font("Tahoma", Font.PLAIN, 19));
+		btnProximo.setBorder(null);
+		btnProximo.setBounds(new Rectangle(10, 10, 10, 10));
+		btnProximo.setBackground(Color.WHITE);
+		btnProximo.setForeground(Color.BLACK);
+		btnProximo.setBounds(993, 569, 114, 38);
+		contentPane.add(btnProximo);
+		btnProximo.setRolloverEnabled(true);
 		
 		RoundJTextField txtfSenha1 = new RoundJTextField(0);
 		txtfSenha1.setHorizontalAlignment(SwingConstants.CENTER);
@@ -71,22 +71,22 @@ public class TelaCliente extends JFrame {
 		contentPane.add(txtfSenha2);
 		
 		
-		JLabel lblNewLabel_1_1 = new JLabel("Confirme sua senha:");
-		lblNewLabel_1_1.setForeground(Color.WHITE);
-		lblNewLabel_1_1.setBounds(678, 358, 127, 14);
-		contentPane.add(lblNewLabel_1_1);
-		lblNewLabel_1.setForeground(new Color(255, 255, 255));
-		lblNewLabel_1.setBounds(678, 237, 98, 14);
-		contentPane.add(lblNewLabel_1);
+		JLabel confirmeSuaSenha = new JLabel("Confirme sua senha:");
+		confirmeSuaSenha.setForeground(Color.WHITE);
+		confirmeSuaSenha.setBounds(678, 358, 127, 14);
+		contentPane.add(confirmeSuaSenha);
+		digiteSuaSenha.setForeground(new Color(255, 255, 255));
+		digiteSuaSenha.setBounds(678, 237, 98, 14);
+		contentPane.add(digiteSuaSenha);
 		
-		JLabel lblNewLabel = new JLabel("");
-		lblNewLabel.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		lblNewLabel.setBorder(null);
-		lblNewLabel.setBackground(new Color(240, 240, 240));
-		lblNewLabel.setHorizontalAlignment(SwingConstants.CENTER);
-		lblNewLabel.setIcon(new ImageIcon("C:\\Users\\caua_m_vieira\\Desktop\\telas caua\\telaCliente.png"));
-		lblNewLabel.setBounds(0, 0, 1162, 654);
-		contentPane.add(lblNewLabel);
+		JLabel fundo = new JLabel("");
+		fundo.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		fundo.setBorder(null);
+		fundo.setBackground(new Color(240, 240, 240));
+		fundo.setHorizontalAlignment(SwingConstants.CENTER);
+		fundo.setIcon(new ImageIcon(TelaSenha.class.getResource("/img/telaSenha.png")));
+		fundo.setBounds(0, 0, 1162, 654);
+		contentPane.add(fundo);
 
 	}
 }
