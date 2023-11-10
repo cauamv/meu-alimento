@@ -113,7 +113,7 @@ public class TelaEndereco extends JFrame {
 		fundo.setBorder(null);
 		fundo.setBackground(new Color(240, 240, 240));
 		fundo.setHorizontalAlignment(SwingConstants.CENTER);
-		fundo.setIcon(new ImageIcon(TelaEndereco.class.getResource("/img/telaEndereco.png")));
+		fundo.setIcon(new ImageIcon(TelaEndereco.class.getResource("/br/com/senai/gestaoDeCadastroFront/img/telaEndereco.png")));
 		fundo.setBounds(0, 0, 1162, 654);
 		contentPane.add(fundo);
 

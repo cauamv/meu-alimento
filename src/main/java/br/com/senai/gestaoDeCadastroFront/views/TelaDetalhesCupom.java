@@ -130,7 +130,7 @@ public class TelaDetalhesCupom extends JFrame {
 		fundo.setBorder(null);
 		fundo.setBackground(new Color(240, 240, 240));
 		fundo.setHorizontalAlignment(SwingConstants.CENTER);
-		fundo.setIcon(new ImageIcon(TelaDetalhesCupom.class.getResource("/img/telaCupom.png")));
+		fundo.setIcon(new ImageIcon(TelaDetalhesCupom.class.getResource("/br/com/senai/gestaoDeCadastroFront/img/telaDetalhesCupom.png")));
 		fundo.setBounds(0, 0, 1162, 654);
 		contentPane.add(fundo);
 
