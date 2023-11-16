@@ -122,7 +122,8 @@ public class TelaCupons extends JFrame {
 		fundo.setBorder(null);
 		fundo.setBackground(new Color(240, 240, 240));
 		fundo.setHorizontalAlignment(SwingConstants.CENTER);
-		fundo.setIcon(new ImageIcon(TelaCupons.class.getResource("/img/telaCupons.png")));
+
+		fundo.setIcon(new ImageIcon(TelaCupons.class.getResource("/br/com/senai/gestaoDeCadastroFront/img/telaCupons.png")));
 		fundo.setBounds(0, 0, 1162, 654);
 		contentPane.add(fundo);
 		this.configurarCabecalhos(tbCupons);
