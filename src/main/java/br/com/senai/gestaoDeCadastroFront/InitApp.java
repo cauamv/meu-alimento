@@ -27,12 +27,14 @@ public class InitApp {
 	@Bean
 	public CommandLineRunner commandLineRunner(ApplicationContext ctx) {
 		return args -> {
-			UserClient client = new UserClient();
+			UserClient userClient = new UserClient();
 			UsuarioDto dto = new UsuarioDto();
-			dto.setEmail("teste@gmail.com");
+			dto.setEmail("example@gmail.com");
+			dto.setSenha("12345678");
 			dto.setRole("Administrador");
-			dto.setSenha("1345678");
-			client.inserir(dto);
+			UsuarioDto usuarioInserido = userClient.inserir(dto);
+			System.out.println(usuarioInserido);
+			
 		};
 	}
 }
