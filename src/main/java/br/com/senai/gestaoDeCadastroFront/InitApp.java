@@ -1,9 +1,5 @@
 package br.com.senai.gestaoDeCadastroFront;
 
-
-import org.apache.camel.ProducerTemplate;
-import org.json.JSONObject;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -11,6 +7,9 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
 
 import com.fasterxml.jackson.datatype.hibernate5.jakarta.Hibernate5JakartaModule;
+
+import br.com.senai.gestaoDeCadastroFront.client.UserClient;
+import br.com.senai.gestaoDeCadastroFront.dto.UsuarioDto;
 
 
 @SpringBootApplication
@@ -25,18 +24,15 @@ public class InitApp {
 		return new Hibernate5JakartaModule();
 	}
 	 
-	@Autowired
-	private ProducerTemplate cadastrosApi;
-	
 	@Bean
 	public CommandLineRunner commandLineRunner(ApplicationContext ctx) {
 		return args -> {
-			JSONObject bodyRequest = new JSONObject();
-			bodyRequest.put("idEndereco", 1);
-
-			JSONObject restauranteJson = cadastrosApi.requestBody("direct:cadastros", bodyRequest, JSONObject.class);
-			System.out.println("Running gestao de cadastros. " + restauranteJson.toString());
-			
+			UserClient client = new UserClient();
+			UsuarioDto dto = new UsuarioDto();
+			dto.setEmail("teste@gmail.com");
+			dto.setRole("Administrador");
+			dto.setSenha("1345678");
+			client.inserir(dto);
 		};
 	}
 }

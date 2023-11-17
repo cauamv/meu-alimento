@@ -14,6 +14,8 @@ import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
 
 import br.com.senai.gestaoDeCadastroFront.components.RoundJTextField;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 
 public class TelaSenha extends JFrame {
 
@@ -45,6 +47,11 @@ public class TelaSenha extends JFrame {
 		contentPane.setLayout(null);
 		
 		JButton btnProximo = new JButton("Próximo");
+		btnProximo.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				new TelaCupons().setVisible(true);
+			}
+		});
 		btnProximo.setFont(new Font("Tahoma", Font.PLAIN, 19));
 		btnProximo.setBorder(null);
 		btnProximo.setBounds(new Rectangle(10, 10, 10, 10));

@@ -24,6 +24,7 @@ import br.com.senai.gestaoDeCadastroFront.components.table.CupomTableModel;
 public class TelaCupons extends JFrame {
 
 	private static final long serialVersionUID = 1L;
+	
 	private JPanel contentPane;
 	
 	private JScrollPane scrollPane;
