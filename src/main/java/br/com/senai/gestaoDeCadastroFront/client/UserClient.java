@@ -23,7 +23,6 @@ public class UserClient {
 	
 	private AutenticadorClient autenticadorClient = new AutenticadorClient();
 	
-	
 	public UsuarioDto inserir(UsuarioDto novoUsuario) {
 		
 		Preconditions.checkNotNull(novoUsuario, "O usuário é obrigatório. ");
