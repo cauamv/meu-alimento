@@ -51,6 +51,8 @@ public class TelaCupons extends JFrame {
 		tbCupons.getTableHeader().setOpaque(false);
 		tbCupons.getTableHeader().setBackground(Color.RED);
 		tbCupons.getTableHeader().setForeground(Color.WHITE);
+		tbCupons.getTableHeader().setReorderingAllowed(false);
+        tbCupons.getTableHeader().setResizingAllowed(false);
 		tbCupons.getTableHeader().setPreferredSize(new Dimension(tbCupons.getTableHeader().getWidth(), 50));
 	}
 
@@ -123,7 +125,6 @@ public class TelaCupons extends JFrame {
 		fundo.setBorder(null);
 		fundo.setBackground(new Color(240, 240, 240));
 		fundo.setHorizontalAlignment(SwingConstants.CENTER);
-
 		fundo.setIcon(new ImageIcon(TelaCupons.class.getResource("/br/com/senai/gestaoDeCadastroFront/img/telaCupons.png")));
 		fundo.setBounds(0, 0, 1162, 654);
 		contentPane.add(fundo);

@@ -72,7 +72,6 @@ public class TelaSenha extends JFrame {
 		fundo.setBorder(null);
 		fundo.setBackground(new Color(240, 240, 240));
 		fundo.setHorizontalAlignment(SwingConstants.CENTER);
-		
 		fundo.setIcon(new ImageIcon(TelaSenha.class.getResource("/br/com/senai/gestaoDeCadastroFront/img/telaSenha.png")));
 		fundo.setBounds(0, 0, 1162, 654);
 		contentPane.add(fundo);
