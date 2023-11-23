@@ -23,19 +23,6 @@ public class TelaSenha extends JFrame {
 	private JPanel contentPane;
 	private final JLabel digiteSuaSenha = new JLabel("Digite sua senha:");
 
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					TelaSenha frame = new TelaSenha();
-					frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
-
 	public TelaSenha() {
 		setResizable(false);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
