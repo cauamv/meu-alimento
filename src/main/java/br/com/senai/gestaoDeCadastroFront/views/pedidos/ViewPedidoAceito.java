@@ -1,4 +1,4 @@
-package br.com.senai.gestaoDeCadastroFront.views;
+package br.com.senai.gestaoDeCadastroFront.views.pedidos;
 
 import java.awt.Color;
 import java.awt.EventQueue;
@@ -248,20 +248,20 @@ public class ViewPedidoAceito extends JFrame {
 		);
 		panel_1.setLayout(gl_panel_1);
 		
-		Panel panel = new Panel();
-		panel.setBounds(69, 221, 385, 72);
-		panel.setBackground(Color.WHITE);
-		contentPane.add(panel);
-		GroupLayout gl_panel = new GroupLayout(panel);
-		gl_panel.setHorizontalGroup(
-			gl_panel.createParallelGroup(Alignment.LEADING)
+		Panel panelInformacoesPedido = new Panel();
+		panelInformacoesPedido.setBounds(69, 221, 385, 72);
+		panelInformacoesPedido.setBackground(Color.WHITE);
+		contentPane.add(panelInformacoesPedido);
+		GroupLayout gl_panelInformacoesPedido = new GroupLayout(panelInformacoesPedido);
+		gl_panelInformacoesPedido.setHorizontalGroup(
+			gl_panelInformacoesPedido.createParallelGroup(Alignment.LEADING)
 				.addGap(0, 385, Short.MAX_VALUE)
 		);
-		gl_panel.setVerticalGroup(
-			gl_panel.createParallelGroup(Alignment.LEADING)
+		gl_panelInformacoesPedido.setVerticalGroup(
+			gl_panelInformacoesPedido.createParallelGroup(Alignment.LEADING)
 				.addGap(0, 57, Short.MAX_VALUE)
 		);
-		panel.setLayout(gl_panel);
+		panelInformacoesPedido.setLayout(gl_panelInformacoesPedido);
 		
 		JLabel lblTempoMedio = new JLabel("30 minutos");
 		lblTempoMedio.setBounds(992, 45, 180, 40);

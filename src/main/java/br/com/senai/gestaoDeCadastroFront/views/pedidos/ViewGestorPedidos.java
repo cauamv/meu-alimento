@@ -1,24 +1,39 @@
-package br.com.senai.gestaoDeCadastroFront.views;
+package br.com.senai.gestaoDeCadastroFront.views.pedidos;
 
-import javax.swing.JFrame;
-import javax.swing.JPanel;
-import javax.swing.border.EmptyBorder;
-import javax.swing.JLabel;
-import javax.swing.ImageIcon;
 import java.awt.Color;
-import javax.swing.SwingConstants;
 import java.awt.Font;
 import java.awt.Panel;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
-import java.awt.event.ActionListener;
-import java.awt.event.ActionEvent;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.SwingConstants;
+import javax.swing.border.EmptyBorder;
 
+import org.springframework.stereotype.Component;
+
+import jakarta.annotation.PostConstruct;
+
+@Component
 public class ViewGestorPedidos extends JFrame {
 
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
+	
+	@PostConstruct
+	public void inicializar() {
+		
+	}
+	
+	public void abrirTela() {
+		new ViewGestorPedidos().setVisible(true);
+	}
 
 	public ViewGestorPedidos() {
 		setResizable(false);
@@ -36,7 +51,7 @@ public class ViewGestorPedidos extends JFrame {
 			}
 		});
 		
-		JLabel lblNumPedido = new JLabel("Pedido Realizado - N° 123");
+		JLabel lblNumPedido = new JLabel("Pedido Realizado - N° ");
 		lblNumPedido.setHorizontalAlignment(SwingConstants.LEFT);
 		lblNumPedido.setForeground(Color.RED);
 		lblNumPedido.setFont(new Font("Tahoma", Font.PLAIN, 12));
@@ -63,88 +78,88 @@ public class ViewGestorPedidos extends JFrame {
 		btnAceitar.setBounds(433, 622, 100, 35);
 		contentPane.add(btnAceitar);
 		
-		Panel panel_4 = new Panel();
-		panel_4.setBackground(Color.WHITE);
-		panel_4.setBounds(389, 533, 385, 72);
-		contentPane.add(panel_4);
-		GroupLayout gl_panel_4 = new GroupLayout(panel_4);
-		gl_panel_4.setHorizontalGroup(
-			gl_panel_4.createParallelGroup(Alignment.LEADING)
+		Panel panelInfoPagamento = new Panel();
+		panelInfoPagamento.setBackground(Color.WHITE);
+		panelInfoPagamento.setBounds(389, 533, 385, 72);
+		contentPane.add(panelInfoPagamento);
+		GroupLayout gl_panelInfoPagamento = new GroupLayout(panelInfoPagamento);
+		gl_panelInfoPagamento.setHorizontalGroup(
+			gl_panelInfoPagamento.createParallelGroup(Alignment.LEADING)
 				.addGap(0, 385, Short.MAX_VALUE)
 				.addGap(0, 385, Short.MAX_VALUE)
 		);
-		gl_panel_4.setVerticalGroup(
-			gl_panel_4.createParallelGroup(Alignment.LEADING)
+		gl_panelInfoPagamento.setVerticalGroup(
+			gl_panelInfoPagamento.createParallelGroup(Alignment.LEADING)
 				.addGap(0, 86, Short.MAX_VALUE)
 				.addGap(0, 57, Short.MAX_VALUE)
 		);
-		panel_4.setLayout(gl_panel_4);
+		panelInfoPagamento.setLayout(gl_panelInfoPagamento);
 		
-		Panel panel_3 = new Panel();
-		panel_3.setBackground(Color.WHITE);
-		panel_3.setBounds(389, 455, 385, 72);
-		contentPane.add(panel_3);
-		GroupLayout gl_panel_3 = new GroupLayout(panel_3);
-		gl_panel_3.setHorizontalGroup(
-			gl_panel_3.createParallelGroup(Alignment.LEADING)
+		Panel panelInfoOpcoesDoPedido = new Panel();
+		panelInfoOpcoesDoPedido.setBackground(Color.WHITE);
+		panelInfoOpcoesDoPedido.setBounds(389, 455, 385, 72);
+		contentPane.add(panelInfoOpcoesDoPedido);
+		GroupLayout gl_panelInfoOpcoesDoPedido = new GroupLayout(panelInfoOpcoesDoPedido);
+		gl_panelInfoOpcoesDoPedido.setHorizontalGroup(
+			gl_panelInfoOpcoesDoPedido.createParallelGroup(Alignment.LEADING)
 				.addGap(0, 385, Short.MAX_VALUE)
 				.addGap(0, 385, Short.MAX_VALUE)
 		);
-		gl_panel_3.setVerticalGroup(
-			gl_panel_3.createParallelGroup(Alignment.LEADING)
+		gl_panelInfoOpcoesDoPedido.setVerticalGroup(
+			gl_panelInfoOpcoesDoPedido.createParallelGroup(Alignment.LEADING)
 				.addGap(0, 86, Short.MAX_VALUE)
 				.addGap(0, 57, Short.MAX_VALUE)
 		);
-		panel_3.setLayout(gl_panel_3);
+		panelInfoOpcoesDoPedido.setLayout(gl_panelInfoOpcoesDoPedido);
 		
-		Panel panel_2 = new Panel();
-		panel_2.setBackground(Color.WHITE);
-		panel_2.setBounds(389, 377, 385, 72);
-		contentPane.add(panel_2);
-		GroupLayout gl_panel_2 = new GroupLayout(panel_2);
-		gl_panel_2.setHorizontalGroup(
-			gl_panel_2.createParallelGroup(Alignment.LEADING)
+		Panel panelInfoEndereco = new Panel();
+		panelInfoEndereco.setBackground(Color.WHITE);
+		panelInfoEndereco.setBounds(389, 377, 385, 72);
+		contentPane.add(panelInfoEndereco);
+		GroupLayout gl_panelInfoEndereco = new GroupLayout(panelInfoEndereco);
+		gl_panelInfoEndereco.setHorizontalGroup(
+			gl_panelInfoEndereco.createParallelGroup(Alignment.LEADING)
 				.addGap(0, 385, Short.MAX_VALUE)
 				.addGap(0, 385, Short.MAX_VALUE)
 		);
-		gl_panel_2.setVerticalGroup(
-			gl_panel_2.createParallelGroup(Alignment.LEADING)
+		gl_panelInfoEndereco.setVerticalGroup(
+			gl_panelInfoEndereco.createParallelGroup(Alignment.LEADING)
 				.addGap(0, 86, Short.MAX_VALUE)
 				.addGap(0, 57, Short.MAX_VALUE)
 		);
-		panel_2.setLayout(gl_panel_2);
+		panelInfoEndereco.setLayout(gl_panelInfoEndereco);
 		
-		Panel panel_1 = new Panel();
-		panel_1.setBackground(Color.WHITE);
-		panel_1.setBounds(389, 299, 385, 72);
-		contentPane.add(panel_1);
-		GroupLayout gl_panel_1 = new GroupLayout(panel_1);
-		gl_panel_1.setHorizontalGroup(
-			gl_panel_1.createParallelGroup(Alignment.LEADING)
+		Panel panelInfoCliente = new Panel();
+		panelInfoCliente.setBackground(Color.WHITE);
+		panelInfoCliente.setBounds(389, 299, 385, 72);
+		contentPane.add(panelInfoCliente);
+		GroupLayout gl_panelInfoCliente = new GroupLayout(panelInfoCliente);
+		gl_panelInfoCliente.setHorizontalGroup(
+			gl_panelInfoCliente.createParallelGroup(Alignment.LEADING)
 				.addGap(0, 385, Short.MAX_VALUE)
 				.addGap(0, 385, Short.MAX_VALUE)
 		);
-		gl_panel_1.setVerticalGroup(
-			gl_panel_1.createParallelGroup(Alignment.LEADING)
+		gl_panelInfoCliente.setVerticalGroup(
+			gl_panelInfoCliente.createParallelGroup(Alignment.LEADING)
 				.addGap(0, 86, Short.MAX_VALUE)
 				.addGap(0, 57, Short.MAX_VALUE)
 		);
-		panel_1.setLayout(gl_panel_1);
+		panelInfoCliente.setLayout(gl_panelInfoCliente);
 		
-		Panel panel = new Panel();
-		panel.setBackground(Color.WHITE);
-		panel.setBounds(389, 221, 385, 72);
-		contentPane.add(panel);
-		GroupLayout gl_panel = new GroupLayout(panel);
-		gl_panel.setHorizontalGroup(
-			gl_panel.createParallelGroup(Alignment.LEADING)
+		Panel panelInfoPedidos = new Panel();
+		panelInfoPedidos.setBackground(Color.WHITE);
+		panelInfoPedidos.setBounds(389, 221, 385, 72);
+		contentPane.add(panelInfoPedidos);
+		GroupLayout gl_panelInfoPedidos = new GroupLayout(panelInfoPedidos);
+		gl_panelInfoPedidos.setHorizontalGroup(
+			gl_panelInfoPedidos.createParallelGroup(Alignment.LEADING)
 				.addGap(0, 385, Short.MAX_VALUE)
 		);
-		gl_panel.setVerticalGroup(
-			gl_panel.createParallelGroup(Alignment.LEADING)
+		gl_panelInfoPedidos.setVerticalGroup(
+			gl_panelInfoPedidos.createParallelGroup(Alignment.LEADING)
 				.addGap(0, 57, Short.MAX_VALUE)
 		);
-		panel.setLayout(gl_panel);
+		panelInfoPedidos.setLayout(gl_panelInfoPedidos);
 		
 		JLabel lblTempoMedio = new JLabel("30 minutos");
 		lblTempoMedio.setHorizontalAlignment(SwingConstants.CENTER);

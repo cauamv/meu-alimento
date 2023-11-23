@@ -1,4 +1,4 @@
-package br.com.senai.gestaoDeCadastroFront.views;
+package br.com.senai.gestaoDeCadastroFront.views.pedidos;
 
 import java.awt.Color;
 import java.awt.Font;
@@ -11,12 +11,12 @@ import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
 import javax.swing.JButton;
 
-public class ViewPedidoAceito1 extends JFrame {
+public class ViewListagemDePedidos extends JFrame {
 
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
 
-	public ViewPedidoAceito1() {
+	public ViewListagemDePedidos() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 1172, 722);
 		contentPane = new JPanel();

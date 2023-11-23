@@ -14,24 +14,29 @@ import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
 
+import org.hibernate.validator.internal.util.stereotypes.Lazy;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import br.com.senai.gestaoDeCadastroFront.client.authenticate.AutenticadorClient;
-import br.com.senai.gestaoDeCadastroFront.client.authenticate.Token;
 import br.com.senai.gestaoDeCadastroFront.components.RoundJTextField;
 import br.com.senai.gestaoDeCadastroFront.dto.CredencialDeAcesso;
+import br.com.senai.gestaoDeCadastroFront.views.pedidos.ViewGestorPedidos;
 
 @Component
-public class TelaLogin extends JFrame {
+public class ViewLogin extends JFrame {
 
     private static final long serialVersionUID = 1L;
     private JPanel contentPane;
     
     @Autowired
+    @Lazy
+    private ViewGestorPedidos viewGestorPedidos;
+    
+    @Autowired
     private AutenticadorClient autenticadorClient;
     
-    public TelaLogin() {
+    public ViewLogin() {
         setBounds(100, 100, 1277, 769);
         contentPane = new JPanel();
         contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -65,8 +70,8 @@ public class TelaLogin extends JFrame {
         		String email = txtEmail.getText();
         		String senha = txtSenha.getText();
         		try {
-        			Token token = autenticadorClient.getTokenPela(new CredencialDeAcesso(email, senha));
-        			System.out.println(token.getValor());
+        			autenticadorClient.getTokenPela(new CredencialDeAcesso(email, senha));
+        			viewGestorPedidos.abrirTela();
         		} catch (Exception e2) {
 					JOptionPane.showMessageDialog(bntEntrar, "Email e/ou senha invalidos. ");
 				}
@@ -95,7 +100,7 @@ public class TelaLogin extends JFrame {
         JLabel lblNewLabel = new JLabel("");
         lblNewLabel.setHorizontalAlignment(SwingConstants.CENTER);
         lblNewLabel.setForeground(new Color(255, 255, 255));
-        lblNewLabel.setIcon(new ImageIcon(TelaLogin.class.getResource("./telaLogin.png")));
+        lblNewLabel.setIcon(new ImageIcon(ViewLogin.class.getResource("./telaLogin.png")));
         lblNewLabel.setBounds(0, 0, 1259, 729);
         contentPane.add(lblNewLabel);
     }

@@ -9,13 +9,13 @@ import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
 
-import br.com.senai.gestaoDeCadastroFront.views.login.TelaLogin;
+import br.com.senai.gestaoDeCadastroFront.views.login.ViewLogin;
 
 @SpringBootApplication
 public class InitApp {
 	
 	@Autowired
-	private TelaLogin telaLogin;
+	private ViewLogin telaLogin;
 	
 	public static void main(String[] args) {		
 		SpringApplicationBuilder builder = new SpringApplicationBuilder(InitApp.class);
