@@ -24,6 +24,7 @@ import br.com.senai.gestaoDeCadastroFront.components.table.CupomTableModel;
 public class ViewCupons extends JFrame {
 
 	private static final long serialVersionUID = 1L;
+	
 	private JPanel contentPane;
 	
 	private JScrollPane scrollPane;
@@ -50,6 +51,8 @@ public class ViewCupons extends JFrame {
 		tbCupons.getTableHeader().setOpaque(false);
 		tbCupons.getTableHeader().setBackground(Color.RED);
 		tbCupons.getTableHeader().setForeground(Color.WHITE);
+		tbCupons.getTableHeader().setReorderingAllowed(false);
+        tbCupons.getTableHeader().setResizingAllowed(false);
 		tbCupons.getTableHeader().setPreferredSize(new Dimension(tbCupons.getTableHeader().getWidth(), 50));
 	}
 
