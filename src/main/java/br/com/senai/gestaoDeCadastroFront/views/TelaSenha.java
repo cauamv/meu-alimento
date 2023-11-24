@@ -1,9 +1,10 @@
 package br.com.senai.gestaoDeCadastroFront.views;
 
 import java.awt.Color;
-import java.awt.EventQueue;
 import java.awt.Font;
 import java.awt.Rectangle;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -14,27 +15,12 @@ import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
 
 import br.com.senai.gestaoDeCadastroFront.components.RoundJTextField;
-import java.awt.event.ActionListener;
-import java.awt.event.ActionEvent;
 
 public class TelaSenha extends JFrame {
 
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
 	private final JLabel digiteSuaSenha = new JLabel("Digite sua senha:");
-
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					TelaSenha frame = new TelaSenha();
-					frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
 
 	public TelaSenha() {
 		setResizable(false);
@@ -49,7 +35,7 @@ public class TelaSenha extends JFrame {
 		JButton btnProximo = new JButton("Próximo");
 		btnProximo.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				new TelaCupons().setVisible(true);
+				new ViewCupons().setVisible(true);
 			}
 		});
 		btnProximo.setFont(new Font("Tahoma", Font.PLAIN, 19));
@@ -85,7 +71,6 @@ public class TelaSenha extends JFrame {
 		fundo.setBorder(null);
 		fundo.setBackground(new Color(240, 240, 240));
 		fundo.setHorizontalAlignment(SwingConstants.CENTER);
-		
 		fundo.setIcon(new ImageIcon(TelaSenha.class.getResource("/br/com/senai/gestaoDeCadastroFront/img/telaSenha.png")));
 		fundo.setBounds(0, 0, 1162, 654);
 		contentPane.add(fundo);
