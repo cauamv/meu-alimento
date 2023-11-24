@@ -8,10 +8,10 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.JLabel;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
-import java.awt.Color;
 import java.awt.Font;
+import java.awt.Color;
 
-public class TelaGestor extends JFrame {
+public class ViewGestor extends JFrame {
 
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
@@ -23,7 +23,7 @@ public class TelaGestor extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					TelaGestor frame = new TelaGestor();
+					ViewGestor frame = new ViewGestor();
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -35,9 +35,10 @@ public class TelaGestor extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public TelaGestor() {
+	public ViewGestor() {
+		setResizable(false);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 1176, 698);
+		setBounds(100, 100, 1343, 773);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 
@@ -46,21 +47,25 @@ public class TelaGestor extends JFrame {
 		
 		JButton btnCupons = new JButton("Cupons");
 		btnCupons.setFont(new Font("Tahoma", Font.PLAIN, 22));
-		btnCupons.setBackground(new Color(255, 255, 255));
 		btnCupons.setBorder(null);
-		btnCupons.setBounds(761, 210, 328, 78);
+		btnCupons.setBackground(Color.WHITE);
+		btnCupons.setBounds(896, 239, 388, 93);
 		contentPane.add(btnCupons);
 		
 		JButton btnPedidos = new JButton("Pedidos");
-		btnPedidos.setFont(new Font("Tahoma", Font.PLAIN, 22));
 		btnPedidos.setBackground(new Color(255, 255, 255));
 		btnPedidos.setBorder(null);
-		btnPedidos.setBounds(97, 210, 328, 78);
+		btnPedidos.setFont(new Font("Tahoma", Font.PLAIN, 22));
+		btnPedidos.setBounds(115, 239, 388, 93);
 		contentPane.add(btnPedidos);
 		
-		JLabel lblNewLabel = new JLabel("");
-		lblNewLabel.setIcon(new ImageIcon(TelaGestor.class.getResource("/br/com/senai/gestaoDeCadastroFront/img/telaGestor.png")));
-		lblNewLabel.setBounds(0, 0, 1162, 671);
-		contentPane.add(lblNewLabel);
+		JLabel fundo = new JLabel("");
+		fundo.setIcon(new ImageIcon(ViewGestor.class.getResource("/br/com/senai/gestaoDeCadastroFront/img/telaGestor.png")));
+		fundo.setBounds(0, 0, 1366, 768);
+		contentPane.add(fundo);
+		
+		setLocationRelativeTo(null);
+		
+		
 	}
 }
