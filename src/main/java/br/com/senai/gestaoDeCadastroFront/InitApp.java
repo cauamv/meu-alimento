@@ -1,42 +1,40 @@
 package br.com.senai.gestaoDeCadastroFront;
 
+import java.awt.EventQueue;
 
-import org.apache.camel.ProducerTemplate;
-import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
-import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
 
-import com.fasterxml.jackson.datatype.hibernate5.jakarta.Hibernate5JakartaModule;
-
+import br.com.senai.gestaoDeCadastroFront.views.login.ViewLogin;
 
 @SpringBootApplication
 public class InitApp {
 	
-	public static void main(String[] args) {
-		SpringApplication.run(InitApp.class, args);
-	}
-	
-	@Bean
-	public Hibernate5JakartaModule jsonHibernate5Module() {
-		return new Hibernate5JakartaModule();
-	}
-	 
 	@Autowired
-	private ProducerTemplate cadastrosApi;
+	private ViewLogin telaLogin;
+	
+	public static void main(String[] args) {		
+		SpringApplicationBuilder builder = new SpringApplicationBuilder(InitApp.class);
+		builder.headless(false);
+		builder.run(args);
+	}
 	
 	@Bean
-	public CommandLineRunner commandLineRunner(ApplicationContext ctx) {
-		return args -> {
-			JSONObject bodyRequest = new JSONObject();
-			bodyRequest.put("idEndereco", 1);
-
-			JSONObject restauranteJson = cadastrosApi.requestBody("direct:cadastros", bodyRequest, JSONObject.class);
-			System.out.println("Running gestao de cadastros. " + restauranteJson.toString());
-			
+	public CommandLineRunner commandLineRunner(ApplicationContext ctx) {		
+		return args -> {			
+			EventQueue.invokeLater(new Runnable() {
+				public void run() {
+					try {						
+						telaLogin.setVisible(true);
+					} catch (Exception e) {
+						e.printStackTrace();
+					}
+				}
+			});
 		};
-	}
+	}	
 }

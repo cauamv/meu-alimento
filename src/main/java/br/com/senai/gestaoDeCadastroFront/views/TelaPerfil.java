@@ -1,7 +1,6 @@
 package br.com.senai.gestaoDeCadastroFront.views;
 
 import java.awt.Color;
-import java.awt.EventQueue;
 import java.awt.Font;
 
 import javax.swing.ImageIcon;
@@ -16,18 +15,6 @@ public class TelaPerfil extends JFrame {
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
 
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					TelaPerfil frame = new TelaPerfil();
-					frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
 
 	public TelaPerfil() {
 		setResizable(false);
@@ -38,6 +25,7 @@ public class TelaPerfil extends JFrame {
 
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
+		
 
 		JButton btnSouUmAdimi = new JButton("Sou um administrador");
 		btnSouUmAdimi.setFont(new Font("Tahoma", Font.PLAIN, 18));
@@ -45,6 +33,7 @@ public class TelaPerfil extends JFrame {
 		btnSouUmAdimi.setBackground(Color.WHITE);
 		btnSouUmAdimi.setBounds(745, 365, 277, 43);
 		contentPane.add(btnSouUmAdimi);
+		
 
 		JButton btnSouUmCliente = new JButton("Sou um cliente");
 		btnSouUmCliente.setFont(new Font("Tahoma", Font.PLAIN, 18));
@@ -52,10 +41,13 @@ public class TelaPerfil extends JFrame {
 		btnSouUmCliente.setBackground(Color.WHITE);
 		btnSouUmCliente.setBounds(743, 266, 277, 43);
 		contentPane.add(btnSouUmCliente);
+		
 
 		JLabel lblNewLabel = new JLabel("");
 		lblNewLabel.setIcon(new ImageIcon(TelaPerfil.class.getResource("/br/com/senai/gestaoDeCadastroFront/img/telaPerfil.png")));
 		lblNewLabel.setBounds(0, 0, 1162, 671);
 		contentPane.add(lblNewLabel);
 	}
+
 }
+
