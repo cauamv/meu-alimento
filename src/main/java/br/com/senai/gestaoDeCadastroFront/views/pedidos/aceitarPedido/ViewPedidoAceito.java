@@ -1,20 +1,19 @@
-package br.com.senai.gestaoDeCadastroFront.views.pedidos;
+package br.com.senai.gestaoDeCadastroFront.views.pedidos.aceitarPedido;
 
 import java.awt.Color;
-import java.awt.EventQueue;
 import java.awt.Font;
 import java.awt.Panel;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import javax.swing.GroupLayout;
+import javax.swing.GroupLayout.Alignment;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
-import javax.swing.GroupLayout.Alignment;
 import javax.swing.border.EmptyBorder;
 
 import org.springframework.stereotype.Component;
@@ -328,7 +327,7 @@ public class ViewPedidoAceito extends JFrame {
 		JLabel lblFundo = new JLabel("");
 		lblFundo.setBounds(0, 0, 1162, 690);
 		lblFundo.setBackground(Color.WHITE);
-		lblFundo.setIcon(new ImageIcon(ViewPedidoAceito.class.getResource("/br/com/senai/gestaoDeCadastroFront/img/Tela de pedidos aceitos.png")));
+		lblFundo.setIcon(new ImageIcon(ViewPedidoAceito.class.getResource("./imageAceitarPedido.png")));
 		contentPane.add(lblFundo);
 		
 		setLocationRelativeTo(null);

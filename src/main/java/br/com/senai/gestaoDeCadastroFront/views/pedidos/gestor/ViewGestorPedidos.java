@@ -1,4 +1,4 @@
-package br.com.senai.gestaoDeCadastroFront.views.pedidos;
+package br.com.senai.gestaoDeCadastroFront.views.pedidos.gestor;
 
 import java.awt.Color;
 import java.awt.Font;
@@ -18,21 +18,16 @@ import javax.swing.border.EmptyBorder;
 
 import org.springframework.stereotype.Component;
 
-import jakarta.annotation.PostConstruct;
-
 @Component
 public class ViewGestorPedidos extends JFrame {
 
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
 	
-	@PostConstruct
-	public void initialize() {
-		
-	}
+	private ViewGestorPedidos viewGestorPedidos;
 	
 	public void abrirTela() {
-		new ViewGestorPedidos().setVisible(true);
+		viewGestorPedidos.setVisible(true);
 	}
 
 	public ViewGestorPedidos() {
@@ -215,7 +210,7 @@ public class ViewGestorPedidos extends JFrame {
 		
 		JLabel lblFundo = new JLabel("");
 		lblFundo.setBackground(Color.WHITE);
-		lblFundo.setIcon(new ImageIcon(ViewGestorPedidos.class.getResource("/br/com/senai/gestaoDeCadastroFront/img/Tela inicial após ter logado (cliente) (2).png")));
+		lblFundo.setIcon(new ImageIcon(ViewGestorPedidos.class.getResource("./imageGestor.png")));
 		lblFundo.setBounds(0, 0, 1162, 690);
 		contentPane.add(lblFundo);
 		
