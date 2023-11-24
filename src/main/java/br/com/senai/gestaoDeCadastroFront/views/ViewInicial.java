@@ -15,7 +15,7 @@ import javax.swing.border.EmptyBorder;
 
 import br.com.senai.gestaoDeCadastroFront.components.RoundJTextField;
 
-public class TelaInicial extends JFrame {
+public class ViewInicial extends JFrame {
 
     private static final long serialVersionUID = 1L;
     private JPanel contentPane;
@@ -24,7 +24,7 @@ public class TelaInicial extends JFrame {
         EventQueue.invokeLater(new Runnable() {
             public void run() {
                 try {
-                    TelaInicial frame = new TelaInicial();
+                    ViewInicial frame = new ViewInicial();
                     frame.setVisible(true);
                 } catch (Exception e) {
                     e.printStackTrace();
@@ -33,9 +33,9 @@ public class TelaInicial extends JFrame {
         });
     }
 
-    public TelaInicial() {
+    public ViewInicial() {
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setBounds(100, 100, 1273, 731);
+        setBounds(100, 100, 1366, 763);
         contentPane = new JPanel();
         contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 
@@ -54,11 +54,11 @@ public class TelaInicial extends JFrame {
         btnCriarConta.setFont(new Font("Tahoma", Font.PLAIN, 22));
         btnCriarConta.setBorder(null);
         btnCriarConta.setBackground(new Color(242, 242, 242, 255));
-        btnCriarConta.setBounds(871, 49, 164, 43);
+        btnCriarConta.setBounds(949, 49, 172, 43);
         btnCriarConta.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 // Code to switch to TelaCadastro
-                TelaCadastro telaCadastro = new TelaCadastro();
+                ViewCadastro telaCadastro = new ViewCadastro();
                 telaCadastro.setVisible(true);
             }
         });
@@ -69,11 +69,11 @@ public class TelaInicial extends JFrame {
         btnLogin.setFont(new Font("Tahoma", Font.PLAIN, 22));
         btnLogin.setBorder(null);
         btnLogin.setBackground(new Color(255, 49, 49, 255));
-        btnLogin.setBounds(1059, 50, 158, 43);
+        btnLogin.setBounds(1147, 49, 172, 43);
         btnLogin.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 // Code to switch to TelaLogin
-                TelaLogin telaLogin = new TelaLogin();
+                ViewLogin telaLogin = new ViewLogin();
                 telaLogin.setVisible(true);
             }
         });
@@ -82,17 +82,19 @@ public class TelaInicial extends JFrame {
         btnBuscar.setFont(new Font("Tahoma", Font.PLAIN, 20));
         btnBuscar.setBorder(null);
         btnBuscar.setBackground(Color.WHITE);
-        btnBuscar.setBounds(917, 400, 164, 43);
+        btnBuscar.setBounds(994, 425, 181, 49);
         contentPane.add(btnBuscar);
 
-        RoundJTextField roundJTextField = new RoundJTextField(0);
-        roundJTextField.setBackground(new Color(255, 255, 255));
-        roundJTextField.setBounds(181, 390, 706, 64);
-        contentPane.add(roundJTextField);
+        RoundJTextField roundEndereco = new RoundJTextField(0);
+        roundEndereco.setBackground(new Color(255, 255, 255));
+        roundEndereco.setBounds(195, 411, 769, 70);
+        contentPane.add(roundEndereco);
 
-        JLabel lblNewLabel = new JLabel("");
-        lblNewLabel.setIcon(new ImageIcon(TelaInicial.class.getResource("/br/com/senai/gestaoDeCadastroFront/img/telaInicial.png")));
-        lblNewLabel.setBounds(0, 10, 1250, 674);
-        contentPane.add(lblNewLabel);
+        JLabel Fundo = new JLabel("");
+        Fundo.setIcon(new ImageIcon(ViewInicial.class.getResource("/br/com/senai/gestaoDeCadastroFront/img/telaInicial.png")));
+        Fundo.setBounds(0, 10, 1366, 719);
+        contentPane.add(Fundo);
+        
+        setLocationRelativeTo(null);
     }
 }

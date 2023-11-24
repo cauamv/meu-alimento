@@ -17,17 +17,16 @@ import javax.swing.border.EmptyBorder;
 
 import br.com.senai.gestaoDeCadastroFront.components.RoundJTextField;
 
-public class TelaSenha extends JFrame {
+public class ViewSenha extends JFrame {
 
     private static final long serialVersionUID = 1L;
     private JPanel contentPane;
-    private final JLabel digiteSuaSenha = new JLabel("Digite sua senha:");
 
     public static void main(String[] args) {
         EventQueue.invokeLater(new Runnable() {
             public void run() {
                 try {
-                    TelaSenha frame = new TelaSenha();
+                    ViewSenha frame = new ViewSenha();
                     frame.setVisible(true);
                 } catch (Exception e) {
                     e.printStackTrace();
@@ -36,10 +35,10 @@ public class TelaSenha extends JFrame {
         });
     }
 
-    public TelaSenha() {
+    public ViewSenha() {
         setResizable(false);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setBounds(100, 100, 1177, 693);
+        setBounds(100, 100, 1386, 803);
         contentPane = new JPanel();
         contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 
@@ -51,44 +50,52 @@ public class TelaSenha extends JFrame {
         btnProximo.setBorder(null);
         btnProximo.setBackground(Color.WHITE);
         btnProximo.setForeground(Color.BLACK);
-        btnProximo.setBounds(993, 569, 114, 38);
+        btnProximo.setBounds(1179, 670, 114, 55);
         btnProximo.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 // Code to switch to TelaEndereco
-                TelaEndereco telaEndereco = new TelaEndereco();
+                ViewEndereco telaEndereco = new ViewEndereco();
                 telaEndereco.setVisible(true);
                 dispose(); // Close the current TelaSenha screen if needed
             }
         });
+        
+        JLabel lblConfirmeSenha = new JLabel("Confirme sua senha:");
+        lblConfirmeSenha.setHorizontalAlignment(SwingConstants.LEFT);
+        lblConfirmeSenha.setForeground(Color.WHITE);
+        lblConfirmeSenha.setFont(new Font("Tahoma", Font.PLAIN, 16));
+        lblConfirmeSenha.setBounds(799, 413, 184, 30);
+        contentPane.add(lblConfirmeSenha);
+        
+        JLabel lblSenha = new JLabel("Digite sua senha:");
+        lblSenha.setForeground(new Color(255, 255, 255));
+        lblSenha.setHorizontalAlignment(SwingConstants.LEFT);
+        lblSenha.setFont(new Font("Tahoma", Font.PLAIN, 16));
+        lblSenha.setBounds(799, 276, 184, 30);
+        contentPane.add(lblSenha);
         contentPane.add(btnProximo);
         btnProximo.setRolloverEnabled(true);
 
         RoundJTextField txtfSenha1 = new RoundJTextField(0);
         txtfSenha1.setHorizontalAlignment(SwingConstants.CENTER);
-        txtfSenha1.setBounds(678, 253, 439, 53);
+        txtfSenha1.setBounds(799, 302, 516, 66);
         contentPane.add(txtfSenha1);
-
-        RoundJTextField txtfSenha2 = new RoundJTextField(0);
-        txtfSenha2.setHorizontalAlignment(SwingConstants.CENTER);
-        txtfSenha2.setBounds(678, 374, 439, 53);
-        contentPane.add(txtfSenha2);
-
-        JLabel confirmeSuaSenha = new JLabel("Confirme sua senha:");
-        confirmeSuaSenha.setForeground(Color.WHITE);
-        confirmeSuaSenha.setBounds(678, 358, 127, 14);
-        contentPane.add(confirmeSuaSenha);
-        digiteSuaSenha.setForeground(new Color(255, 255, 255));
-        digiteSuaSenha.setBounds(678, 237, 98, 14);
-        contentPane.add(digiteSuaSenha);
-
-        JLabel fundo = new JLabel("");
-        fundo.setFont(new Font("Tahoma", Font.PLAIN, 14));
-        fundo.setBorder(null);
-        fundo.setBackground(new Color(240, 240, 240));
-        fundo.setHorizontalAlignment(SwingConstants.CENTER);
-
-        fundo.setIcon(new ImageIcon(TelaSenha.class.getResource("/br/com/senai/gestaoDeCadastroFront/img/telaSenha.png")));
-        fundo.setBounds(0, 0, 1162, 654);
-        contentPane.add(fundo);
+        
+        RoundJTextField txtfConfirmeSenha = new RoundJTextField(0);
+        txtfConfirmeSenha.setHorizontalAlignment(SwingConstants.CENTER);
+        txtfConfirmeSenha.setBounds(799, 443, 516, 66);
+        contentPane.add(txtfConfirmeSenha);
+        
+                JLabel fundo = new JLabel("");
+                fundo.setFont(new Font("Tahoma", Font.PLAIN, 14));
+                fundo.setBorder(null);
+                fundo.setBackground(new Color(240, 240, 240));
+                fundo.setHorizontalAlignment(SwingConstants.CENTER);
+                
+                        fundo.setIcon(new ImageIcon(ViewSenha.class.getResource("/br/com/senai/gestaoDeCadastroFront/img/telaSenha.png")));
+                        fundo.setBounds(0, 0, 1372, 780);
+                        contentPane.add(fundo);
+                        
+                        setLocationRelativeTo(null);
     }
 }

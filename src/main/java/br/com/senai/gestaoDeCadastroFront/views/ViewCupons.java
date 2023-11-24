@@ -21,7 +21,7 @@ import javax.swing.border.EmptyBorder;
 import br.com.senai.gestaoDeCadastroFront.components.table.CupomTableModel;
 
 
-public class TelaCupons extends JFrame {
+public class ViewCupons extends JFrame {
 
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
@@ -37,7 +37,7 @@ public class TelaCupons extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					TelaCupons frame = new TelaCupons();
+					ViewCupons frame = new ViewCupons();
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -56,10 +56,10 @@ public class TelaCupons extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public TelaCupons() {
+	public ViewCupons() {
 		setResizable(false);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 1177, 693);
+		setBounds(100, 100, 1386, 776);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 
@@ -72,7 +72,7 @@ public class TelaCupons extends JFrame {
 		panel_1.setForeground(Color.DARK_GRAY);
 		panel_1.setBorder(null);
 		panel_1.setBackground(new Color(242, 242, 242));
-		panel_1.setBounds(648, 97, 505, 33);
+		panel_1.setBounds(857, 126, 505, 33);
 		contentPane.add(panel_1);
 		
 		JLabel lblLogadoComo_1 = new JLabel("Logado como:");
@@ -94,7 +94,7 @@ public class TelaCupons extends JFrame {
 		scrollPane = new JScrollPane(tbCupons);
 		scrollPane.setBackground(new Color(255, 52, 52));
 		scrollPane.setBorder(null);
-		scrollPane.setBounds(32, 268, 1109, 345);
+		scrollPane.setBounds(40, 319, 1322, 314);
 		contentPane.add(scrollPane);
 		
 		JButton btnCriar = new JButton("Criar");
@@ -104,7 +104,7 @@ public class TelaCupons extends JFrame {
 		btnCriar.setBounds(new Rectangle(10, 10, 10, 10));
 		btnCriar.setBorder(null);
 		btnCriar.setBackground(new Color(255, 52, 52));
-		btnCriar.setBounds(40, 191, 114, 38);
+		btnCriar.setBounds(57, 232, 132, 44);
 		contentPane.add(btnCriar);
 		
 		JButton btnBuscar = new JButton("Buscar");
@@ -114,7 +114,7 @@ public class TelaCupons extends JFrame {
 		btnBuscar.setBounds(new Rectangle(10, 10, 10, 10));
 		btnBuscar.setBorder(null);
 		btnBuscar.setBackground(new Color(255, 52, 52));
-		btnBuscar.setBounds(191, 191, 114, 38);
+		btnBuscar.setBounds(231, 235, 132, 41);
 		contentPane.add(btnBuscar);
 		
 		JLabel fundo = new JLabel("");
@@ -123,10 +123,12 @@ public class TelaCupons extends JFrame {
 		fundo.setBackground(new Color(240, 240, 240));
 		fundo.setHorizontalAlignment(SwingConstants.CENTER);
 
-		fundo.setIcon(new ImageIcon(TelaCupons.class.getResource("/br/com/senai/gestaoDeCadastroFront/img/telaCupons.png")));
-		fundo.setBounds(0, 0, 1162, 654);
+		fundo.setIcon(new ImageIcon(ViewCupons.class.getResource("/br/com/senai/gestaoDeCadastroFront/img/telaCupons.png")));
+		fundo.setBounds(0, 0, 1382, 785);
 		contentPane.add(fundo);
 		this.configurarCabecalhos(tbCupons);
+		
+		setLocationRelativeTo(null);
 
 	}
 }

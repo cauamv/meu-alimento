@@ -11,7 +11,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
-public class TelaPerfil extends JFrame {
+public class ViewPerfil extends JFrame {
 
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
@@ -20,7 +20,7 @@ public class TelaPerfil extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					TelaPerfil frame = new TelaPerfil();
+					ViewPerfil frame = new ViewPerfil();
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -29,33 +29,35 @@ public class TelaPerfil extends JFrame {
 		});
 	}
 
-	public TelaPerfil() {
+	public ViewPerfil() {
 		setResizable(false);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 1176, 708);
+		setBounds(100, 100, 1373, 788);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 
-		JButton btnSouUmAdimi = new JButton("Sou um administrador");
-		btnSouUmAdimi.setFont(new Font("Tahoma", Font.PLAIN, 18));
-		btnSouUmAdimi.setBorder(null);
-		btnSouUmAdimi.setBackground(Color.WHITE);
-		btnSouUmAdimi.setBounds(745, 365, 277, 43);
-		contentPane.add(btnSouUmAdimi);
+		JButton btnSouUmAdmin = new JButton("Sou um administrador");
+		btnSouUmAdmin.setFont(new Font("Tahoma", Font.PLAIN, 18));
+		btnSouUmAdmin.setBorder(null);
+		btnSouUmAdmin.setBackground(Color.WHITE);
+		btnSouUmAdmin.setBounds(886, 415, 307, 58);
+		contentPane.add(btnSouUmAdmin);
 
 		JButton btnSouUmCliente = new JButton("Sou um cliente");
 		btnSouUmCliente.setFont(new Font("Tahoma", Font.PLAIN, 18));
 		btnSouUmCliente.setBorder(null);
 		btnSouUmCliente.setBackground(Color.WHITE);
-		btnSouUmCliente.setBounds(743, 266, 277, 43);
+		btnSouUmCliente.setBounds(886, 297, 313, 58);
 		contentPane.add(btnSouUmCliente);
 
 		JLabel lblNewLabel = new JLabel("");
-		lblNewLabel.setIcon(new ImageIcon(TelaPerfil.class.getResource("/br/com/senai/gestaoDeCadastroFront/img/telaPerfil.png")));
-		lblNewLabel.setBounds(0, 0, 1162, 671);
+		lblNewLabel.setIcon(new ImageIcon(ViewPerfil.class.getResource("/br/com/senai/gestaoDeCadastroFront/img/telaPerfil.png")));
+		lblNewLabel.setBounds(0, 0, 1376, 768);
 		contentPane.add(lblNewLabel);
+		
+		setLocationRelativeTo(null);
 	}
 }

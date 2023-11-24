@@ -16,7 +16,7 @@ import javax.swing.border.EmptyBorder;
 import java.awt.Rectangle;
 import java.awt.FlowLayout;
 
-public class TelaDetalhesCupom extends JFrame {
+public class ViewDetalhesCupom extends JFrame {
 
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
@@ -28,7 +28,7 @@ public class TelaDetalhesCupom extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					TelaDetalhesCupom frame = new TelaDetalhesCupom();
+					ViewDetalhesCupom frame = new ViewDetalhesCupom();
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -40,28 +40,28 @@ public class TelaDetalhesCupom extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public TelaDetalhesCupom() {
+	public ViewDetalhesCupom() {
 		setResizable(false);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 1177, 693);
+		setBounds(100, 100, 1384, 803);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 		
-		JPanel panel = new JPanel();
-		panel.setBackground(new Color(242, 242, 242));
-		panel.setForeground(Color.DARK_GRAY);
-		panel.setBorder(null);
-		FlowLayout flowLayout = (FlowLayout) panel.getLayout();
-		flowLayout.setAlignment(FlowLayout.RIGHT);
-		flowLayout.setAlignOnBaseline(true);
-		panel.setBounds(644, 98, 505, 33);
-		contentPane.add(panel);
+		JPanel panelLogado = new JPanel();
+		panelLogado.setBackground(new Color(242, 242, 242));
+		panelLogado.setForeground(Color.DARK_GRAY);
+		panelLogado.setBorder(null);
+		FlowLayout fl_panelLogado = (FlowLayout) panelLogado.getLayout();
+		fl_panelLogado.setAlignment(FlowLayout.RIGHT);
+		fl_panelLogado.setAlignOnBaseline(true);
+		panelLogado.setBounds(855, 121, 505, 33);
+		contentPane.add(panelLogado);
 		
 		JLabel lblLogadoComo = new JLabel("Logado como:");
-		panel.add(lblLogadoComo);
+		panelLogado.add(lblLogadoComo);
 		lblLogadoComo.setForeground(Color.BLACK);
 		lblLogadoComo.setVerticalAlignment(SwingConstants.BOTTOM);
 		lblLogadoComo.setHorizontalAlignment(SwingConstants.LEFT);
@@ -72,7 +72,7 @@ public class TelaDetalhesCupom extends JFrame {
 		lblLogin.setHorizontalAlignment(SwingConstants.LEFT);
 		lblLogin.setForeground(Color.BLACK);
 		lblLogin.setFont(new Font("Arial", Font.PLAIN, 15));
-		panel.add(lblLogin);
+		panelLogado.add(lblLogin);
 		
 		JButton btnExcluir = new JButton("Excluir");
 		btnExcluir.setRolloverEnabled(true);
@@ -81,7 +81,7 @@ public class TelaDetalhesCupom extends JFrame {
 		btnExcluir.setBounds(new Rectangle(10, 10, 10, 10));
 		btnExcluir.setBorder(null);
 		btnExcluir.setBackground(new Color(255, 52, 52));
-		btnExcluir.setBounds(190, 583, 114, 38);
+		btnExcluir.setBounds(235, 680, 114, 53);
 		contentPane.add(btnExcluir);
 		
 		JButton btnAlterar = new JButton("Alterar");
@@ -90,7 +90,7 @@ public class TelaDetalhesCupom extends JFrame {
 		btnAlterar.setBounds(new Rectangle(10, 10, 10, 10));
 		btnAlterar.setBackground(new Color(242, 242, 242));
 		btnAlterar.setForeground(Color.BLACK);
-		btnAlterar.setBounds(41, 583, 114, 38);
+		btnAlterar.setBounds(55, 680, 114, 53);
 		contentPane.add(btnAlterar);
 		btnAlterar.setRolloverEnabled(true);
 		
@@ -98,25 +98,25 @@ public class TelaDetalhesCupom extends JFrame {
 		lblStatus.setForeground(Color.RED);
 		lblStatus.setHorizontalAlignment(SwingConstants.LEFT);
 		lblStatus.setFont(new Font("Arial", Font.PLAIN, 30));
-		lblStatus.setBounds(142, 499, 205, 33);
+		lblStatus.setBounds(155, 587, 205, 33);
 		contentPane.add(lblStatus);
 		
 		JLabel lblCodigo = new JLabel("911OFF");
 		lblCodigo.setHorizontalAlignment(SwingConstants.LEFT);
 		lblCodigo.setFont(new Font("Arial", Font.PLAIN, 30));
-		lblCodigo.setBounds(144, 422, 205, 33);
+		lblCodigo.setBounds(164, 500, 156, 33);
 		contentPane.add(lblCodigo);
 		
 		JLabel lblValidade = new JLabel("09/11/2011");
 		lblValidade.setHorizontalAlignment(SwingConstants.LEFT);
 		lblValidade.setFont(new Font("Arial", Font.PLAIN, 30));
-		lblValidade.setBounds(169, 346, 205, 33);
+		lblValidade.setBounds(192, 409, 205, 33);
 		contentPane.add(lblValidade);
 		
 		JLabel lblPorcentagem = new JLabel("100%");
 		lblPorcentagem.setHorizontalAlignment(SwingConstants.LEFT);
 		lblPorcentagem.setFont(new Font("Arial", Font.PLAIN, 30));
-		lblPorcentagem.setBounds(123, 269, 114, 33);
+		lblPorcentagem.setBounds(136, 319, 114, 33);
 		contentPane.add(lblPorcentagem);
 		
 		JLabel lblCupom = new JLabel("Cupom");
@@ -130,9 +130,11 @@ public class TelaDetalhesCupom extends JFrame {
 		fundo.setBorder(null);
 		fundo.setBackground(new Color(240, 240, 240));
 		fundo.setHorizontalAlignment(SwingConstants.CENTER);
-		fundo.setIcon(new ImageIcon(TelaDetalhesCupom.class.getResource("/br/com/senai/gestaoDeCadastroFront/img/telaCupom.png")));
-		fundo.setBounds(0, 0, 1162, 654);
+		fundo.setIcon(new ImageIcon(ViewDetalhesCupom.class.getResource("/br/com/senai/gestaoDeCadastroFront/img/telaCupom.png")));
+		fundo.setBounds(0, 0, 1370, 766);
 		contentPane.add(fundo);
+		
+		setLocationRelativeTo(null);
 
 	}
 }
