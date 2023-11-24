@@ -29,7 +29,7 @@ public class UserClient {
 		
 		HttpEntity<UsuarioDto> request = new HttpEntity<UsuarioDto>(novoUsuario);
 
-		URI location = httpClient.postForLocation("http://localhost:9090/usuarios", request);
+	    URI location = httpClient.postForLocation("http://localhost:9090/usuarios", request);
 		
 		CredencialDeAcesso credencial = new CredencialDeAcesso();
 		credencial.setEmail(novoUsuario.getEmail());

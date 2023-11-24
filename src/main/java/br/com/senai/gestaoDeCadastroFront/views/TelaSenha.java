@@ -1,9 +1,10 @@
 package br.com.senai.gestaoDeCadastroFront.views;
 
 import java.awt.Color;
-import java.awt.EventQueue;
 import java.awt.Font;
 import java.awt.Rectangle;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -14,8 +15,6 @@ import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
 
 import br.com.senai.gestaoDeCadastroFront.components.RoundJTextField;
-import java.awt.event.ActionListener;
-import java.awt.event.ActionEvent;
 
 public class TelaSenha extends JFrame {
 
@@ -36,7 +35,7 @@ public class TelaSenha extends JFrame {
 		JButton btnProximo = new JButton("Próximo");
 		btnProximo.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				new TelaCupons().setVisible(true);
+				new ViewCupons().setVisible(true);
 			}
 		});
 		btnProximo.setFont(new Font("Tahoma", Font.PLAIN, 19));
