@@ -29,7 +29,7 @@ public class InitApp {
 		return args -> {
 			UserClient client = new UserClient();
 			UsuarioDto dto = new UsuarioDto();
-			dto.setEmail("teste@gmail.com");
+			dto.setEmail("teste2@gmail.com");
 			dto.setRole("Administrador");
 			dto.setSenha("1345678");
 			client.inserir(dto);
