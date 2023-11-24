@@ -27,7 +27,7 @@ public class ViewGestorPedidos extends JFrame {
 	private JPanel contentPane;
 	
 	@PostConstruct
-	public void inicializar() {
+	public void initialize() {
 		
 	}
 	
@@ -38,7 +38,7 @@ public class ViewGestorPedidos extends JFrame {
 	public ViewGestorPedidos() {
 		setResizable(false);
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-		setBounds(100, 100, 1176, 722);
+		setBounds(100, 100, 1366, 768);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 
@@ -218,5 +218,7 @@ public class ViewGestorPedidos extends JFrame {
 		lblFundo.setIcon(new ImageIcon(ViewGestorPedidos.class.getResource("/br/com/senai/gestaoDeCadastroFront/img/Tela inicial após ter logado (cliente) (2).png")));
 		lblFundo.setBounds(0, 0, 1162, 690);
 		contentPane.add(lblFundo);
+		
+		setLocationRelativeTo(null);
 	}
 }

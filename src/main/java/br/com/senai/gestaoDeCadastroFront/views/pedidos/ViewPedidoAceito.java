@@ -17,11 +17,21 @@ import javax.swing.SwingConstants;
 import javax.swing.GroupLayout.Alignment;
 import javax.swing.border.EmptyBorder;
 
+import org.springframework.stereotype.Component;
+
+import jakarta.annotation.PostConstruct;
+
+@Component
 public class ViewPedidoAceito extends JFrame {
 
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
 
+	@PostConstruct
+	public void initialize() {
+		
+	}
+	
 	public ViewPedidoAceito() {
 
 		setResizable(false);
@@ -321,5 +331,6 @@ public class ViewPedidoAceito extends JFrame {
 		lblFundo.setIcon(new ImageIcon(ViewPedidoAceito.class.getResource("/br/com/senai/gestaoDeCadastroFront/img/Tela de pedidos aceitos.png")));
 		contentPane.add(lblFundo);
 		
+		setLocationRelativeTo(null);
 	}
 }

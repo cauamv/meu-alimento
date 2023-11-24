@@ -4,19 +4,31 @@ import java.awt.Color;
 import java.awt.Font;
 
 import javax.swing.ImageIcon;
+import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
-import javax.swing.JButton;
 
+import org.springframework.stereotype.Component;
+
+import jakarta.annotation.PostConstruct;
+
+@Component
 public class ViewListagemDePedidos extends JFrame {
 
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
+	
+	
+	@PostConstruct
+	public void initialize() {
+		
+	}
 
 	public ViewListagemDePedidos() {
+		
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 1172, 722);
 		contentPane = new JPanel();
@@ -870,11 +882,13 @@ public class ViewListagemDePedidos extends JFrame {
 		contentPane.add(btnNewButton_1_1_1_2);
 		
 		JLabel lblFundo = new JLabel("");
+		lblFundo.setIcon(new ImageIcon(ViewListagemDePedidos.class.getResource("/br/com/senai/gestaoDeCadastroFront/img/Tela de pedidos aceitos 1.png")));
 		lblFundo.setBorder(null);
 		lblFundo.setHorizontalAlignment(SwingConstants.LEFT);
 		lblFundo.setBounds(0, 0, 1156, 683);
 		lblFundo.setBackground(Color.WHITE);
-		lblFundo.setIcon(new ImageIcon(ViewPedidoAceito.class.getResource("/br/com/senai/gestaoDeCadastroFront/img/Tela de pedidos aceitos 1.png")));
 		contentPane.add(lblFundo);
+		
+		setLocationRelativeTo(null);
 	}
 }
