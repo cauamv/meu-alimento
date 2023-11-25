@@ -8,7 +8,6 @@ import java.awt.event.ActionListener;
 
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
-import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -24,10 +23,8 @@ public class ViewGestorPedidos extends JFrame {
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
 	
-	private ViewGestorPedidos viewGestorPedidos;
-	
-	public void abrirTela() {
-		viewGestorPedidos.setVisible(true);
+	public void abrirTela(String token) {
+		this.setVisible(true);
 	}
 
 	public ViewGestorPedidos() {
@@ -207,12 +204,6 @@ public class ViewGestorPedidos extends JFrame {
 		lblTempoEntrega.setBackground(new Color(248,244,244));
 		lblTempoEntrega.setBounds(948, 82, 187, 27);
 		contentPane.add(lblTempoEntrega);
-		
-		JLabel lblFundo = new JLabel("");
-		lblFundo.setBackground(Color.WHITE);
-		lblFundo.setIcon(new ImageIcon(ViewGestorPedidos.class.getResource("./imageGestor.png")));
-		lblFundo.setBounds(0, 0, 1162, 690);
-		contentPane.add(lblFundo);
 		
 		setLocationRelativeTo(null);
 	}

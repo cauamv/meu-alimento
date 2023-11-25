@@ -17,22 +17,15 @@ import javax.swing.border.TitledBorder;
 
 import org.springframework.stereotype.Component;
 
-import jakarta.annotation.PostConstruct;
-
 @Component
 public class ViewListagemDePedidos extends JFrame {
 
 	private static final long serialVersionUID = 1L;
+	
 	private JPanel contentPane;
 	
-	
-	@PostConstruct
-	public void initialize() {
-		
-	}
-	
-	public static void main(String[] args) {
-		new ViewListagemDePedidos().setVisible(true);
+	public void abrirTela(String token) {
+		this.setVisible(true);
 	}
 	
 	public ViewListagemDePedidos() {
@@ -131,21 +124,9 @@ public class ViewListagemDePedidos extends JFrame {
 		JPanel columnOrganizePanel = new JPanel();
 		columnOrganizePanel.setBounds(22, 115, 1332, 559);
 		contentPane.add(columnOrganizePanel);
-		
+
 		JPanel panelPedido = new JPanel();
-		columnOrganizePanel.add(gerarPedido(panelPedido, "Kauan", "88703-656", "R$ 44,90"));
-		JPanel panelPedido1 = new JPanel();
-		columnOrganizePanel.add(gerarPedido(panelPedido1, "Eduarda", "88703-656", "R$ 45,90"));
-		JPanel panelPedido2 = new JPanel();
-		columnOrganizePanel.add(gerarPedido(panelPedido2, "philippe", "88703-656", "R$ 95,90"));
-		JPanel panelPedido3 = new JPanel();
-		columnOrganizePanel.add(gerarPedido(panelPedido3, "User 1", "88703-656", "R$ 9,90"));
-		JPanel panelPedido4 = new JPanel();
-		columnOrganizePanel.add(gerarPedido(panelPedido4, "User 2", "88703-656", "R$ 145,90"));
-		JPanel panelPedido5 = new JPanel();
-		columnOrganizePanel.add(gerarPedido(panelPedido5, "User 3", "88703-656", "R$ 78,50"));
-		JPanel panelPedido6 = new JPanel();
-		columnOrganizePanel.add(gerarPedido(panelPedido6, "User 4", "88703-656", "R$ 65,90"));
+		columnOrganizePanel.add(gerarPedido(panelPedido, "Teste","teste", "R$ 123"));
 		
 	}
 }

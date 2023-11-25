@@ -12,6 +12,7 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JPasswordField;
 import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
 
@@ -19,10 +20,11 @@ import org.hibernate.validator.internal.util.stereotypes.Lazy;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import br.com.senai.gestaoDeCadastroFront.client.authenticate.AutenticadorClient;
+import br.com.senai.gestaoDeCadastroFront.client.authenticate.server.AutenticadorClient;
+import br.com.senai.gestaoDeCadastroFront.client.authenticate.server.CredencialDeAcesso;
 import br.com.senai.gestaoDeCadastroFront.components.RoundJTextField;
-import br.com.senai.gestaoDeCadastroFront.dto.CredencialDeAcesso;
-import br.com.senai.gestaoDeCadastroFront.views.pedidos.gestor.ViewGestorPedidos;
+import br.com.senai.gestaoDeCadastroFront.views.cadastros.ViewCadastro;
+import br.com.senai.gestaoDeCadastroFront.views.pedidos.listagem.ViewListagemDePedidos;
 
 @Component
 public class ViewLogin extends JFrame {
@@ -32,7 +34,11 @@ public class ViewLogin extends JFrame {
     
     @Autowired
     @Lazy
-    private ViewGestorPedidos viewGestorPedidos;
+    private ViewListagemDePedidos viewListagemDePedidos;
+    
+    @Autowired
+    @Lazy
+    private ViewCadastro viewCadastro;
     
     @Autowired
     private AutenticadorClient autenticadorClient;
@@ -45,76 +51,49 @@ public class ViewLogin extends JFrame {
         setContentPane(contentPane);
         contentPane.setLayout(null);
         
-        JPanel Leftpanel = new JPanel();
-        Leftpanel.setBackground(Color.RED);
-        Leftpanel.setForeground(Color.RED);
-        Leftpanel.setBounds(-15, -21, 654, 782);
-        contentPane.add(Leftpanel);
-        
-        JLabel lblMeuAlimento = new JLabel("Meu Alimento");
-        lblMeuAlimento.setForeground(Color.WHITE);
-        lblMeuAlimento.setHorizontalAlignment(SwingConstants.CENTER);
-        lblMeuAlimento.setFont(new Font("Bitstream Charter", Font.BOLD, 43));
-        GroupLayout gl_Leftpanel = new GroupLayout(Leftpanel);
-        gl_Leftpanel.setHorizontalGroup(
-        	gl_Leftpanel.createParallelGroup(Alignment.LEADING)
-        		.addGroup(Alignment.TRAILING, gl_Leftpanel.createSequentialGroup()
-        			.addContainerGap(132, Short.MAX_VALUE)
-        			.addComponent(lblMeuAlimento, GroupLayout.PREFERRED_SIZE, 488, GroupLayout.PREFERRED_SIZE)
-        			.addGap(34))
-        );
-        gl_Leftpanel.setVerticalGroup(
-        	gl_Leftpanel.createParallelGroup(Alignment.LEADING)
-        		.addGroup(gl_Leftpanel.createSequentialGroup()
-        			.addGap(51)
-        			.addComponent(lblMeuAlimento)
-        			.addContainerGap(678, Short.MAX_VALUE))
-        );
-        Leftpanel.setLayout(gl_Leftpanel);
-        
         JPanel rightPanel = new JPanel();
-        rightPanel.setBounds(773, 129, 529, 529);
+        rightPanel.setBackground(Color.RED);
+        rightPanel.setForeground(Color.RED);
+        rightPanel.setBounds(667, 0, 683, 768);
         contentPane.add(rightPanel);
         
         JLabel lblEmail = new JLabel("Digite seu email:");
+        lblEmail.setForeground(Color.WHITE);
         lblEmail.setHorizontalAlignment(SwingConstants.LEFT);
         lblEmail.setFont(new Font("Tahoma", Font.PLAIN, 14));
         
         RoundJTextField txtEmail = new RoundJTextField(0);
-        txtEmail.setForeground(Color.WHITE);
+        txtEmail.setForeground(Color.BLACK);
         txtEmail.setColumns(4);
         txtEmail.setHorizontalAlignment(SwingConstants.LEFT);
-        txtEmail.setBackground(Color.RED);
+        txtEmail.setBackground(Color.WHITE);
         
         JLabel lblSenha = new JLabel("Digite sua senha:");
+        lblSenha.setForeground(Color.WHITE);
         lblSenha.setHorizontalAlignment(SwingConstants.LEFT);
         lblSenha.setFont(new Font("Tahoma", Font.PLAIN, 14));
         
-        RoundJTextField txtSenha = new RoundJTextField(0);
-        txtSenha.setForeground(Color.WHITE);
+        JPasswordField txtSenha = new JPasswordField();
+        txtSenha.setForeground(Color.BLACK);
         txtSenha.setColumns(4);
         txtSenha.setHorizontalAlignment(SwingConstants.LEFT);
-        txtSenha.setBackground(Color.RED);
-        GroupLayout gl_rightPanel = new GroupLayout(rightPanel);
-        
-        
-        JButton bntCadastrar = new JButton("Novo aqui?");
-        bntCadastrar.setForeground(new Color(0, 128, 255));
-        bntCadastrar.setFont(new Font("Tahoma", Font.PLAIN, 18));
-        bntCadastrar.setBorderPainted(false);
-        bntCadastrar.setBorder(null);
-        bntCadastrar.setBackground(new Color(255, 255, 255));
+        txtSenha.setBackground(Color.WHITE);
         
         JButton bntEntrar = new JButton("Entrar");
         bntEntrar.addActionListener(new ActionListener() {
         	public void actionPerformed(ActionEvent e) {
-        		String email = txtEmail.getText();
-        		String senha = txtSenha.getText();
         		try {
-        			autenticadorClient.getTokenPela(new CredencialDeAcesso(email, senha));
-        			viewGestorPedidos.abrirTela();
-        		} catch (Exception e2) {
-					JOptionPane.showMessageDialog(contentPane, "Email e/ou senha invalidos. ");
+        			String email = txtEmail.getText();
+        			String senha = new String(txtSenha.getPassword());
+        			if (!email.isBlank() && !senha.isBlank()) {
+        				String token = autenticadorClient.getTokenPela(new CredencialDeAcesso(email, senha)).getValor();
+        				viewListagemDePedidos.abrirTela(token);
+        				dispose();
+					} else {
+	        			JOptionPane.showMessageDialog(contentPane, "Email e senha são obrigatórios. ");
+					}
+				} catch (Exception e2) {
+					JOptionPane.showMessageDialog(contentPane, "Email e/ou senha incorretos");
 				}
         	}
         });
@@ -124,54 +103,68 @@ public class ViewLogin extends JFrame {
         bntEntrar.setBackground(new Color(120,116,116));
         bntEntrar.setFont(new Font("Tahoma", Font.PLAIN, 18));
         
+        JLabel lblMeuLogin = new JLabel("Meu Login");
+        lblMeuLogin.setFont(new Font("Dialog", Font.BOLD, 43));
+        lblMeuLogin.setHorizontalAlignment(SwingConstants.CENTER);
+        lblMeuLogin.setForeground(Color.WHITE);
+        
+        JButton btnNovoAqui = new JButton("Novo aqui?");
+        btnNovoAqui.addActionListener(new ActionListener() {
+        	public void actionPerformed(ActionEvent e) {
+        		viewCadastro.setVisible(true);
+        		dispose();
+        	}
+        });
+        btnNovoAqui.setForeground(Color.WHITE);
+        btnNovoAqui.setFont(new Font("Tahoma", Font.ITALIC, 18));
+        btnNovoAqui.setBorder(null);
+        btnNovoAqui.setBackground(Color.RED);
+        GroupLayout gl_rightPanel = new GroupLayout(rightPanel);
         gl_rightPanel.setHorizontalGroup(
         	gl_rightPanel.createParallelGroup(Alignment.LEADING)
         		.addGroup(gl_rightPanel.createSequentialGroup()
-        			.addContainerGap()
-        			.addComponent(lblSenha, GroupLayout.PREFERRED_SIZE, 184, GroupLayout.PREFERRED_SIZE)
-        			.addContainerGap(333, Short.MAX_VALUE))
-        		.addGroup(gl_rightPanel.createSequentialGroup()
-        			.addContainerGap()
-        			.addComponent(txtEmail, GroupLayout.PREFERRED_SIZE, 480, GroupLayout.PREFERRED_SIZE)
-        			.addContainerGap(37, Short.MAX_VALUE))
-        		.addGroup(gl_rightPanel.createSequentialGroup()
-        			.addContainerGap()
-        			.addComponent(lblEmail, GroupLayout.PREFERRED_SIZE, 184, GroupLayout.PREFERRED_SIZE)
-        			.addContainerGap(333, Short.MAX_VALUE))
-        		.addGroup(gl_rightPanel.createSequentialGroup()
-        			.addContainerGap()
-        			.addGroup(gl_rightPanel.createParallelGroup(Alignment.TRAILING)
-        				.addComponent(bntEntrar, GroupLayout.PREFERRED_SIZE, 126, GroupLayout.PREFERRED_SIZE)
-        				.addComponent(txtSenha, GroupLayout.PREFERRED_SIZE, 480, GroupLayout.PREFERRED_SIZE))
-        			.addContainerGap(37, Short.MAX_VALUE))
-        		.addGroup(Alignment.TRAILING, gl_rightPanel.createSequentialGroup()
-        			.addContainerGap(380, Short.MAX_VALUE)
-        			.addComponent(bntCadastrar)
-        			.addGap(49))
+        			.addGroup(gl_rightPanel.createParallelGroup(Alignment.LEADING)
+        				.addGroup(gl_rightPanel.createSequentialGroup()
+        					.addGap(170)
+        					.addComponent(lblMeuLogin, GroupLayout.PREFERRED_SIZE, 357, GroupLayout.PREFERRED_SIZE))
+        				.addGroup(gl_rightPanel.createSequentialGroup()
+        					.addGap(28)
+        					.addGroup(gl_rightPanel.createParallelGroup(Alignment.LEADING, false)
+        						.addComponent(bntEntrar, Alignment.TRAILING, GroupLayout.PREFERRED_SIZE, 126, GroupLayout.PREFERRED_SIZE)
+        						.addComponent(btnNovoAqui, Alignment.TRAILING, GroupLayout.PREFERRED_SIZE, 126, GroupLayout.PREFERRED_SIZE)
+        						.addComponent(txtSenha, GroupLayout.DEFAULT_SIZE, 629, Short.MAX_VALUE)
+        						.addComponent(txtEmail, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+        						.addComponent(lblEmail, GroupLayout.PREFERRED_SIZE, 184, GroupLayout.PREFERRED_SIZE)
+        						.addComponent(lblSenha, GroupLayout.PREFERRED_SIZE, 184, GroupLayout.PREFERRED_SIZE))))
+        			.addContainerGap(26, Short.MAX_VALUE))
         );
         gl_rightPanel.setVerticalGroup(
         	gl_rightPanel.createParallelGroup(Alignment.LEADING)
-        		.addGroup(Alignment.TRAILING, gl_rightPanel.createSequentialGroup()
-        			.addContainerGap(91, Short.MAX_VALUE)
+        		.addGroup(gl_rightPanel.createSequentialGroup()
+        			.addGap(66)
+        			.addComponent(lblMeuLogin)
+        			.addGap(67)
         			.addComponent(lblEmail, GroupLayout.PREFERRED_SIZE, 30, GroupLayout.PREFERRED_SIZE)
         			.addGap(18)
         			.addComponent(txtEmail, GroupLayout.PREFERRED_SIZE, 64, GroupLayout.PREFERRED_SIZE)
-        			.addGap(28)
+        			.addGap(68)
         			.addComponent(lblSenha)
-        			.addGap(42)
+        			.addGap(18)
         			.addComponent(txtSenha, GroupLayout.PREFERRED_SIZE, 61, GroupLayout.PREFERRED_SIZE)
-        			.addGap(55)
+        			.addGap(45)
         			.addComponent(bntEntrar, GroupLayout.PREFERRED_SIZE, 39, GroupLayout.PREFERRED_SIZE)
-        			.addGap(40)
-        			.addComponent(bntCadastrar)
-        			.addGap(22))
+        			.addGap(104)
+        			.addComponent(btnNovoAqui, GroupLayout.PREFERRED_SIZE, 39, GroupLayout.PREFERRED_SIZE)
+        			.addGap(118))
         );
         rightPanel.setLayout(gl_rightPanel);
         
-        JLabel lblMeuLogin = new JLabel("Meu Login");
-        lblMeuLogin.setHorizontalAlignment(SwingConstants.CENTER);
-        lblMeuLogin.setFont(new Font("Bitstream Charter", Font.BOLD, 43));
-        lblMeuLogin.setBounds(657, 24, 697, 58);
-        contentPane.add(lblMeuLogin);
+        JLabel lblMeuAlimento = new JLabel("Meu Alimento");
+        lblMeuAlimento.setHorizontalAlignment(SwingConstants.CENTER);
+        lblMeuAlimento.setForeground(Color.BLACK);
+        lblMeuAlimento.setFont(new Font("Dialog", Font.BOLD, 43));
+        lblMeuAlimento.setBounds(116, 49, 357, 55);
+        contentPane.add(lblMeuAlimento);
+        setLocationRelativeTo(null);
     }
 }
