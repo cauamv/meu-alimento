@@ -21,6 +21,7 @@ import org.springframework.stereotype.Component;
 import br.com.senai.gestaoDeCadastroFront.client.authenticate.AutenticadorClient;
 import br.com.senai.gestaoDeCadastroFront.components.RoundJTextField;
 import br.com.senai.gestaoDeCadastroFront.dto.CredencialDeAcesso;
+import br.com.senai.gestaoDeCadastroFront.views.ViewPerfil;
 import br.com.senai.gestaoDeCadastroFront.views.pedidos.ViewGestorPedidos;
 
 @Component
@@ -44,6 +45,16 @@ public class ViewLogin extends JFrame {
         contentPane.setLayout(null);
         
         JButton bntCadastrar = new JButton("Novo aqui?");
+        bntCadastrar.addActionListener(new ActionListener() {
+        	public void actionPerformed(ActionEvent e) {
+        		try {
+					ViewPerfil view = new ViewPerfil();
+					view.setVisible(true);
+				} catch (Exception e2) {
+					e2.getMessage();
+				}
+        	}
+        });
         bntCadastrar.setForeground(new Color(0, 128, 255));
         bntCadastrar.setFont(new Font("Tahoma", Font.PLAIN, 18));
         bntCadastrar.setBorderPainted(false);

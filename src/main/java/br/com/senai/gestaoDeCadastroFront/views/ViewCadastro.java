@@ -1,7 +1,6 @@
 package br.com.senai.gestaoDeCadastroFront.views;
 
 import java.awt.Color;
-import java.awt.EventQueue;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -14,25 +13,22 @@ import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
 
+import org.springframework.beans.factory.annotation.Autowired;
+
+//import br.com.senai.gestaoDeCadastroFront.client.NovoClienteClient;
 import br.com.senai.gestaoDeCadastroFront.components.RoundJTextField;
+import br.com.senai.gestaoDeCadastroFront.dto.CadastroClienteDto;
 
 public class ViewCadastro extends JFrame {
 
     private static final long serialVersionUID = 1L;
     private JPanel contentPane;
 
-    public static void main(String[] args) {
-        EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                try {
-                    ViewCadastro frame = new ViewCadastro();
-                    frame.setVisible(true);
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-            }
-        });
-    }
+//    @Autowired
+//	private NovoClienteClient cliente;
+    
+    @Autowired
+    private CadastroClienteDto clienteDto;
 
     public ViewCadastro() {
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -43,16 +39,6 @@ public class ViewCadastro extends JFrame {
         setContentPane(contentPane);
         contentPane.setLayout(null);
 
-        JButton btnProximo = new JButton("Próximo");
-        btnProximo.setFont(new Font("Tahoma", Font.PLAIN, 18));
-        btnProximo.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                // Code to switch to TelaSenha
-                ViewSenha telaSenha = new ViewSenha();
-                telaSenha.setVisible(true);
-                dispose(); // Close the current TelaCadastro screen if needed
-            }
-        });
                 
                 RoundJTextField roundTelefone = new RoundJTextField(0);
                 roundTelefone.setHorizontalAlignment(SwingConstants.CENTER);
@@ -71,10 +57,6 @@ public class ViewCadastro extends JFrame {
                 roundCpf.setBackground(Color.WHITE);
                 roundCpf.setBounds(794, 279, 517, 68);
                 contentPane.add(roundCpf);
-        btnProximo.setBackground(new Color(255, 255, 255));
-        btnProximo.setBorder(null);
-        btnProximo.setBounds(1169, 647, 129, 47);
-        contentPane.add(btnProximo);
 
         RoundJTextField roundNome = new RoundJTextField(0);
         roundNome.setHorizontalAlignment(SwingConstants.CENTER);
@@ -109,6 +91,29 @@ public class ViewCadastro extends JFrame {
         lblNome.setFont(new Font("Tahoma", Font.PLAIN, 14));
         lblNome.setBounds(794, 158, 184, 30);
         contentPane.add(lblNome);
+        JButton btnProximo = new JButton("Próximo");
+        btnProximo.setFont(new Font("Tahoma", Font.PLAIN, 18));
+        btnProximo.addActionListener(new ActionListener() {
+        	public void actionPerformed(ActionEvent e) {
+//        		try {
+//        			String nome = roundNome.getText();
+//        			String cpf = roundCpf.getText();
+//        			String email = roundEmail.getText();
+//        			String tel = roundTelefone.getText();
+//        			clienteDto.setNome(nome);
+//        			clienteDto.setCpf(cpf);
+//        			clienteDto.setEmail(email);
+//        			clienteDto.setTel(tel);
+//        			cliente.inserir(clienteDto);
+//        		} catch (Exception e2) {
+//        			e2.getMessage();
+//        		}
+        	}
+        });
+        btnProximo.setBackground(new Color(255, 255, 255));
+        btnProximo.setBorder(null);
+        btnProximo.setBounds(1169, 647, 129, 47);
+        contentPane.add(btnProximo);
         
                 JLabel lblImagem = new JLabel("");
                 lblImagem.setIcon(new ImageIcon(ViewCadastro.class.getResource("/br/com/senai/gestaoDeCadastroFront/img/telaCadastro.png")));

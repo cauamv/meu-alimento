@@ -213,11 +213,6 @@ public class ViewGestorPedidos extends JFrame {
 		lblTempoEntrega.setBounds(948, 82, 187, 27);
 		contentPane.add(lblTempoEntrega);
 		
-		JLabel lblFundo = new JLabel("");
-		lblFundo.setBackground(Color.WHITE);
-		lblFundo.setIcon(new ImageIcon(ViewGestorPedidos.class.getResource("/br/com/senai/gestaoDeCadastroFront/img/Tela inicial após ter logado (cliente) (2).png")));
-		lblFundo.setBounds(0, 0, 1162, 690);
-		contentPane.add(lblFundo);
 		
 		setLocationRelativeTo(null);
 	}

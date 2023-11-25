@@ -14,6 +14,7 @@ import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
 import br.com.senai.gestaoDeCadastroFront.components.RoundJTextField;
+import br.com.senai.gestaoDeCadastroFront.views.login.ViewLogin;
 
 public class ViewInicial extends JFrame {
 
