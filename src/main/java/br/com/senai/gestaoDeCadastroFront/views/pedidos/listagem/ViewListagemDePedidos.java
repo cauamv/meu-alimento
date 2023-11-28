@@ -3,6 +3,8 @@ package br.com.senai.gestaoDeCadastroFront.views.pedidos.listagem;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.GridLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
@@ -15,7 +17,15 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.border.LineBorder;
 import javax.swing.border.TitledBorder;
 
+import org.hibernate.validator.internal.util.stereotypes.Lazy;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+
+import br.com.senai.gestaoDeCadastroFront.client.pedidos.PedidosClient;
+import br.com.senai.gestaoDeCadastroFront.dto.Paginacao;
+import br.com.senai.gestaoDeCadastroFront.dto.enums.Status;
+import br.com.senai.gestaoDeCadastroFront.dto.pedidos.Pedido;
+import javax.swing.SwingConstants;
 
 @Component
 public class ViewListagemDePedidos extends JFrame {
@@ -24,10 +34,15 @@ public class ViewListagemDePedidos extends JFrame {
 	
 	private JPanel contentPane;
 	
+	@Autowired
+	@Lazy
+	private PedidosClient pedidosClient;
+	
 	public void abrirTela(String token) {
-		this.setVisible(true);
+		this.setVisible(true); 
 	}
 	
+	@Autowired
 	public ViewListagemDePedidos() {
 		
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -40,12 +55,28 @@ public class ViewListagemDePedidos extends JFrame {
 		
 		JPanel panelSuperior = new JPanel();
 		panelSuperior.setBackground(Color.LIGHT_GRAY);
-		panelSuperior.setBounds(12, 0, 1389, 103);
+		panelSuperior.setBounds(0, 0, 1401, 103);
 		contentPane.add(panelSuperior);
 		
 		JLabel lblNewLabel = new JLabel("Gestor de Pedidos");
+		lblNewLabel.setHorizontalAlignment(SwingConstants.CENTER);
 		lblNewLabel.setFont(new Font("Bitstream Charter", Font.BOLD, 38));
-		panelSuperior.add(lblNewLabel);
+		GroupLayout gl_panelSuperior = new GroupLayout(panelSuperior);
+		gl_panelSuperior.setHorizontalGroup(
+			gl_panelSuperior.createParallelGroup(Alignment.LEADING)
+				.addGroup(Alignment.TRAILING, gl_panelSuperior.createSequentialGroup()
+					.addContainerGap(543, Short.MAX_VALUE)
+					.addComponent(lblNewLabel)
+					.addGap(538))
+		);
+		gl_panelSuperior.setVerticalGroup(
+			gl_panelSuperior.createParallelGroup(Alignment.LEADING)
+				.addGroup(gl_panelSuperior.createSequentialGroup()
+					.addGap(23)
+					.addComponent(lblNewLabel)
+					.addContainerGap(34, Short.MAX_VALUE))
+		);
+		panelSuperior.setLayout(gl_panelSuperior);
 		
 		panelPedido();
 		
@@ -87,6 +118,13 @@ public class ViewListagemDePedidos extends JFrame {
 		panel.add(btnV);
 		btnV.setForeground(Color.RED);
 		btnV.setBackground(Color.LIGHT_GRAY);
+		btnV.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				
+			}
+		});
+		
 		
 		JLabel lblCliente = new JLabel("Cliente: " + cliente);
 		
@@ -121,12 +159,17 @@ public class ViewListagemDePedidos extends JFrame {
 	
 	private void panelPedido() {
 		
-		JPanel columnOrganizePanel = new JPanel();
-		columnOrganizePanel.setBounds(22, 115, 1332, 559);
+		JPanel columnOrganizePanel = new JPanel(); 
+		columnOrganizePanel.setBounds(10, 115, 1344, 559);
 		contentPane.add(columnOrganizePanel);
-
-		JPanel panelPedido = new JPanel();
-		columnOrganizePanel.add(gerarPedido(panelPedido, "Teste","teste", "R$ 123"));
+		 
+		pedidosClient = new PedidosClient();
+		Paginacao<Pedido> paginas = pedidosClient.listarPor(64, 0, Status.PRONTO_PARA_COLETA);
+		for (int i = 0; i < paginas.getListagem().size(); i++) {
+			Pedido pedido = paginas.getListagem().get(i); 
+			columnOrganizePanel.add(gerarPedido(new JPanel(), pedido.getIdPedido().toString(), pedido.getEndereco().getCep(), "R$ " + pedido.getValorTotal().toString()));
+		}
+		
 		
 	}
 }

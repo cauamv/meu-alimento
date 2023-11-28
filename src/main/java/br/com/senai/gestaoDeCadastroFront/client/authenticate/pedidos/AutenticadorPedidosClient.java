@@ -10,7 +10,7 @@ import br.com.senai.gestaoDeCadastroFront.dto.TokenDto;
 
 public class AutenticadorPedidosClient {
 	
-	private String URL = "http://localhost:3000";
+	private String URL = "http://localhost:8080";
 
 	private String login = "integracao@pedidos.com";
 	

@@ -15,21 +15,21 @@ import br.com.senai.gestaoDeCadastroFront.views.login.ViewLogin;
 public class InitApp {
 	
 	@Autowired
-	private ViewLogin telaLogin;
+	private ViewLogin viewLogin;
 	
 	public static void main(String[] args) {		
 		SpringApplicationBuilder builder = new SpringApplicationBuilder(InitApp.class);
 		builder.headless(false);
 		builder.run(args);
-	}
+	} 
 	
 	@Bean
 	public CommandLineRunner commandLineRunner(ApplicationContext ctx) {		
 		return args -> {			
 			EventQueue.invokeLater(new Runnable() {
 				public void run() {
-					try {						
-						telaLogin.setVisible(true);
+					try {		
+						viewLogin.setVisible(true);;
 					} catch (Exception e) {
 						e.printStackTrace();
 					}
