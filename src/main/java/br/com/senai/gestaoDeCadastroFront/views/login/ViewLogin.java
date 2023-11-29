@@ -25,6 +25,7 @@ import br.com.senai.gestaoDeCadastroFront.client.authenticate.server.CredencialD
 import br.com.senai.gestaoDeCadastroFront.components.RoundJTextField;
 import br.com.senai.gestaoDeCadastroFront.views.ViewPrincipal;
 import br.com.senai.gestaoDeCadastroFront.views.cadastros.ViewCadastro;
+import javax.swing.ImageIcon;
 
 @Component
 public class ViewLogin extends JFrame {
@@ -166,6 +167,21 @@ public class ViewLogin extends JFrame {
         lblMeuAlimento.setFont(new Font("Dialog", Font.BOLD, 43));
         lblMeuAlimento.setBounds(116, 49, 357, 55);
         contentPane.add(lblMeuAlimento);
+        
+        JLabel lblNewLabel = new JLabel("New label");
+        lblNewLabel.setIcon(new ImageIcon(ViewLogin.class.getResource("/br/com/senai/gestaoDeCadastroFront/img/hamburguer.png")));
+        lblNewLabel.setBounds(37, 201, 229, 219);
+        contentPane.add(lblNewLabel);
+        
+        JLabel lblNewLabel_1 = new JLabel("");
+        lblNewLabel_1.setIcon(new ImageIcon(ViewLogin.class.getResource("/br/com/senai/gestaoDeCadastroFront/img/pizza.png")));
+        lblNewLabel_1.setBounds(296, 285, 279, 250);
+        contentPane.add(lblNewLabel_1);
+        
+        JLabel lblNewLabel_1_1 = new JLabel("");
+        lblNewLabel_1_1.setIcon(new ImageIcon(ViewLogin.class.getResource("/br/com/senai/gestaoDeCadastroFront/img/brownie.png")));
+        lblNewLabel_1_1.setBounds(39, 471, 279, 250);
+        contentPane.add(lblNewLabel_1_1);
         setLocationRelativeTo(null);
     }
 }
