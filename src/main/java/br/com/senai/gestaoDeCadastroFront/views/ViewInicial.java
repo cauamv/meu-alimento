@@ -74,8 +74,8 @@ public class ViewInicial extends JFrame {
         btnLogin.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 // Code to switch to TelaLogin
-                ViewLogin telaLogin = new ViewLogin();
-                telaLogin.setVisible(true);
+//                ViewLogin telaLogin = new ViewLogin();
+//                telaLogin.setVisible(true);
             }
         });
         contentPane.add(btnLogin);

@@ -1,4 +1,4 @@
-package br.com.senai.gestaoDeCadastroFront.views.pedidos.aceitarPedido;
+package br.com.senai.gestaoDeCadastroFront.views.pedidos;
 
 import java.awt.Color;
 import java.awt.Font;
@@ -8,7 +8,6 @@ import java.awt.event.ActionListener;
 
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
-import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -323,12 +322,6 @@ public class ViewPedidoAceito extends JFrame {
 		lblTempoEntrega.setHorizontalAlignment(SwingConstants.CENTER);
 		lblTempoEntrega.setBackground(new Color(248,244,244));
 		contentPane.add(lblTempoEntrega);
-		
-		JLabel lblFundo = new JLabel("");
-		lblFundo.setBounds(0, 0, 1162, 690);
-		lblFundo.setBackground(Color.WHITE);
-		lblFundo.setIcon(new ImageIcon(ViewPedidoAceito.class.getResource("./imageAceitarPedido.png")));
-		contentPane.add(lblFundo);
 		
 		setLocationRelativeTo(null);
 	}

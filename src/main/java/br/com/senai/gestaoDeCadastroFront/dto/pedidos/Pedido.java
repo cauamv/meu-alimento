@@ -28,13 +28,13 @@ public class Pedido {
 	@JsonProperty("desconto")
 	private BigDecimal desconto;
 	
-	@JsonProperty("valor do frete")
+	@JsonProperty("valor_do_frete")
 	private BigDecimal valorDoFrete;
 	
-	@JsonProperty("valor dos itens")
+	@JsonProperty("valor_dos_itens")
 	private BigDecimal valorDosItens;
 	
-	@JsonProperty("tipo de entrega")
+	@JsonProperty("tipo_entrega")
 	private String tipoDeEntrega;
 	
 	@JsonProperty("data_pedido")
@@ -49,6 +49,6 @@ public class Pedido {
 	@JsonProperty("status")
 	private String status;
 	
-	@JsonProperty("valor total")
+	@JsonProperty("valor_total")
 	private BigDecimal valorTotal;
 }

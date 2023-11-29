@@ -1,4 +1,4 @@
-package br.com.senai.gestaoDeCadastroFront.views;
+package br.com.senai.gestaoDeCadastroFront.views.cupons;
 
 
 import java.awt.Color;

@@ -1,4 +1,4 @@
-package br.com.senai.gestaoDeCadastroFront.views.pedidos.listagem;
+package br.com.senai.gestaoDeCadastroFront.views.pedidos;
 
 import java.awt.Color;
 import java.awt.Font;
@@ -13,6 +13,7 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.LayoutStyle.ComponentPlacement;
+import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.LineBorder;
 import javax.swing.border.TitledBorder;
@@ -21,11 +22,11 @@ import org.hibernate.validator.internal.util.stereotypes.Lazy;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import br.com.senai.gestaoDeCadastroFront.client.decode.TokenDecoder;
 import br.com.senai.gestaoDeCadastroFront.client.pedidos.PedidosClient;
 import br.com.senai.gestaoDeCadastroFront.dto.Paginacao;
 import br.com.senai.gestaoDeCadastroFront.dto.enums.Status;
 import br.com.senai.gestaoDeCadastroFront.dto.pedidos.Pedido;
-import javax.swing.SwingConstants;
 
 @Component
 public class ViewListagemDePedidos extends JFrame {
@@ -40,6 +41,40 @@ public class ViewListagemDePedidos extends JFrame {
 	
 	public void abrirTela(String token) {
 		this.setVisible(true); 
+		Thread thread = new Thread(new Runnable() {
+			
+			@Override
+			public void run() {
+				gerarCards(token);
+			}
+		});
+		thread.start();
+	}
+	
+	public void gerarCards(String token) {
+		JPanel columnOrganizePanel = new JPanel(); 
+		columnOrganizePanel.setBounds(10, 115, 1344, 559);
+		contentPane.add(columnOrganizePanel);
+		
+		pedidosClient = new PedidosClient();
+		TokenDecoder decoder = new TokenDecoder();
+		
+		Integer id = Integer.parseInt(decoder.extrairIdRestauranteDo(token));
+		
+		Paginacao<Pedido> paginas = pedidosClient.listarPor(
+					id,
+					0, 
+					Status.REALIZADO
+				);
+		
+		for (int i = 0; i < paginas.getListagem().size(); i++) {
+			Pedido pedido = paginas.getListagem().get(i); 
+			columnOrganizePanel.add(gerarPedido(new JPanel(),
+					pedido.getIdPedido().toString(),
+					pedido.getEndereco().getCep(), 
+					"R$ " + pedido.
+					getValorTotal().toString()));
+		}
 	}
 	
 	@Autowired
@@ -77,8 +112,6 @@ public class ViewListagemDePedidos extends JFrame {
 					.addContainerGap(34, Short.MAX_VALUE))
 		);
 		panelSuperior.setLayout(gl_panelSuperior);
-		
-		panelPedido();
 		
 		setLocationRelativeTo(null);
 	}
@@ -157,19 +190,4 @@ public class ViewListagemDePedidos extends JFrame {
 		return panelPedido;
 	}
 	
-	private void panelPedido() {
-		
-		JPanel columnOrganizePanel = new JPanel(); 
-		columnOrganizePanel.setBounds(10, 115, 1344, 559);
-		contentPane.add(columnOrganizePanel);
-		 
-		pedidosClient = new PedidosClient();
-		Paginacao<Pedido> paginas = pedidosClient.listarPor(64, 0, Status.PRONTO_PARA_COLETA);
-		for (int i = 0; i < paginas.getListagem().size(); i++) {
-			Pedido pedido = paginas.getListagem().get(i); 
-			columnOrganizePanel.add(gerarPedido(new JPanel(), pedido.getIdPedido().toString(), pedido.getEndereco().getCep(), "R$ " + pedido.getValorTotal().toString()));
-		}
-		
-		
-	}
 }

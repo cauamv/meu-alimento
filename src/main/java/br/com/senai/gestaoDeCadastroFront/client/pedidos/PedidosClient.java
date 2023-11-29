@@ -22,7 +22,7 @@ public class PedidosClient {
 
 	private AutenticadorPedidosClient autenticadorClient = new AutenticadorPedidosClient();
 
-	private String URL = "http://localhost:8080";
+	private String URL = "http://localhost:3000";
 
 	private final String GET_ENDPOINT = "/pedidos"; 
 
@@ -43,14 +43,6 @@ public class PedidosClient {
 				HttpMethod.GET, 
 				request, 
 				new ParameterizedTypeReference<Paginacao<Pedido>>(){});
-		
-		ResponseEntity<String> response = httpClient.exchange(
-				URL + GET_ENDPOINT + queryParams, 
-				HttpMethod.GET, 
-				request, 
-				String.class);
-		
-		System.out.println(response);
 		
 		return pedidosEncontrados.getBody();
 

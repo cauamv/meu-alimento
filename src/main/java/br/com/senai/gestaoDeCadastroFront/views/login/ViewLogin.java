@@ -23,8 +23,8 @@ import org.springframework.stereotype.Component;
 import br.com.senai.gestaoDeCadastroFront.client.authenticate.server.AutenticadorClient;
 import br.com.senai.gestaoDeCadastroFront.client.authenticate.server.CredencialDeAcesso;
 import br.com.senai.gestaoDeCadastroFront.components.RoundJTextField;
+import br.com.senai.gestaoDeCadastroFront.views.ViewPrincipal;
 import br.com.senai.gestaoDeCadastroFront.views.cadastros.ViewCadastro;
-import br.com.senai.gestaoDeCadastroFront.views.pedidos.listagem.ViewListagemDePedidos;
 
 @Component
 public class ViewLogin extends JFrame {
@@ -34,7 +34,7 @@ public class ViewLogin extends JFrame {
     
     @Autowired
     @Lazy
-    private ViewListagemDePedidos viewListagemDePedidos;
+    private ViewPrincipal viewGestor;
     
     @Autowired
     @Lazy
@@ -87,13 +87,14 @@ public class ViewLogin extends JFrame {
         			String senha = new String(txtSenha.getPassword());
         			if (!email.isBlank() && !senha.isBlank()) {
         				String token = autenticadorClient.getTokenPela(new CredencialDeAcesso(email, senha)).getValor();
-        				viewListagemDePedidos.abrirTela(token);
+        				viewGestor.abrirTela(token, new CredencialDeAcesso(email, senha));
         				dispose();
 					} else {
 	        			JOptionPane.showMessageDialog(contentPane, "Email e senha são obrigatórios. ");
 					}
 				} catch (Exception e2) {
 					JOptionPane.showMessageDialog(contentPane, "Email e/ou senha incorretos");
+					e2.printStackTrace();
 				}
         	}
         });
