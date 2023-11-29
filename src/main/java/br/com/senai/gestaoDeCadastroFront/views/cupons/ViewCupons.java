@@ -21,6 +21,9 @@ import br.com.senai.gestaoDeCadastroFront.client.authenticate.server.CredencialD
 import br.com.senai.gestaoDeCadastroFront.components.table.CupomTableModel;
 import br.com.senai.gestaoDeCadastroFront.dto.Cupom;
 import br.com.senai.gestaoDeCadastroFront.dto.Paginacao;
+import javax.swing.SwingConstants;
+import javax.swing.JLabel;
+import javax.swing.JSeparator;
 
 @Component
 public class ViewCupons extends JFrame {
@@ -37,6 +40,8 @@ public class ViewCupons extends JFrame {
 	
 	@Autowired
 	private CuponsClient cuponsClient;
+	private JLabel lblMeusCupons;
+	private final JSeparator separator = new JSeparator();
 	
 	private void configurarCabecalhos(JTable tbCupons) {
 		tbCupons.getTableHeader().setOpaque(false);
@@ -68,9 +73,12 @@ public class ViewCupons extends JFrame {
 
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
+		separator.setForeground(new Color(0, 0, 0));
+		separator.setBounds(0, 105, 1402, 36);
+		contentPane.add(separator);
 		
 		tbCupons = new JTable(new CupomTableModel());
-		tbCupons.setBackground(new Color(255, 255, 255));
+		tbCupons.setBackground(new Color(240, 240, 240));
 		
 		scrollPane = new JScrollPane(tbCupons);
 		scrollPane.setBackground(new Color(255, 52, 52));
@@ -98,6 +106,14 @@ public class ViewCupons extends JFrame {
 		btnBuscar.setBounds(207, 235, 132, 41);
 		contentPane.add(btnBuscar);
 		this.configurarCabecalhos(tbCupons);
+		
+		lblMeusCupons = new JLabel("Meus Cupons");
+		lblMeusCupons.setBackground(new Color(255, 255, 255));
+		lblMeusCupons.setHorizontalAlignment(SwingConstants.CENTER);
+		lblMeusCupons.setForeground(new Color(255, 0, 0));
+		lblMeusCupons.setFont(new Font("Dialog", Font.BOLD, 43));
+		lblMeusCupons.setBounds(0, 0, 1363, 104);
+		contentPane.add(lblMeusCupons);
 		
 		setLocationRelativeTo(null);
 
