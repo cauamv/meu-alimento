@@ -28,8 +28,6 @@ import br.com.senai.gestaoDeCadastroFront.client.authenticate.server.CredencialD
 import br.com.senai.gestaoDeCadastroFront.components.RoundJTextField;
 import br.com.senai.gestaoDeCadastroFront.views.ViewPrincipal;
 import br.com.senai.gestaoDeCadastroFront.views.cadastros.ViewCadastro;
-import javax.swing.border.CompoundBorder;
-import javax.swing.border.BevelBorder;
 
 @Component
 public class ViewLogin extends JFrame {
@@ -72,7 +70,7 @@ public class ViewLogin extends JFrame {
         txtEmail.setBorder(null);
         txtEmail.setForeground(Color.BLACK);
         txtEmail.setColumns(4);
-        txtEmail.setHorizontalAlignment(SwingConstants.LEFT);
+        txtEmail.setHorizontalAlignment(SwingConstants.CENTER);
         txtEmail.setBackground(Color.WHITE);
 
         JLabel lblSenha = new JLabel("Digite sua senha:");
@@ -84,11 +82,12 @@ public class ViewLogin extends JFrame {
         txtSenha.setBorder(null);
         txtSenha.setForeground(Color.BLACK);
         txtSenha.setColumns(4);
-        txtSenha.setHorizontalAlignment(SwingConstants.LEFT);
+        txtSenha.setHorizontalAlignment(SwingConstants.CENTER);
         txtSenha.setBackground(Color.WHITE);
 
         JButton bntEntrar = new JButton("Entrar");
         bntEntrar.addActionListener(new ActionListener() {
+
             public void actionPerformed(ActionEvent e) {
                 try {
                     String email = txtEmail.getText();
@@ -105,6 +104,7 @@ public class ViewLogin extends JFrame {
                     e2.printStackTrace();
                 }
             }
+
         });
         bntEntrar.setForeground(Color.BLACK);
         bntEntrar.setBorder(null);

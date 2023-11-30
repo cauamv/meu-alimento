@@ -27,5 +27,8 @@ public class Endereco {
 	
 	@JsonProperty("CEP")
 	private String cep;
+	
+	@JsonProperty("rua")
+	private String rua;
 
 }

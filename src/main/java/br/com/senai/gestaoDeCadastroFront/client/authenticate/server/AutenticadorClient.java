@@ -18,8 +18,6 @@ public class AutenticadorClient {
 	@Value("${base.url}")
 	private String URL;
 	
-	private final String ENDPOINT = "/auth";
-	
 	private RestTemplate httpClient = new RestTemplate();
 	
 	private Token token;
@@ -37,7 +35,7 @@ public class AutenticadorClient {
 		HttpEntity<CredencialDeAcesso> request = new HttpEntity<CredencialDeAcesso>(credencial);
 		
 		ResponseEntity<TokenDto> tokenGerado = httpClient.exchange(
-				URL + ENDPOINT,
+				"http://localhost:3001/auth",
 				HttpMethod.POST,
 				request,
 				TokenDto.class
