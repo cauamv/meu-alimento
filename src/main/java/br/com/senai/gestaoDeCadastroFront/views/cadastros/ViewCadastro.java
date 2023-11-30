@@ -72,7 +72,7 @@ public class ViewCadastro extends JFrame {
 		JLabel lblMeuCadastro = new JLabel("Meu Cadastro");
 		lblMeuCadastro.setForeground(Color.WHITE);
 		lblMeuCadastro.setHorizontalAlignment(SwingConstants.CENTER);
-		lblMeuCadastro.setFont(new Font("Dialog", Font.BOLD, 43));
+		lblMeuCadastro.setFont(new Font("Tahoma", Font.BOLD, 43));
 
 		JLabel lblSexo = new JLabel("Sexo:");
 		lblSexo.setHorizontalAlignment(SwingConstants.LEFT);
@@ -134,7 +134,7 @@ public class ViewCadastro extends JFrame {
 			}
 		});
 		btnProximo.setBackground(new Color(255, 255, 255));
-		btnProximo.setBorder(new SoftBevelBorder(BevelBorder.RAISED, null, null, null, null));
+		btnProximo.setBorder(null);
 
 		GroupLayout gl_panelDireito = new GroupLayout(panelDireito);
 		gl_panelDireito.setHorizontalGroup(gl_panelDireito.createParallelGroup(Alignment.TRAILING)
@@ -179,8 +179,8 @@ public class ViewCadastro extends JFrame {
 		JLabel lblMeuAlimento = new JLabel("Meu Alimento");
 		lblMeuAlimento.setHorizontalAlignment(SwingConstants.CENTER);
 		lblMeuAlimento.setForeground(Color.BLACK);
-		lblMeuAlimento.setFont(new Font("Dialog", Font.BOLD, 43));
-		lblMeuAlimento.setBounds(135, 42, 285, 55);
+		lblMeuAlimento.setFont(new Font("Tahoma", Font.BOLD, 43));
+		lblMeuAlimento.setBounds(135, 42, 344, 55);
 		contentPane.add(lblMeuAlimento);
 		
 		JLabel lblImage1 = new JLabel("");

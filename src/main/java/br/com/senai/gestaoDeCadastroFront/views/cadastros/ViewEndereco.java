@@ -56,46 +56,46 @@ public class ViewEndereco extends JFrame {
 
 		JLabel lblNome = new JLabel("Nome:");
 		lblNome.setForeground(Color.WHITE);
-		lblNome.setFont(new Font("Arial", Font.PLAIN, 20));
+		lblNome.setFont(new Font("Tahoma", Font.PLAIN, 20));
 
 		RoundJTextField txtCep = new RoundJTextField(0);
 		txtCep.setHorizontalAlignment(SwingConstants.CENTER);
 
 		JLabel lblCep = new JLabel("Cep:");
 		lblCep.setForeground(Color.WHITE);
-		lblCep.setFont(new Font("Arial", Font.PLAIN, 20));
+		lblCep.setFont(new Font("Tahoma", Font.PLAIN, 20));
 
 		RoundJTextField txtRua = new RoundJTextField(0);
 		txtRua.setHorizontalAlignment(SwingConstants.CENTER);
 
 		JLabel lblRua = new JLabel("Rua:");
 		lblRua.setForeground(Color.WHITE);
-		lblRua.setFont(new Font("Arial", Font.PLAIN, 20));
+		lblRua.setFont(new Font("Tahoma", Font.PLAIN, 20));
 
 		JLabel lblBairro = new JLabel("Bairro:");
 		lblBairro.setForeground(Color.WHITE);
-		lblBairro.setFont(new Font("Arial", Font.PLAIN, 20));
+		lblBairro.setFont(new Font("Tahoma", Font.PLAIN, 20));
 
 		RoundJTextField txtBairro = new RoundJTextField(0);
 		txtBairro.setHorizontalAlignment(SwingConstants.CENTER);
 
 		JLabel lblCidade = new JLabel("Cidade:");
 		lblCidade.setForeground(Color.WHITE);
-		lblCidade.setFont(new Font("Arial", Font.PLAIN, 20));
+		lblCidade.setFont(new Font("Tahoma", Font.PLAIN, 20));
 
 		RoundJTextField txtCidade = new RoundJTextField(0);
 		txtCidade.setHorizontalAlignment(SwingConstants.CENTER);
 
 		JLabel lblEstado = new JLabel("Estado:");
 		lblEstado.setForeground(Color.WHITE);
-		lblEstado.setFont(new Font("Arial", Font.PLAIN, 20));
+		lblEstado.setFont(new Font("Tahoma", Font.PLAIN, 20));
 
 		RoundJTextField txtEstado = new RoundJTextField(0);
 		txtEstado.setHorizontalAlignment(SwingConstants.CENTER);
 
 		JLabel lblNumeroDaCasa = new JLabel("Numero da casa:");
 		lblNumeroDaCasa.setForeground(Color.WHITE);
-		lblNumeroDaCasa.setFont(new Font("Arial", Font.PLAIN, 20));
+		lblNumeroDaCasa.setFont(new Font("Tahoma", Font.PLAIN, 20));
 
 		RoundJTextField txtNumeroDaCasa = new RoundJTextField(0);
 		txtNumeroDaCasa.setHorizontalAlignment(SwingConstants.CENTER);
@@ -104,9 +104,12 @@ public class ViewEndereco extends JFrame {
 
 		JLabel lblComplemento = new JLabel("Complemento:");
 		lblComplemento.setForeground(Color.WHITE);
-		lblComplemento.setFont(new Font("Arial", Font.PLAIN, 20));
+		lblComplemento.setFont(new Font("Tahoma", Font.PLAIN, 20));
 
 		JButton btnSalvar = new JButton("Salvar");
+		btnSalvar.setFont(new Font("Tahoma", Font.BOLD, 15));
+		btnSalvar.setBackground(Color.WHITE);
+		btnSalvar.setBorder(null);
 		btnSalvar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				try {
@@ -129,10 +132,10 @@ public class ViewEndereco extends JFrame {
 			}
 		});
 
-		JLabel lblNewLabel = new JLabel("Meu endereco");
-		lblNewLabel.setHorizontalAlignment(SwingConstants.CENTER);
-		lblNewLabel.setForeground(Color.WHITE);
-		lblNewLabel.setFont(new Font("Dialog", Font.BOLD, 43));
+		JLabel lblTitulo = new JLabel("Meu endereco");
+		lblTitulo.setHorizontalAlignment(SwingConstants.CENTER);
+		lblTitulo.setForeground(Color.WHITE);
+		lblTitulo.setFont(new Font("Tahoma", Font.BOLD, 43));
 		GroupLayout gl_contentPane = new GroupLayout(contentPane);
 		gl_contentPane
 				.setHorizontalGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
@@ -141,7 +144,7 @@ public class ViewEndereco extends JFrame {
 								gl_contentPane
 										.createSequentialGroup().addContainerGap(270, Short.MAX_VALUE)
 										.addComponent(
-												lblNewLabel, GroupLayout.PREFERRED_SIZE, 812,
+												lblTitulo, GroupLayout.PREFERRED_SIZE, 812,
 												GroupLayout.PREFERRED_SIZE)
 										.addGap(258))
 						.addGroup(gl_contentPane.createSequentialGroup().addGap(24).addGroup(gl_contentPane
@@ -178,7 +181,7 @@ public class ViewEndereco extends JFrame {
 																GroupLayout.PREFERRED_SIZE))))
 								.addGap(47)));
 		gl_contentPane.setVerticalGroup(gl_contentPane.createParallelGroup(Alignment.LEADING).addGroup(gl_contentPane
-				.createSequentialGroup().addGap(21).addComponent(lblNewLabel).addGap(51)
+				.createSequentialGroup().addGap(21).addComponent(lblTitulo).addGap(51)
 				.addGroup(gl_contentPane.createParallelGroup(Alignment.BASELINE).addComponent(lblNome)
 						.addComponent(lblEstado, GroupLayout.PREFERRED_SIZE, 24, GroupLayout.PREFERRED_SIZE))
 				.addPreferredGap(ComponentPlacement.RELATED)
