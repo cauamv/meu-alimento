@@ -61,7 +61,13 @@ public class ViewCupons extends JFrame {
 	private void listarCuponsDa(int pagina, CredencialDeAcesso credencialDeAcesso) {
 		paginacao = cuponsClient.listarTodos(0, credencialDeAcesso);			
 		CupomTableModel model = new CupomTableModel(paginacao.getListagem());
-		tbCupons.setModel(model);			
+		tbCupons.setModel(model);	
+		scrollPane = new JScrollPane(tbCupons);
+		scrollPane.setBackground(new Color(255, 52, 52));
+		scrollPane.setBorder(null);
+		scrollPane.setBounds(40, 305, 1284, 314);
+		contentPane.add(scrollPane);
+
 	}
 
 	public ViewCupons() {
@@ -79,12 +85,6 @@ public class ViewCupons extends JFrame {
 		
 		tbCupons = new JTable(new CupomTableModel());
 		tbCupons.setBackground(new Color(240, 240, 240));
-		
-		scrollPane = new JScrollPane(tbCupons);
-		scrollPane.setBackground(new Color(255, 52, 52));
-		scrollPane.setBorder(null);
-		scrollPane.setBounds(40, 305, 1284, 314);
-		contentPane.add(scrollPane);
 		
 		JButton btnCriar = new JButton("Criar");
 		btnCriar.setRolloverEnabled(true);

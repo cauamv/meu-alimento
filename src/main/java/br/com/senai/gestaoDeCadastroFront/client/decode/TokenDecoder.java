@@ -16,7 +16,6 @@ public class TokenDecoder {
 	
 	public String extrairIdRestauranteDo(String tokenGerado) {
 		Claims detalhes = extrairDetalhesDo(tokenGerado);
-		System.out.println(detalhes.toString());
 		return detalhes.get("idDoRestaurante", String.class);
 	}
 	

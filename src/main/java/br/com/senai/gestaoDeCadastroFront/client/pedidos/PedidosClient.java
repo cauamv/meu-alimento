@@ -2,6 +2,7 @@ package br.com.senai.gestaoDeCadastroFront.client.pedidos;
 
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
@@ -48,13 +49,16 @@ public class PedidosClient {
 
 	}
 	
-	public void alterarStatusDoPedido(Status status, Integer idDoPedido) {
-		String token = autenticadorClient.getToken().getValor();
+	public void atualizarPor(Integer idDoPedido, Status status) {
 		
-		HttpEntity<Paginacao<Pedido>> request = new HttpEntity<Paginacao<Pedido>>(
-				aplicadorDeToken.aplicar(token));
-
-		this.httpClient.patchForObject(URL + ENDPOINT + "/id/" + idDoPedido + "/status/" + status, request, Void.class);
+		HttpHeaders headers = aplicadorDeToken.aplicar(autenticadorClient.getToken().getValor());
+		
+		this.httpClient.exchange(
+				URL + ENDPOINT + "/id/" + idDoPedido.toString() + "/status/" + status.toString(),
+				HttpMethod.PATCH, 
+				new HttpEntity<>(headers),
+				Void.class
+		);
 		
 	}
 

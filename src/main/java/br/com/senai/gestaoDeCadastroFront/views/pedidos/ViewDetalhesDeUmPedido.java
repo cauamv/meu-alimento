@@ -8,6 +8,7 @@ import java.awt.event.ActionListener;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
@@ -50,6 +51,7 @@ public class ViewDetalhesDeUmPedido extends JFrame {
 	}
 	
 	private void montarPedido(Pedido pedido) {
+		
 		JLabel lblNumPedido = new JLabel("Pedido Realizado - N° " + pedido.getIdPedido().toString());
 		lblNumPedido.setHorizontalAlignment(SwingConstants.LEFT);
 		lblNumPedido.setForeground(Color.RED);
@@ -67,13 +69,13 @@ public class ViewDetalhesDeUmPedido extends JFrame {
 		
 		JLabel lblCliente = new JLabel("Cliente:" + pedido.getCliente().getNome());
 		lblCliente.setFont(new Font("Tahoma", Font.BOLD, 13));
-		lblCliente.setBounds(31, 348, 180, 14);
+		lblCliente.setBounds(31, 348, 427, 14);
 		contentPane.add(lblCliente);
 		
 		JLabel lblTotal = new JLabel("Total:" + pedido.getValorTotal().toString());
 		lblTotal.setForeground(new Color(255, 0, 0));
 		lblTotal.setFont(new Font("Tahoma", Font.BOLD, 13));
-		lblTotal.setBounds(31, 547, 180, 14);
+		lblTotal.setBounds(31, 547, 427, 14);
 		contentPane.add(lblTotal);
 		
 		JPanel panel = new JPanel();
@@ -91,38 +93,38 @@ public class ViewDetalhesDeUmPedido extends JFrame {
 		
 		JLabel lblHorario = new JLabel("Data do pedido:" + pedido.getDataPedido().toString());
 		lblHorario.setFont(new Font("Tahoma", Font.BOLD, 13));
-		lblHorario.setBounds(31, 323, 199, 14);
+		lblHorario.setBounds(31, 323, 441, 23);
 		contentPane.add(lblHorario);
 		
 		JLabel lblNumero = new JLabel("Número da residência: " + pedido.getEndereco().getNumero());
 		lblNumero.setFont(new Font("Tahoma", Font.BOLD, 13));
-		lblNumero.setBounds(31, 395, 180, 14);
+		lblNumero.setBounds(31, 395, 471, 14);
 		contentPane.add(lblNumero);
 		
 		JLabel lblCep = new JLabel("CEP: " + pedido.getEndereco().getCep());
 		lblCep.setFont(new Font("Tahoma", Font.BOLD, 13));
-		lblCep.setBounds(31, 420, 180, 14);
+		lblCep.setBounds(31, 420, 388, 14);
 		contentPane.add(lblCep);
 		
 		JLabel lblRua = new JLabel("Rua: " + pedido.getEndereco().getRua());
 		lblRua.setFont(new Font("Tahoma", Font.BOLD, 13));
-		lblRua.setBounds(31, 445, 180, 14);
+		lblRua.setBounds(31, 445, 441, 14);
 		contentPane.add(lblRua);
 		
 		JLabel lblPedido = new JLabel("Pedido:");
 		lblPedido.setFont(new Font("Tahoma", Font.BOLD, 13));
-		lblPedido.setBounds(31, 470, 180, 14);
+		lblPedido.setBounds(31, 470, 471, 14);
 		contentPane.add(lblPedido);
 		
 		JLabel lblCupom = new JLabel("Cupom: " + pedido.getCupom().getCodigo());
 		lblCupom.setForeground(Color.RED);
 		lblCupom.setFont(new Font("Tahoma", Font.BOLD, 13));
-		lblCupom.setBounds(31, 573, 147, 14);
+		lblCupom.setBounds(31, 573, 427, 14);
 		contentPane.add(lblCupom);
 		
 		JLabel lblPagamento = new JLabel("Forma de Pagamento: " + pedido.getPagamento());
 		lblPagamento.setFont(new Font("Tahoma", Font.BOLD, 13));
-		lblPagamento.setBounds(31, 598, 259, 14);
+		lblPagamento.setBounds(31, 598, 549, 27);
 		contentPane.add(lblPagamento);
 		
 		JButton btnAceitar = new JButton("Aceitar");
@@ -130,11 +132,12 @@ public class ViewDetalhesDeUmPedido extends JFrame {
 		btnAceitar.setForeground(Color.BLACK);
 		btnAceitar.setBackground(Color.GREEN);
 		btnAceitar.setFont(new Font("Tahoma", Font.BOLD, 13));
-		btnAceitar.setBounds(27, 623, 89, 23);
+		btnAceitar.setBounds(31, 675, 89, 23);
 		btnAceitar.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				pedidosClient.alterarStatusDoPedido(Status.ACEITO_PELO_RESTAURANTE, pedido.getIdPedido());
+				pedidosClient.atualizarPor(pedido.getIdPedido(), Status.ACEITO_PELO_RESTAURANTE);
+				JOptionPane.showMessageDialog(contentPane, "Aceito");
 			}
 		});
 		contentPane.add(btnAceitar);
@@ -144,7 +147,8 @@ public class ViewDetalhesDeUmPedido extends JFrame {
 		btnRecusar.setFont(new Font("Tahoma", Font.BOLD, 13));
 		btnRecusar.setBorder(null);
 		btnRecusar.setBackground(Color.RED);
-		btnRecusar.setBounds(141, 623, 89, 23);
+		btnRecusar.setBounds(152, 675, 89, 23);
 		contentPane.add(btnRecusar);
+		
 	}
 }

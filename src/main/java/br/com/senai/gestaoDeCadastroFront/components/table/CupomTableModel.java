@@ -55,7 +55,7 @@ private static final long serialVersionUID = 1L;
 		if (columnIndex == 0) {
 			return cupons.get(rowIndex).getId();
 		} else if (columnIndex == 1) {
-			return cupons.get(rowIndex).getValor();
+			return cupons.get(rowIndex).getPercentualDeDesconto();
 		} else if (columnIndex == 2) {
 			return cupons.get(rowIndex).getValidade();
 		} else if (columnIndex == 3) {

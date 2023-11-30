@@ -39,6 +39,7 @@ public class ClienteClient {
 	private UserClient userClient;
 	
 	public ClienteDto inserir(NovoClienteDto clienteCadastroDto) {
+		
 		Preconditions.checkNotNull(clienteCadastroDto, "O cliente é obrigatório.");
 	    
 		String email = clienteCadastroDto.getUsuario().getEmail();
