@@ -25,6 +25,7 @@ import br.com.senai.gestaoDeCadastroFront.components.RoundJTextField;
 import br.com.senai.gestaoDeCadastroFront.dto.ClienteDto;
 import br.com.senai.gestaoDeCadastroFront.dto.NovoClienteDto;
 import jakarta.annotation.PostConstruct;
+import javax.swing.ImageIcon;
 
 @Component
 public class ViewSenha extends JFrame {
@@ -140,6 +141,24 @@ public class ViewSenha extends JFrame {
 		lblMeuAlimento.setFont(new Font("Dialog", Font.BOLD, 43));
 		lblMeuAlimento.setBounds(154, 61, 344, 55);
 		contentPane.add(lblMeuAlimento);
+		
+		JLabel lblImage1 = new JLabel("");
+		lblImage1.setIcon(new ImageIcon(ViewSenha.class.getResource("/br/com/senai/gestaoDeCadastroFront/img/hamburguer.png")));
+		lblImage1.setHorizontalAlignment(SwingConstants.LEFT);
+		lblImage1.setBounds(10, 127, 241, 215);
+		contentPane.add(lblImage1);
+		
+		JLabel lblImage2 = new JLabel("");
+		lblImage2.setIcon(new ImageIcon(ViewSenha.class.getResource("/br/com/senai/gestaoDeCadastroFront/img/pizza.png")));
+		lblImage2.setHorizontalAlignment(SwingConstants.LEFT);
+		lblImage2.setBounds(315, 232, 273, 275);
+		contentPane.add(lblImage2);
+		
+		JLabel lblImage3 = new JLabel("");
+		lblImage3.setIcon(new ImageIcon(ViewSenha.class.getResource("/br/com/senai/gestaoDeCadastroFront/img/brownie.png")));
+		lblImage3.setHorizontalAlignment(SwingConstants.LEFT);
+		lblImage3.setBounds(37, 403, 214, 191);
+		contentPane.add(lblImage3);
 
 		setLocationRelativeTo(null);
 	}
