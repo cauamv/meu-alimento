@@ -1,5 +1,6 @@
 package br.com.senai.gestaoDeCadastroFront.client;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpMethod;
@@ -21,15 +22,17 @@ public class CuponsClient {
 
 	private AutenticadorClient autenticadorClient = new AutenticadorClient();
 
+	@Value("${base.url}")
+	private String URL;
+	
 	public Paginacao<Cupom> listarTodos(Integer pagina, CredencialDeAcesso credencialDeAcesso) {
-
 		String token = autenticadorClient.getTokenPela(credencialDeAcesso).getValor();
 
 		HttpEntity<Paginacao<Cupom>> request = new HttpEntity<Paginacao<Cupom>>(
 				aplicadorDeToken.aplicar(token));
 
 		ResponseEntity<Paginacao<Cupom>> cuponsEncontrados = httpClient.exchange(
-				"http://localhost:3001/cupons", 
+				URL + "/cupons", 
 				HttpMethod.GET, 
 				request, 
 				new ParameterizedTypeReference<Paginacao<Cupom>>(){});

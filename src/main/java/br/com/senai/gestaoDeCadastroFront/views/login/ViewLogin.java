@@ -66,7 +66,7 @@ public class ViewLogin extends JFrame {
         RoundJTextField txtEmail = new RoundJTextField(0);
         txtEmail.setForeground(Color.BLACK);
         txtEmail.setColumns(4);
-        txtEmail.setHorizontalAlignment(SwingConstants.LEFT);
+        txtEmail.setHorizontalAlignment(SwingConstants.CENTER);
         txtEmail.setBackground(Color.WHITE);
         
         JLabel lblSenha = new JLabel("Digite sua senha:");
@@ -77,7 +77,7 @@ public class ViewLogin extends JFrame {
         JPasswordField txtSenha = new JPasswordField();
         txtSenha.setForeground(Color.BLACK);
         txtSenha.setColumns(4);
-        txtSenha.setHorizontalAlignment(SwingConstants.LEFT);
+        txtSenha.setHorizontalAlignment(SwingConstants.CENTER);
         txtSenha.setBackground(Color.WHITE);
         
         JButton bntEntrar = new JButton("Entrar");
@@ -95,7 +95,6 @@ public class ViewLogin extends JFrame {
 					}
 				} catch (Exception e2) {
 					JOptionPane.showMessageDialog(contentPane, "Email e/ou senha incorretos");
-					e2.printStackTrace();
 				}
         	}
         });

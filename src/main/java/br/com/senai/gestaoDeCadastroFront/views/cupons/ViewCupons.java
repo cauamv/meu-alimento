@@ -59,7 +59,7 @@ public class ViewCupons extends JFrame {
 	}
 	
 	private void listarCuponsDa(int pagina, CredencialDeAcesso credencialDeAcesso) {
-		paginacao = cuponsClient.listarTodos(pagina, credencialDeAcesso);			
+		paginacao = cuponsClient.listarTodos(0, credencialDeAcesso);			
 		CupomTableModel model = new CupomTableModel(paginacao.getListagem());
 		tbCupons.setModel(model);			
 	}

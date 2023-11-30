@@ -2,12 +2,7 @@ package br.com.senai.gestaoDeCadastroFront.views.pedidos;
 
 import java.awt.Color;
 import java.awt.Font;
-import java.awt.Panel;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 
-import javax.swing.GroupLayout;
-import javax.swing.GroupLayout.Alignment;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -33,7 +28,7 @@ public class ViewGestorPedidos extends JFrame {
 		setBounds(100, 100, 1366, 768);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
-
+	
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 		

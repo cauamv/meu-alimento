@@ -42,7 +42,6 @@ public class ViewListagemDePedidos extends JFrame {
 	public void abrirTela(String token) {
 		this.setVisible(true); 
 		Thread thread = new Thread(new Runnable() {
-			
 			@Override
 			public void run() {
 				gerarCards(token);
@@ -56,31 +55,29 @@ public class ViewListagemDePedidos extends JFrame {
 		columnOrganizePanel.setBounds(10, 115, 1344, 559);
 		contentPane.add(columnOrganizePanel);
 		
-		pedidosClient = new PedidosClient();
-		TokenDecoder decoder = new TokenDecoder();
-		
-		Integer id = Integer.parseInt(decoder.extrairIdRestauranteDo(token));
-		
-		Paginacao<Pedido> paginas = pedidosClient.listarPor(
-					id,
-					0, 
-					Status.REALIZADO
-				);
-		
-		for (int i = 0; i < paginas.getListagem().size(); i++) {
-			Pedido pedido = paginas.getListagem().get(i); 
-			columnOrganizePanel.add(gerarPedido(new JPanel(),
-					pedido.getIdPedido().toString(),
-					pedido.getEndereco().getCep(), 
-					"R$ " + pedido.
-					getValorTotal().toString()));
+		try {
+			pedidosClient = new PedidosClient();
+			TokenDecoder decoder = new TokenDecoder();
+			Integer id = Integer.parseInt(decoder.extrairIdRestauranteDo(token));
+			Paginacao<Pedido> paginas = pedidosClient.listarPor(id, 0, Status.REALIZADO);
+			
+			for (int i = 0; i < paginas.getListagem().size(); i++) {
+				Pedido pedido = paginas.getListagem().get(i); 
+				columnOrganizePanel.add(gerarPedido(new JPanel(),
+						pedido.getIdPedido().toString(),
+						pedido.getEndereco().getRua(), 
+						"R$ " + pedido.
+						getValorTotal().toString()));
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
 		}
 	}
 	
 	@Autowired
 	public ViewListagemDePedidos() {
 		
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setBounds(100, 100, 1366, 768);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));

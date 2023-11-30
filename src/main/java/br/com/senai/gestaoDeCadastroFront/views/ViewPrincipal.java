@@ -7,11 +7,15 @@ import java.awt.event.ActionListener;
 
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JSeparator;
 import javax.swing.LayoutStyle.ComponentPlacement;
+import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
 
 import org.hibernate.validator.internal.util.stereotypes.Lazy;
@@ -22,10 +26,7 @@ import br.com.senai.gestaoDeCadastroFront.client.authenticate.server.CredencialD
 import br.com.senai.gestaoDeCadastroFront.client.decode.TokenDecoder;
 import br.com.senai.gestaoDeCadastroFront.dto.enums.Role;
 import br.com.senai.gestaoDeCadastroFront.views.cupons.ViewCupons;
-import javax.swing.JLabel;
-import javax.swing.SwingConstants;
-import javax.swing.JSeparator;
-import javax.swing.ImageIcon;
+import br.com.senai.gestaoDeCadastroFront.views.pedidos.ViewListagemDePedidos;
 
 @Component
 public class ViewPrincipal extends JFrame {
@@ -47,6 +48,10 @@ public class ViewPrincipal extends JFrame {
 	
 	private CredencialDeAcesso credencialDeAcesso;
 	
+	@Autowired
+	@Lazy
+	private ViewListagemDePedidos viewListagemDePedidos;
+	
 	public void abrirTela(String token, CredencialDeAcesso credencialDeAcesso) {
 		this.token = token;
 		this.credencialDeAcesso = credencialDeAcesso;
@@ -55,7 +60,8 @@ public class ViewPrincipal extends JFrame {
 	}
 
 	public ViewPrincipal() {
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setResizable(false);
+		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setBounds(100, 100, 1366, 768);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -103,10 +109,10 @@ public class ViewPrincipal extends JFrame {
 		JButton btnPedidos = new JButton("Pedidos");
 		btnPedidos.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				if (role.equals(Role.Administrador.toString()) || role.equals(Role.Restaurante.toString())) {
-					JOptionPane.showMessageDialog(contentPane, "Permitido");
+				if (role.equals(Role.Restaurante.toString())) {
+					viewListagemDePedidos.abrirTela(token);
 				} else {
-					JOptionPane.showMessageDialog(contentPane, "Permissão negada.");
+					JOptionPane.showMessageDialog(contentPane, "Permissão negada. Apenas restaurantes podem acessar o espaço de pedidos.");
 				}
 			}
 		});
