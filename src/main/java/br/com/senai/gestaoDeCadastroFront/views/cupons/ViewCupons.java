@@ -8,10 +8,14 @@ import java.awt.Rectangle;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
+import javax.swing.JSeparator;
 import javax.swing.JTable;
+import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
+import javax.swing.table.DefaultTableCellRenderer;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -21,9 +25,6 @@ import br.com.senai.gestaoDeCadastroFront.client.authenticate.server.CredencialD
 import br.com.senai.gestaoDeCadastroFront.components.table.CupomTableModel;
 import br.com.senai.gestaoDeCadastroFront.dto.Cupom;
 import br.com.senai.gestaoDeCadastroFront.dto.Paginacao;
-import javax.swing.SwingConstants;
-import javax.swing.JLabel;
-import javax.swing.JSeparator;
 
 @Component
 public class ViewCupons extends JFrame {
@@ -59,15 +60,28 @@ public class ViewCupons extends JFrame {
 	}
 	
 	private void listarCuponsDa(int pagina, CredencialDeAcesso credencialDeAcesso) {
-		paginacao = cuponsClient.listarTodos(0, credencialDeAcesso);			
-		CupomTableModel model = new CupomTableModel(paginacao.getListagem());
-		tbCupons.setModel(model);	
-		scrollPane = new JScrollPane(tbCupons);
-		scrollPane.setBackground(new Color(255, 52, 52));
-		scrollPane.setBorder(null);
-		scrollPane.setBounds(40, 305, 1284, 314);
-		contentPane.add(scrollPane);
+	    paginacao = cuponsClient.listarTodos(0, credencialDeAcesso);			
+	    CupomTableModel model = new CupomTableModel(paginacao.getListagem());
+	    tbCupons.setModel(model);
 
+	    DefaultTableCellRenderer centerRenderer = new DefaultTableCellRenderer();
+	    centerRenderer.setHorizontalAlignment(JLabel.CENTER);
+	    tbCupons.setDefaultRenderer(Object.class, centerRenderer);
+
+	    tbCupons.setRowHeight(40);
+
+	    tbCupons.setBackground(new Color(240, 240, 240));
+	    tbCupons.setFont(new Font("Arial", Font.PLAIN, 18));
+	    tbCupons.getTableHeader().setFont(new Font("Arial", Font.BOLD, 18));
+
+	    tbCupons.getTableHeader().setBackground(new Color(255, 52, 52));
+	    tbCupons.getTableHeader().setForeground(Color.WHITE);
+
+	    scrollPane = new JScrollPane(tbCupons);
+	    scrollPane.setBackground(new Color(255, 52, 52));
+	    scrollPane.setBorder(null);
+	    scrollPane.setBounds(40, 305, 1284, 314);
+	    contentPane.add(scrollPane);
 	}
 
 	public ViewCupons() {
