@@ -39,7 +39,13 @@ public class ViewListagemDePedidos extends JFrame {
 	@Lazy
 	private PedidosClient pedidosClient;
 	
+	@Autowired
+	@Lazy
+	private ViewDetalhesDeUmPedido viewDetalhesDeUmPedido;
+	
 	public void abrirTela(String token) {
+		this.token = token;
+		
 		this.setVisible(true); 
 		Thread thread = new Thread(new Runnable() {
 			@Override
@@ -49,6 +55,8 @@ public class ViewListagemDePedidos extends JFrame {
 		});
 		thread.start();
 	}
+	
+	private String token;
 	
 	public void gerarCards(String token) {
 		JPanel columnOrganizePanel = new JPanel(); 
@@ -63,11 +71,7 @@ public class ViewListagemDePedidos extends JFrame {
 			
 			for (int i = 0; i < paginas.getListagem().size(); i++) {
 				Pedido pedido = paginas.getListagem().get(i); 
-				columnOrganizePanel.add(gerarPedido(new JPanel(),
-						pedido.getIdPedido().toString(),
-						pedido.getEndereco().getRua(), 
-						"R$ " + pedido.
-						getValorTotal().toString()));
+				columnOrganizePanel.add(gerarPedido(new JPanel(), pedido));
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -113,7 +117,7 @@ public class ViewListagemDePedidos extends JFrame {
 		setLocationRelativeTo(null);
 	}
 	
-	private java.awt.Component gerarPedido(JPanel panelPedido, String cliente, String endereco, String total) {
+	private java.awt.Component gerarPedido(JPanel panelPedido, Pedido pedido) {
 		panelPedido.setBorder(new TitledBorder(new LineBorder(new Color(184, 207, 229)), "N\u00B0 do pedido", TitledBorder.CENTER, TitledBorder.TOP, null, new Color(51, 51, 51)));
 		panelPedido.setBackground(Color.LIGHT_GRAY);
 		
@@ -151,16 +155,16 @@ public class ViewListagemDePedidos extends JFrame {
 		btnV.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				
+				viewDetalhesDeUmPedido.abrirTela(token, pedido);
 			}
 		});
 		
 		
-		JLabel lblCliente = new JLabel("Cliente: " + cliente);
+		JLabel lblCliente = new JLabel("Cliente: " + pedido.getCliente().getNome());
 		
-		JLabel lblEndereo = new JLabel("Endereço: " + endereco);
+		JLabel lblEndereo = new JLabel("Endereço: " + pedido.getEndereco().getRua());
 		
-		JLabel lblTotal = new JLabel("Total:" + total);
+		JLabel lblTotal = new JLabel("Total:" + pedido.getValorTotal().toString());
 		GroupLayout gl_panelInfo = new GroupLayout(panelInfo);
 		gl_panelInfo.setHorizontalGroup(
 			gl_panelInfo.createParallelGroup(Alignment.LEADING)

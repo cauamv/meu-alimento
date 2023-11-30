@@ -24,8 +24,8 @@ public class PedidosClient {
 
 	private String URL = "http://localhost:3000";
 
-	private final String GET_ENDPOINT = "/pedidos"; 
-
+	private final String ENDPOINT = "/pedidos";
+	
 	public Paginacao<Pedido> listarPor(Integer idRestaurante, Integer pagina, Status status) {
 
 		StringBuilder queryParams = new StringBuilder();
@@ -39,13 +39,23 @@ public class PedidosClient {
 				aplicadorDeToken.aplicar(token));
 
 		ResponseEntity<Paginacao<Pedido>> pedidosEncontrados = httpClient.exchange(
-				URL + GET_ENDPOINT + queryParams, 
+				URL + ENDPOINT + queryParams, 
 				HttpMethod.GET, 
 				request, 
 				new ParameterizedTypeReference<Paginacao<Pedido>>(){});
 		
 		return pedidosEncontrados.getBody();
 
+	}
+	
+	public void alterarStatusDoPedido(Status status, Integer idDoPedido) {
+		String token = autenticadorClient.getToken().getValor();
+		
+		HttpEntity<Paginacao<Pedido>> request = new HttpEntity<Paginacao<Pedido>>(
+				aplicadorDeToken.aplicar(token));
+
+		this.httpClient.patchForObject(URL + ENDPOINT + "/id/" + idDoPedido + "/status/" + status, request, Void.class);
+		
 	}
 
 }
