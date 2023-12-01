@@ -47,6 +47,7 @@ public class ViewLogin extends JFrame {
     private AutenticadorClient autenticadorClient;
 
     public ViewLogin() {
+    	setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setBounds(100, 100, 1366, 768);
         setResizable(false);
         contentPane = new JPanel();

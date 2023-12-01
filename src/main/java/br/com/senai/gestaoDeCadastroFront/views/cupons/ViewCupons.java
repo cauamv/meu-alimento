@@ -119,6 +119,7 @@ public class ViewCupons extends JFrame {
 		btnBuscar.setBackground(Color.RED);
 		btnBuscar.setBounds(207, 235, 132, 41);
 		contentPane.add(btnBuscar);
+		
 		this.configurarCabecalhos(tbCupons);
 		
 		lblMeusCupons = new JLabel("Meus Cupons");

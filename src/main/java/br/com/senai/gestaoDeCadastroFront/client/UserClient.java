@@ -30,6 +30,7 @@ public class UserClient {
 	private String POST_ENDPOINT = "/usuarios";
 	
 	public UsuarioDto inserir(UsuarioDto novoUsuario) {
+		
 		Preconditions.checkNotNull(novoUsuario, "O usuário é obrigatório. ");
 		
 		HttpEntity<UsuarioDto> request = new HttpEntity<UsuarioDto>(novoUsuario);
@@ -41,6 +42,7 @@ public class UserClient {
 		credencial.setSenha(novoUsuario.getSenha());
 		
 		String token = autenticadorClient.getTokenPela(credencial).getValor();
+		
 		request = new HttpEntity<UsuarioDto>(aplicador.aplicar(token));		
 		
 		ResponseEntity<UsuarioDto> usuarioSalvo = httpClient.exchange(

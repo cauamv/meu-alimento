@@ -10,6 +10,7 @@ import java.time.format.DateTimeFormatter;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFormattedTextField;
@@ -19,9 +20,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.LayoutStyle.ComponentPlacement;
 import javax.swing.SwingConstants;
-import javax.swing.border.BevelBorder;
 import javax.swing.border.EmptyBorder;
-import javax.swing.border.SoftBevelBorder;
 import javax.swing.text.MaskFormatter;
 
 import org.hibernate.validator.internal.util.stereotypes.Lazy;
@@ -31,7 +30,6 @@ import org.springframework.stereotype.Component;
 import br.com.senai.gestaoDeCadastroFront.components.RoundJTextField;
 import br.com.senai.gestaoDeCadastroFront.dto.NovoClienteDto;
 import br.com.senai.gestaoDeCadastroFront.dto.UsuarioDto;
-import javax.swing.ImageIcon;
 
 @Component
 public class ViewCadastro extends JFrame {
@@ -116,13 +114,16 @@ public class ViewCadastro extends JFrame {
 				try {
 					String nome = txtNome.getText();
 					String sexo = cbxSexo.getSelectedItem().toString();
-					DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("yyyy-dd-MM");
-					LocalDate dataDeNascimento = LocalDate.parse(txtDataNascimento.getText(), dateFormatter);
+			        DateTimeFormatter formatterEntrada = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+					DateTimeFormatter formatterSaida = DateTimeFormatter.ofPattern("yyyy/MM/dd");
+					String dataString = LocalDate.parse(txtDataNascimento.getText().toString(), formatterEntrada).format(formatterSaida);
+					LocalDate data = LocalDate.parse(dataString);
+					
 					String email = txtEmail.getText();
 					UsuarioDto usuarioDto = new UsuarioDto();
 					usuarioDto.setEmail(email);
 					usuarioDto.setRole("Administrador");
-					NovoClienteDto cadastroDto = new NovoClienteDto(nome, sexo, dataDeNascimento, usuarioDto);
+					NovoClienteDto cadastroDto = new NovoClienteDto(nome, sexo, data, usuarioDto);
 
 					telaSenha.mostrarTela(cadastroDto);
 					dispose();

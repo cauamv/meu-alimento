@@ -1,8 +1,8 @@
 package br.com.senai.gestaoDeCadastroFront.client.pedidos;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.HttpEntity;
-import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
@@ -17,11 +17,14 @@ import br.com.senai.gestaoDeCadastroFront.dto.pedidos.Pedido;
 @Component
 public class PedidosClient {
 
-	private AplicadorDeToken aplicadorDeToken = new AplicadorDeToken();
+	@Autowired
+	private AplicadorDeToken aplicadorDeToken;
 
-	private RestTemplate httpClient = new RestTemplate();
+	@Autowired
+	private RestTemplate httpClient;
 
-	private AutenticadorPedidosClient autenticadorClient = new AutenticadorPedidosClient();
+	@Autowired
+	private AutenticadorPedidosClient autenticadorClient;	
 
 	private String URL = "http://localhost:3000";
 
@@ -50,15 +53,8 @@ public class PedidosClient {
 	}
 	
 	public void atualizarPor(Integer idDoPedido, Status status) {
-		
-		HttpHeaders headers = aplicadorDeToken.aplicar(autenticadorClient.getToken().getValor());
-		
-		this.httpClient.exchange(
-				URL + ENDPOINT + "/id/" + idDoPedido.toString() + "/status/" + status.toString(),
-				HttpMethod.PATCH, 
-				new HttpEntity<>(headers),
-				Void.class
-		);
+		HttpEntity<Pedido> request = new HttpEntity<Pedido>(aplicadorDeToken.aplicar(autenticadorClient.getToken().getValor()));
+		this.httpClient.patchForObject(URL + ENDPOINT + "/id/" + idDoPedido.toString() + "/status/" + status, request, Void.class);
 		
 	}
 
