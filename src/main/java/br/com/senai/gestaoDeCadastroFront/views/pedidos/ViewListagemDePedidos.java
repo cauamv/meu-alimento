@@ -89,13 +89,15 @@ public class ViewListagemDePedidos extends JFrame {
 		contentPane.setLayout(null);
 		
 		JPanel panelSuperior = new JPanel();
-		panelSuperior.setBackground(Color.LIGHT_GRAY);
+		panelSuperior.setBackground(Color.RED);
 		panelSuperior.setBounds(0, 0, 1401, 103);
 		contentPane.add(panelSuperior);
 		
 		JLabel lblNewLabel = new JLabel("Gestor de Pedidos");
+		lblNewLabel.setForeground(Color.WHITE);
+		lblNewLabel.setBackground(Color.BLACK);
 		lblNewLabel.setHorizontalAlignment(SwingConstants.CENTER);
-		lblNewLabel.setFont(new Font("Bitstream Charter", Font.BOLD, 38));
+		lblNewLabel.setFont(new Font("Dialog", Font.BOLD, 43));
 		GroupLayout gl_panelSuperior = new GroupLayout(panelSuperior);
 		gl_panelSuperior.setHorizontalGroup(
 			gl_panelSuperior.createParallelGroup(Alignment.LEADING)

@@ -17,13 +17,16 @@ import javax.swing.LayoutStyle.ComponentPlacement;
 import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
 
+import org.hibernate.validator.internal.util.stereotypes.Lazy;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import br.com.senai.gestaoDeCadastroFront.client.EnderecoClient;
+import br.com.senai.gestaoDeCadastroFront.client.authenticate.server.CredencialDeAcesso;
 import br.com.senai.gestaoDeCadastroFront.components.RoundJTextField;
 import br.com.senai.gestaoDeCadastroFront.dto.ClienteDto;
 import br.com.senai.gestaoDeCadastroFront.dto.NovoEnderecoDto;
+import br.com.senai.gestaoDeCadastroFront.views.ViewPrincipal;
 
 @Component
 public class ViewEndereco extends JFrame {
@@ -41,6 +44,10 @@ public class ViewEndereco extends JFrame {
 		this.setVisible(true);
 	}
 
+	@Autowired
+	@Lazy
+	private ViewPrincipal viewPrincipal;
+	
 	public ViewEndereco() {
 		setResizable(false);
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
@@ -124,7 +131,10 @@ public class ViewEndereco extends JFrame {
 					dto.setComplemento(textComplemento.getText());
 					dto.setClienteDto(clienteDto);
 					enderecoClient.inserir(dto);
-					JOptionPane.showMessageDialog(contentPane, "Salvou");
+					CredencialDeAcesso credencialDeAcesso = new CredencialDeAcesso();
+					credencialDeAcesso.setEmail(clienteDto.getUsuario().getEmail());
+					credencialDeAcesso.setSenha(clienteDto.getUsuario().getSenha());
+					viewPrincipal.abrirTela(credencialDeAcesso);
 				} catch (Exception ex) {
 					JOptionPane.showMessageDialog(contentPane, ex.getMessage());
 				}

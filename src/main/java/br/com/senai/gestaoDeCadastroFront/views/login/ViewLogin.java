@@ -23,7 +23,6 @@ import org.hibernate.validator.internal.util.stereotypes.Lazy;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import br.com.senai.gestaoDeCadastroFront.client.authenticate.server.AutenticadorClient;
 import br.com.senai.gestaoDeCadastroFront.client.authenticate.server.CredencialDeAcesso;
 import br.com.senai.gestaoDeCadastroFront.components.RoundJTextField;
 import br.com.senai.gestaoDeCadastroFront.views.ViewPrincipal;
@@ -42,9 +41,6 @@ public class ViewLogin extends JFrame {
     @Autowired
     @Lazy
     private ViewCadastro viewCadastro;
-
-    @Autowired
-    private AutenticadorClient autenticadorClient;
 
     public ViewLogin() {
     	setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -94,8 +90,7 @@ public class ViewLogin extends JFrame {
                     String email = txtEmail.getText();
                     String senha = new String(txtSenha.getPassword());
                     if (!email.isBlank() && !senha.isBlank()) {
-                        String token = autenticadorClient.getTokenPela(new CredencialDeAcesso(email, senha)).getValor();
-                        viewGestor.abrirTela(token, new CredencialDeAcesso(email, senha));
+                        viewGestor.abrirTela(new CredencialDeAcesso(email, senha));
                         dispose();
                     } else {
                         JOptionPane.showMessageDialog(contentPane, "Email e senha são obrigatórios. ");

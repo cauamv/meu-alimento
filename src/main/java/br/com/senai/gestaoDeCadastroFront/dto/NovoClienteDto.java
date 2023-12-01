@@ -2,7 +2,6 @@ package br.com.senai.gestaoDeCadastroFront.dto;
 
 import java.time.LocalDate;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import jakarta.validation.constraints.NotBlank;
@@ -25,7 +24,6 @@ public class NovoClienteDto {
 	private String sexo;
 	
 	@JsonProperty("dataDeNascimento")
-	@JsonFormat(pattern = "dd-MM-yyyy")
 	@NotNull(message = "A data de nascimento é obrigatória. ")
 	private LocalDate dataDeNascimento;
 	
