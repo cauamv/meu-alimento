@@ -25,7 +25,7 @@ public class NovoClienteDto {
 	private String sexo;
 	
 	@JsonProperty("dataDeNascimento")
-	@JsonFormat(pattern = "yyyy-MM-dd")
+	@JsonFormat(pattern = "dd-MM-yyyy")
 	@NotNull(message = "A data de nascimento é obrigatória. ")
 	private LocalDate dataDeNascimento;
 	

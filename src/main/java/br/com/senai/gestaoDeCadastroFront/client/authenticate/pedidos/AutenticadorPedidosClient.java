@@ -1,13 +1,16 @@
 package br.com.senai.gestaoDeCadastroFront.client.authenticate.pedidos;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
 
 import br.com.senai.gestaoDeCadastroFront.client.authenticate.Token;
 import br.com.senai.gestaoDeCadastroFront.dto.TokenDto;
 
+@Component
 public class AutenticadorPedidosClient {
 	
 	private String URL = "http://localhost:3000";
@@ -17,8 +20,9 @@ public class AutenticadorPedidosClient {
 	private String senha = "querocafe";
 
 	private final String ENDPOINT = "/auth";
-
-	private RestTemplate httpClient = new RestTemplate();
+	
+	@Autowired
+	private RestTemplate httpClient;
 
 	private Token token;
 

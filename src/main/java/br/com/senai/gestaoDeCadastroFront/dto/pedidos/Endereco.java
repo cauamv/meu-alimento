@@ -25,7 +25,7 @@ public class Endereco {
 	@JsonProperty("id_endereco")
 	private Integer id;
 	
-	@JsonProperty("CEP")
+	@JsonProperty("cep")
 	private String cep;
 	
 	@JsonProperty("rua")

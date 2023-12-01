@@ -36,7 +36,6 @@ public class ViewListagemDePedidos extends JFrame {
 	private JPanel contentPane;
 	
 	@Autowired
-	@Lazy
 	private PedidosClient pedidosClient;
 	
 	@Autowired
@@ -64,7 +63,7 @@ public class ViewListagemDePedidos extends JFrame {
 		contentPane.add(columnOrganizePanel);
 		
 		try {
-			pedidosClient = new PedidosClient();
+		
 			TokenDecoder decoder = new TokenDecoder();
 			Integer id = Integer.parseInt(decoder.extrairIdRestauranteDo(token));
 			Paginacao<Pedido> paginas = pedidosClient.listarPor(id, 0, Status.REALIZADO);
