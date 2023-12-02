@@ -34,6 +34,7 @@ import br.com.senai.gestaoDeCadastroFront.dto.pedidos.Pedido;
 public class ViewListagemDePedidos extends JFrame {
 
     private static final long serialVersionUID = 1L;
+    
     private JPanel contentPane;
     
     @Autowired
@@ -49,25 +50,6 @@ public class ViewListagemDePedidos extends JFrame {
         this.token = token;
         this.setVisible(true);
         gerarCards(token);
-    }
-
-    private void gerarCards(String token) {
-        JPanel columnOrganizePanel = new JPanel();
-        columnOrganizePanel.setBounds(10, 115, 1344, 559);
-        contentPane.add(columnOrganizePanel);
-        
-        try {
-            TokenDecoder decoder = new TokenDecoder();
-            Integer id = Integer.parseInt(decoder.extrairIdRestauranteDo(token));
-            Paginacao<Pedido> paginas = pedidosClient.listarPor(id, 0, Status.REALIZADO);
-            
-            for (int i = 0; i < paginas.getListagem().size(); i++) {
-                Pedido pedido = paginas.getListagem().get(i);
-                columnOrganizePanel.add(gerarPedido(new JPanel(), pedido));
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
     }
 
     @Autowired
@@ -154,9 +136,7 @@ public class ViewListagemDePedidos extends JFrame {
                 dispose();
                 viewDetalhesDeUmPedido.abrirTela(token, pedido);
                 Container columnOrganizePanel = new Container();
-                // Remove o componente correspondente do columnOrganizePanel
                 columnOrganizePanel.remove(panelPedido);
-                // Atualiza a interface gráfica
                 columnOrganizePanel.revalidate();
                 columnOrganizePanel.repaint();
                 repaint();
@@ -202,4 +182,25 @@ public class ViewListagemDePedidos extends JFrame {
         panelPedido.setLayout(gl_panelPedido);
         return panelPedido;
     }
+	
+	public void gerarCards(String token) {
+		JPanel columnOrganizePanel = new JPanel(); 
+		columnOrganizePanel.setBounds(10, 115, 1344, 559);
+		contentPane.add(columnOrganizePanel);
+		
+		try {
+			TokenDecoder decoder = new TokenDecoder();
+			Integer id = Integer.parseInt(decoder.extrairIdRestauranteDo(token));
+			Paginacao<Pedido> paginas = pedidosClient.listarPor(id, 0, Status.REALIZADO);
+			
+			for (int i = 0; i < paginas.getListagem().size(); i++) {
+				Pedido pedido = paginas.getListagem().get(i); 
+				columnOrganizePanel.add(gerarPedido(new JPanel(), pedido));
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
+	
 }

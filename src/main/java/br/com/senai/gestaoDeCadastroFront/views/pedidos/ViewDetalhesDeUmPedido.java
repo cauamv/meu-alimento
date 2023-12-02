@@ -33,8 +33,34 @@ public class ViewDetalhesDeUmPedido extends JFrame {
 	
 	@Autowired
 	private ViewListagemDePedidos viewPedido;
+
+	@Autowired
+	private ViewListagemDePedidos viewListagemDePedidos;
+	
+	private String token;
+	
+	private JLabel lblNumPedido;
+	
+	private JLabel lblNomeRestaurante;
+	
+	private JLabel lblCliente;
+	
+	private JLabel lblTotal;
+	
+	private JLabel lblHorario;
+	
+	private JLabel lblCep;
+	
+	private JLabel lblNumero;
+	
+	private JLabel lblRua;
+	 
+	private JLabel lblCupom;
+	
+	private JLabel lblPagamento;
 	
 	public void abrirTela(String token, Pedido pedido) {
+		this.token = token;
 		this.pedido = pedido;
 		this.setVisible(true);
 		montarPedido(this.pedido);
@@ -49,13 +75,8 @@ public class ViewDetalhesDeUmPedido extends JFrame {
 	
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
-		
-		setLocationRelativeTo(null);
-	}
 	
-	private void montarPedido(Pedido pedido) {
-		
-		JLabel lblNumPedido = new JLabel("Pedido Realizado - N° " + pedido.getIdPedido().toString());
+		lblNumPedido = new JLabel();
 		lblNumPedido.setHorizontalAlignment(SwingConstants.LEFT);
 		lblNumPedido.setForeground(Color.RED);
 		lblNumPedido.setFont(new Font("Tahoma", Font.PLAIN, 13));
@@ -63,64 +84,52 @@ public class ViewDetalhesDeUmPedido extends JFrame {
 		lblNumPedido.setBounds(31, 301, 471, 27);
 		contentPane.add(lblNumPedido);
 		
-		JLabel lblPremierCoffe = new JLabel(pedido.getRestaurante().getNome());
-		lblPremierCoffe.setHorizontalAlignment(SwingConstants.LEFT);
-		lblPremierCoffe.setFont(new Font("Tahoma", Font.BOLD, 43));
-		lblPremierCoffe.setBackground(new Color(248, 244, 244));
-		lblPremierCoffe.setBounds(31, 227, 549, 52);
-		contentPane.add(lblPremierCoffe);
+		lblNomeRestaurante = new JLabel();
+		lblNomeRestaurante.setHorizontalAlignment(SwingConstants.LEFT);
+		lblNomeRestaurante.setFont(new Font("Tahoma", Font.BOLD, 43));
+		lblNomeRestaurante.setBackground(new Color(248, 244, 244));
+		lblNomeRestaurante.setBounds(31, 227, 549, 52);
+		contentPane.add(lblNomeRestaurante);
 		
-		JLabel lblCliente = new JLabel("Cliente:" + pedido.getCliente().getNome());
+		lblCliente = new JLabel();
 		lblCliente.setFont(new Font("Dialog", Font.PLAIN, 20));
 		lblCliente.setBounds(31, 373, 427, 27);
 		contentPane.add(lblCliente);
 		
-		JLabel lblTotal = new JLabel("Total:" + pedido.getValorTotal().toString());
+		lblTotal = new JLabel();
 		lblTotal.setForeground(Color.BLACK);
 		lblTotal.setFont(new Font("Dialog", Font.PLAIN, 20));
 		lblTotal.setBounds(31, 535, 427, 27);
 		contentPane.add(lblTotal);
 		
-		JPanel panel = new JPanel();
-		panel.setBackground(new Color(255, 0, 0));
-		panel.setBounds(0, 0, 1340, 216);
-		contentPane.add(panel);
-		panel.setLayout(null);
-		
-		JLabel lblNewLabel = new JLabel("Gestor de Pedidos");
-		lblNewLabel.setHorizontalAlignment(SwingConstants.CENTER);
-		lblNewLabel.setBounds(0, 0, 1340, 216);
-		panel.add(lblNewLabel);
-		lblNewLabel.setForeground(Color.WHITE);
-		lblNewLabel.setFont(new Font("Tahoma", Font.BOLD, 40));
-		
-		JLabel lblHorario = new JLabel("Data do pedido:" + pedido.getDataPedido().toString());
+		lblHorario = new JLabel();
 		lblHorario.setFont(new Font("Dialog", Font.PLAIN, 20));
 		lblHorario.setBounds(31, 339, 441, 23);
 		contentPane.add(lblHorario);
 		
-		JLabel lblNumero = new JLabel("Número da residência: " + pedido.getEndereco().getNumero());
+		lblNumero = new JLabel();
 		lblNumero.setFont(new Font("Dialog", Font.PLAIN, 20));
 		lblNumero.setBounds(31, 411, 471, 27);
 		contentPane.add(lblNumero);
 		
-		JLabel lblCep = new JLabel("CEP: " + pedido.getEndereco().getCep());
+		
+		lblCep = new JLabel();
 		lblCep.setFont(new Font("Dialog", Font.PLAIN, 20));
 		lblCep.setBounds(31, 449, 441, 27);
 		contentPane.add(lblCep);
 		
-		JLabel lblRua = new JLabel("Rua: " + pedido.getEndereco().getRua());
+		lblRua = new JLabel();
 		lblRua.setFont(new Font("Dialog", Font.PLAIN, 20));
 		lblRua.setBounds(31, 487, 441, 27);
 		contentPane.add(lblRua);
 		
-		JLabel lblCupom = new JLabel("Cupom: " + pedido.getCupom().getCodigo());
+		lblCupom = new JLabel();
 		lblCupom.setForeground(Color.GRAY);
 		lblCupom.setFont(new Font("Dialog", Font.BOLD, 20));
 		lblCupom.setBounds(31, 588, 427, 27);
 		contentPane.add(lblCupom);
 		
-		JLabel lblPagamento = new JLabel("Forma de Pagamento: " + pedido.getPagamento());
+		lblPagamento = new JLabel();
 		lblPagamento.setFont(new Font("Dialog", Font.PLAIN, 20));
 		lblPagamento.setBounds(31, 626, 549, 27);
 		contentPane.add(lblPagamento);
@@ -137,6 +146,8 @@ public class ViewDetalhesDeUmPedido extends JFrame {
 				dispose();
 				viewPedido.setVisible(true);
 				JOptionPane.showMessageDialog(contentPane, "Aceito");
+				viewListagemDePedidos.abrirTela(token);
+				dispose();
 			}
 		});
 		contentPane.add(btnAceitar);
@@ -148,6 +159,33 @@ public class ViewDetalhesDeUmPedido extends JFrame {
 		btnRecusar.setBackground(Color.RED);
 		btnRecusar.setBounds(1214, 659, 126, 44);
 		contentPane.add(btnRecusar);
+		
+		setLocationRelativeTo(null);
+	}
+	
+	private void montarPedido(Pedido pedido) {
+		
+		lblNumPedido.setText("Pedido Realizado - N° " + pedido.getIdPedido().toString());
+		
+		lblNomeRestaurante.setText(pedido.getRestaurante().getNome());
+		
+		lblCliente.setText("Cliente:" + pedido.getCliente().getNome());
+		
+		lblTotal.setText("Total:" + pedido.getValorTotal().toString());
+		
+		lblHorario.setText("Data do pedido:" + pedido.getDataPedido().toString());
+		
+		lblNumero.setText("Número da residência: " + pedido.getEndereco().getNumero());
+		
+		lblCep.setText("CEP: " + pedido.getEndereco().getCep());
+		
+		lblNumero.setText("Número da residência: " + pedido.getEndereco().getNumero());
+		
+		lblRua.setText("Rua: " + pedido.getEndereco().getRua());
+		
+		lblCupom.setText("Cupom: " + pedido.getCupom().getCodigo());
+		
+		lblPagamento.setText("Forma de Pagamento: " + pedido.getPagamento());
 		
 	}
 }
