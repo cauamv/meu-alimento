@@ -31,6 +31,9 @@ public class ViewDetalhesDeUmPedido extends JFrame {
 	@Autowired
 	private PedidosClient pedidosClient;
 	
+	@Autowired
+	private ViewListagemDePedidos viewPedido;
+	
 	public void abrirTela(String token, Pedido pedido) {
 		this.pedido = pedido;
 		this.setVisible(true);
@@ -131,6 +134,8 @@ public class ViewDetalhesDeUmPedido extends JFrame {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				pedidosClient.atualizarPor(pedido.getIdPedido(), Status.ACEITO_PELO_RESTAURANTE);
+				dispose();
+				viewPedido.setVisible(true);
 				JOptionPane.showMessageDialog(contentPane, "Aceito");
 			}
 		});
