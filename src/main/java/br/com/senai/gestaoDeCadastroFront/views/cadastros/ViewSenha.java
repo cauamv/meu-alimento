@@ -63,12 +63,9 @@ public class ViewSenha extends JFrame {
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
-		contentPane.setLayout(null);
 
 		JPanel panel = new JPanel();
 		panel.setBackground(Color.RED);
-		panel.setBounds(667, 0, 683, 768);
-		contentPane.add(panel);
 
 		txtfSenha1 = new JPasswordField();
 		txtfSenha1.setHorizontalAlignment(SwingConstants.CENTER);
@@ -169,29 +166,58 @@ public class ViewSenha extends JFrame {
 		JLabel lblMeuAlimento = new JLabel("Meu Alimento");
 		lblMeuAlimento.setForeground(Color.BLACK);
 		lblMeuAlimento.setFont(new Font("Tahoma", Font.BOLD, 43));
-		lblMeuAlimento.setBounds(154, 61, 330, 55);
-		contentPane.add(lblMeuAlimento);
 
 		JLabel lblImage1 = new JLabel("");
 		lblImage1.setIcon(
 				new ImageIcon(ViewSenha.class.getResource("/br/com/senai/gestaoDeCadastroFront/img/hamburguer.png")));
 		lblImage1.setHorizontalAlignment(SwingConstants.LEFT);
-		lblImage1.setBounds(10, 127, 241, 215);
-		contentPane.add(lblImage1);
 
 		JLabel lblImage2 = new JLabel("");
 		lblImage2.setIcon(
 				new ImageIcon(ViewSenha.class.getResource("/br/com/senai/gestaoDeCadastroFront/img/pizza.png")));
 		lblImage2.setHorizontalAlignment(SwingConstants.LEFT);
-		lblImage2.setBounds(315, 232, 273, 275);
-		contentPane.add(lblImage2);
 
 		JLabel lblImage3 = new JLabel("");
 		lblImage3.setIcon(
 				new ImageIcon(ViewSenha.class.getResource("/br/com/senai/gestaoDeCadastroFront/img/brownie.png")));
 		lblImage3.setHorizontalAlignment(SwingConstants.LEFT);
-		lblImage3.setBounds(37, 403, 214, 191);
-		contentPane.add(lblImage3);
+		GroupLayout gl_contentPane = new GroupLayout(contentPane);
+		gl_contentPane.setHorizontalGroup(
+			gl_contentPane.createParallelGroup(Alignment.LEADING)
+				.addGroup(gl_contentPane.createSequentialGroup()
+					.addGap(5)
+					.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
+						.addGroup(gl_contentPane.createSequentialGroup()
+							.addGap(144)
+							.addComponent(lblMeuAlimento, GroupLayout.PREFERRED_SIZE, 330, GroupLayout.PREFERRED_SIZE))
+						.addGroup(gl_contentPane.createSequentialGroup()
+							.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
+								.addComponent(lblImage1, GroupLayout.PREFERRED_SIZE, 241, GroupLayout.PREFERRED_SIZE)
+								.addGroup(gl_contentPane.createSequentialGroup()
+									.addGap(27)
+									.addComponent(lblImage3, GroupLayout.PREFERRED_SIZE, 214, GroupLayout.PREFERRED_SIZE)))
+							.addGap(64)
+							.addComponent(lblImage2, GroupLayout.PREFERRED_SIZE, 273, GroupLayout.PREFERRED_SIZE)))
+					.addGap(79)
+					.addComponent(panel, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+		);
+		gl_contentPane.setVerticalGroup(
+			gl_contentPane.createParallelGroup(Alignment.LEADING)
+				.addGroup(gl_contentPane.createSequentialGroup()
+					.addGap(61)
+					.addComponent(lblMeuAlimento, GroupLayout.PREFERRED_SIZE, 55, GroupLayout.PREFERRED_SIZE)
+					.addGap(11)
+					.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
+						.addGroup(gl_contentPane.createSequentialGroup()
+							.addComponent(lblImage1, GroupLayout.PREFERRED_SIZE, 215, GroupLayout.PREFERRED_SIZE)
+							.addGap(61)
+							.addComponent(lblImage3, GroupLayout.PREFERRED_SIZE, 191, GroupLayout.PREFERRED_SIZE))
+						.addGroup(gl_contentPane.createSequentialGroup()
+							.addGap(105)
+							.addComponent(lblImage2, GroupLayout.PREFERRED_SIZE, 275, GroupLayout.PREFERRED_SIZE))))
+				.addComponent(panel, GroupLayout.PREFERRED_SIZE, 768, GroupLayout.PREFERRED_SIZE)
+		);
+		contentPane.setLayout(gl_contentPane);
 
 		setLocationRelativeTo(null);
 	}

@@ -114,12 +114,10 @@ public class ViewCadastro extends JFrame {
 				try {
 					String nome = txtNome.getText();
 					String sexo = cbxSexo.getSelectedItem().toString();
-					
 			        DateTimeFormatter formatterEntrada = DateTimeFormatter.ofPattern("dd/MM/yyyy");
 					DateTimeFormatter formatterSaida = DateTimeFormatter.ofPattern("yyyy-MM-dd");
 					String dataString = LocalDate.parse(txtDataNascimento.getText().toString(), formatterEntrada).format(formatterSaida);
 					LocalDate data = LocalDate.parse(dataString);
-					System.out.println(data);
 					String email = txtEmail.getText();
 					UsuarioDto usuarioDto = new UsuarioDto();
 					usuarioDto.setEmail(email);
