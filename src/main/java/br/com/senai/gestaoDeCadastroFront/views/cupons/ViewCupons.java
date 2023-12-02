@@ -5,6 +5,8 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.Rectangle;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -18,6 +20,7 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.table.DefaultTableCellRenderer;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Component;
 
 import br.com.senai.gestaoDeCadastroFront.client.CuponsClient;
@@ -44,6 +47,13 @@ public class ViewCupons extends JFrame {
 	private JLabel lblMeusCupons;
 	private final JSeparator separator = new JSeparator();
 	
+	@Autowired
+	@Lazy
+	private ViewFormularioCupom viewFormularioCupom;
+	
+	private CredencialDeAcesso credencial;
+	
+	
 	private void configurarCabecalhos(JTable tbCupons) {
 		tbCupons.getTableHeader().setOpaque(false);
 		tbCupons.getTableHeader().setBackground(Color.RED);
@@ -55,6 +65,7 @@ public class ViewCupons extends JFrame {
 	
 	
 	public void abrirTela(String token, CredencialDeAcesso credencialDeAcesso) {
+		this.credencial = credencialDeAcesso;
 		this.listarCuponsDa(1, credencialDeAcesso);
 		this.setVisible(true);
 	}
@@ -101,6 +112,11 @@ public class ViewCupons extends JFrame {
 		tbCupons.setBackground(new Color(240, 240, 240));
 		
 		JButton btnCriar = new JButton("Criar");
+		btnCriar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				viewFormularioCupom.abrirTela(credencial);
+			}
+		});
 		btnCriar.setRolloverEnabled(true);
 		btnCriar.setForeground(Color.WHITE);
 		btnCriar.setFont(new Font("Tahoma", Font.PLAIN, 19));
