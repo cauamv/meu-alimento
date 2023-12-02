@@ -1,6 +1,7 @@
 package br.com.senai.gestaoDeCadastroFront.client.authenticate.pedidos;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
@@ -13,7 +14,8 @@ import br.com.senai.gestaoDeCadastroFront.dto.TokenDto;
 @Component
 public class AutenticadorPedidosClient {
 	
-	private String URL = "http://localhost:3000";
+	@Value("${pedidos.url}")
+	private String URL;
 
 	private String login = "integracao@pedidos.com";
 	

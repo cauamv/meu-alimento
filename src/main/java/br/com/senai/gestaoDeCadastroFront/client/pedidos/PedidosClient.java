@@ -1,6 +1,7 @@
 package br.com.senai.gestaoDeCadastroFront.client.pedidos;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpMethod;
@@ -26,7 +27,8 @@ public class PedidosClient {
 	@Autowired
 	private AutenticadorPedidosClient autenticadorClient;	
 
-	private String URL = "http://localhost:3000";
+	@Value("${pedidos.url}")
+	private String URL;
 
 	private final String ENDPOINT = "/pedidos";
 	
