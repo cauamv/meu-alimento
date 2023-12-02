@@ -58,6 +58,7 @@ public class ClienteClient {
 	    HttpHeaders headers = aplicadorDeToken.aplicar(token);
 
 	    HttpEntity<NovoClienteDto> request = new HttpEntity<>(clienteCadastroDto, headers);
+	    System.out.println(request);
 
 	    URI location = httpClient.postForLocation(URL + POST_ENDPOINT, request);
 	    

@@ -114,11 +114,12 @@ public class ViewCadastro extends JFrame {
 				try {
 					String nome = txtNome.getText();
 					String sexo = cbxSexo.getSelectedItem().toString();
+					
 			        DateTimeFormatter formatterEntrada = DateTimeFormatter.ofPattern("dd/MM/yyyy");
-					DateTimeFormatter formatterSaida = DateTimeFormatter.ofPattern("yyyy/MM/dd");
+					DateTimeFormatter formatterSaida = DateTimeFormatter.ofPattern("yyyy-MM-dd");
 					String dataString = LocalDate.parse(txtDataNascimento.getText().toString(), formatterEntrada).format(formatterSaida);
 					LocalDate data = LocalDate.parse(dataString);
-					
+					System.out.println(data);
 					String email = txtEmail.getText();
 					UsuarioDto usuarioDto = new UsuarioDto();
 					usuarioDto.setEmail(email);
@@ -187,7 +188,7 @@ public class ViewCadastro extends JFrame {
 		JLabel lblImage1 = new JLabel("");
 		lblImage1.setHorizontalAlignment(SwingConstants.LEFT);
 		lblImage1.setIcon(new ImageIcon(ViewCadastro.class.getResource("/br/com/senai/gestaoDeCadastroFront/img/hamburguer.png")));
-		lblImage1.setBounds(78, 108, 223, 204);
+		lblImage1.setBounds(78, 135, 223, 204);
 		contentPane.add(lblImage1);
 		
 		JLabel lblImage2 = new JLabel("");

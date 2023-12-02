@@ -22,6 +22,7 @@ import org.hibernate.validator.internal.util.stereotypes.Lazy;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import br.com.senai.gestaoDeCadastroFront.client.authenticate.server.AutenticadorClient;
 import br.com.senai.gestaoDeCadastroFront.client.authenticate.server.CredencialDeAcesso;
 import br.com.senai.gestaoDeCadastroFront.client.decode.TokenDecoder;
 import br.com.senai.gestaoDeCadastroFront.dto.enums.Role;
@@ -49,12 +50,15 @@ public class ViewPrincipal extends JFrame {
 	private CredencialDeAcesso credencialDeAcesso;
 	
 	@Autowired
+	private AutenticadorClient autenticadorClient;
+	
+	@Autowired
 	@Lazy
 	private ViewListagemDePedidos viewListagemDePedidos;
 	
-	public void abrirTela(String token, CredencialDeAcesso credencialDeAcesso) {
-		this.token = token;
+	public void abrirTela(CredencialDeAcesso credencialDeAcesso) {
 		this.credencialDeAcesso = credencialDeAcesso;
+		this.token = autenticadorClient.getTokenPela(credencialDeAcesso).getValor();
 		this.role = decoder.extrairIdRoleDo(token);
 		this.setVisible(true);
 	}
