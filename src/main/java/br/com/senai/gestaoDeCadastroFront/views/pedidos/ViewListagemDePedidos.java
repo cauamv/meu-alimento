@@ -1,7 +1,6 @@
 package br.com.senai.gestaoDeCadastroFront.views.pedidos;
 
 import java.awt.Color;
-import java.awt.Container;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Font;
@@ -45,11 +44,11 @@ public class ViewListagemDePedidos extends JFrame {
     private ViewDetalhesDeUmPedido viewDetalhesDeUmPedido;
     
     private String token;
-
+    
     public void abrirTela(String token) {
         this.token = token;
         this.setVisible(true);
-        gerarCards(token);
+    	gerarCards(token, new JPanel());
     }
 
     @Autowired
@@ -57,6 +56,7 @@ public class ViewListagemDePedidos extends JFrame {
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         setBounds(100, 100, 1366, 768);
         contentPane = new JPanel();
+        contentPane.removeAll();
         contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
         setContentPane(contentPane);
         contentPane.setLayout(null);
@@ -92,8 +92,7 @@ public class ViewListagemDePedidos extends JFrame {
     }
     
     
-    public void gerarCards(String token) {
-		JPanel columnOrganizePanel = new JPanel(); 
+    public void gerarCards(String token, JPanel columnOrganizePanel) {
 		columnOrganizePanel.setBounds(10, 115, 1344, 559);
 		contentPane.add(columnOrganizePanel);
 		
@@ -103,22 +102,39 @@ public class ViewListagemDePedidos extends JFrame {
 			Paginacao<Pedido> paginas = pedidosClient.listarPor(id, 0, Status.REALIZADO);
 			
 			for (int i = 0; i < paginas.getListagem().size(); i++) {
-				Pedido pedido = paginas.getListagem().get(i); 
-				columnOrganizePanel.add(gerarPedido(new JPanel(), pedido));
+				columnOrganizePanel.add(gerarPedido(
+							new JPanel(), 
+							new JPanel(),
+							new JPanel(),
+							paginas.getListagem().get(i),
+							new JLabel("Cliente: " + paginas.getListagem().get(i).getCliente().getNome()),
+							new JLabel("Endereço: " + paginas.getListagem().get(i).getEndereco().getRua()),
+							new JLabel("Total: R$" + paginas.getListagem().get(i).getValorTotal().toString()),
+							new JButton("Detalhes"),
+							columnOrganizePanel
+						));
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
     
-    private java.awt.Component gerarPedido(JPanel panelPedido, Pedido pedido) {
-        panelPedido.setBorder(new TitledBorder(new LineBorder(new Color(250, 0, 0)), "N\u00B0 do pedido", TitledBorder.CENTER, TitledBorder.TOP, null, new Color(250, 250, 250)));
+    private java.awt.Component gerarPedido(
+    		JPanel panelPedido,
+    		JPanel panelInfo,
+    		JPanel panel,
+    		Pedido pedido,
+    		JLabel lblCliente,
+    		JLabel lblEndereco,
+    		JLabel lblTotal,
+    		JButton btnDetalhes,
+    		JPanel columnOrganizePanel) {
+    	
+    	panelPedido.setBorder(new TitledBorder(new LineBorder(new Color(250, 0, 0)), "N\u00B0 do pedido", TitledBorder.CENTER, TitledBorder.TOP, null, new Color(250, 250, 250)));
         panelPedido.setBackground(Color.RED);
         
-        JPanel panelInfo = new JPanel();
         panelInfo.setBackground(Color.RED);
         
-        JPanel panel = new JPanel();
         panel.setBackground(Color.RED);
         
         GroupLayout gl_panelPedido = new GroupLayout(panelPedido);
@@ -141,34 +157,26 @@ public class ViewListagemDePedidos extends JFrame {
                     .addComponent(panel, GroupLayout.PREFERRED_SIZE, 25, Short.MAX_VALUE)
                     .addContainerGap())
         );
-        panel.setLayout(new FlowLayout(FlowLayout.CENTER, 0, 0)); // Use FlowLayout
+        panel.setLayout(new FlowLayout(FlowLayout.CENTER, 0, 0)); 
         
-        JButton btnV = new JButton("Detalhes");
-        panel.add(btnV);
-        btnV.setVerticalAlignment(SwingConstants.CENTER);
-        btnV.setPreferredSize(new Dimension(200, 25));
-        btnV.setForeground(Color.RED);
-        btnV.setBackground(Color.WHITE);
+        btnDetalhes.setVerticalAlignment(SwingConstants.CENTER);
+        btnDetalhes.setPreferredSize(new Dimension(200, 25));
+        btnDetalhes.setForeground(Color.RED);
+        btnDetalhes.setBackground(Color.WHITE);
+		panel.add(btnDetalhes);
         
-        btnV.addActionListener(new ActionListener() {
+        btnDetalhes.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                viewDetalhesDeUmPedido.abrirTela(token, pedido);
-                Container columnOrganizePanel = new Container();
-                columnOrganizePanel.remove(panelPedido);
-                columnOrganizePanel.revalidate();
-                columnOrganizePanel.repaint();
-                viewDetalhesDeUmPedido.abrirTela(token, pedido);
-                gerarCards(token);
+            	dispose();
+            	viewDetalhesDeUmPedido.abrirTela(token, pedido);
+            	contentPane.remove(columnOrganizePanel);
+            	contentPane.remove(panelPedido);
+            	contentPane.remove(panelInfo);
+            	contentPane.remove(columnOrganizePanel);
             }
         });
 
-        
-
-        
-        JLabel lblCliente = new JLabel("Cliente: " + pedido.getCliente().getNome());
-        JLabel lblEndereco = new JLabel("Endereço: " + pedido.getEndereco().getRua());
-        JLabel lblTotal = new JLabel("Total: R$" + pedido.getValorTotal().toString());
         lblCliente.setForeground(new Color(255, 255, 255));
         lblEndereco.setForeground(new Color(255, 255, 255));
         lblTotal.setForeground(new Color(255, 255, 255));
@@ -198,5 +206,4 @@ public class ViewListagemDePedidos extends JFrame {
         panelPedido.setLayout(gl_panelPedido);
         return panelPedido;
     }
-	
 }

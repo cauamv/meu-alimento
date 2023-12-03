@@ -4,7 +4,6 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -19,6 +18,8 @@ import org.springframework.stereotype.Component;
 import br.com.senai.gestaoDeCadastroFront.client.pedidos.PedidosClient;
 import br.com.senai.gestaoDeCadastroFront.dto.enums.Status;
 import br.com.senai.gestaoDeCadastroFront.dto.pedidos.Pedido;
+import javax.swing.GroupLayout;
+import javax.swing.GroupLayout.Alignment;
 
 @Component
 public class ViewDetalhesDeUmPedido extends JFrame {
@@ -31,9 +32,6 @@ public class ViewDetalhesDeUmPedido extends JFrame {
 	@Autowired
 	private PedidosClient pedidosClient;
 	
-	@Autowired
-	private ViewListagemDePedidos viewPedido;
-
 	@Autowired
 	private ViewListagemDePedidos viewListagemDePedidos;
 	
@@ -143,11 +141,9 @@ public class ViewDetalhesDeUmPedido extends JFrame {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				pedidosClient.atualizarPor(pedido.getIdPedido(), Status.ACEITO_PELO_RESTAURANTE);
-				dispose();
-				viewPedido.setVisible(true);
 				JOptionPane.showMessageDialog(contentPane, "Aceito");
-				viewListagemDePedidos.abrirTela(token);
 				dispose();
+				viewListagemDePedidos.abrirTela(token);
 			}
 		});
 		contentPane.add(btnAceitar);
@@ -159,6 +155,31 @@ public class ViewDetalhesDeUmPedido extends JFrame {
 		btnRecusar.setBackground(Color.RED);
 		btnRecusar.setBounds(1214, 659, 126, 44);
 		contentPane.add(btnRecusar);
+		
+		JPanel panel = new JPanel();
+		panel.setBackground(Color.RED);
+		panel.setBounds(0, 0, 1360, 188);
+		contentPane.add(panel);
+		
+		JLabel lblNewLabel = new JLabel("Detalhes do Pedido");
+		lblNewLabel.setFont(new Font("Dialog", Font.BOLD, 43));
+		lblNewLabel.setForeground(Color.WHITE);
+		GroupLayout gl_panel = new GroupLayout(panel);
+		gl_panel.setHorizontalGroup(
+			gl_panel.createParallelGroup(Alignment.LEADING)
+				.addGroup(gl_panel.createSequentialGroup()
+					.addGap(451)
+					.addComponent(lblNewLabel)
+					.addContainerGap(511, Short.MAX_VALUE))
+		);
+		gl_panel.setVerticalGroup(
+			gl_panel.createParallelGroup(Alignment.LEADING)
+				.addGroup(gl_panel.createSequentialGroup()
+					.addGap(66)
+					.addComponent(lblNewLabel)
+					.addContainerGap(67, Short.MAX_VALUE))
+		);
+		panel.setLayout(gl_panel);
 		
 		setLocationRelativeTo(null);
 	}
