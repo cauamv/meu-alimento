@@ -2,6 +2,7 @@ package br.com.senai.gestaoDeCadastroFront.client;
 
 import java.net.URI;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.HttpEntity;
@@ -23,11 +24,13 @@ import br.com.senai.gestaoDeCadastroFront.dto.Paginacao;
 @Component
 public class CuponsClient {
 
-	private AplicadorDeToken aplicadorDeToken = new AplicadorDeToken();
+	@Autowired
+	private AplicadorDeToken aplicadorDeToken;
 
 	private RestTemplate httpClient = new RestTemplate();
 
-	private AutenticadorClient autenticadorClient = new AutenticadorClient();
+	@Autowired
+	private AutenticadorClient autenticadorClient;
 
 	@Value("${base.url}")
 	private String URL;
@@ -35,11 +38,12 @@ public class CuponsClient {
 	private String POST_ENDPOINT = "/cupons";
 	
 	public Paginacao<Cupom> listarTodos(Integer pagina, CredencialDeAcesso credencialDeAcesso) {
+		
 		String token = autenticadorClient.getTokenPela(credencialDeAcesso).getValor();
 
 		HttpHeaders headers = aplicadorDeToken.aplicar(token);
 
-		ResponseEntity<Paginacao<Cupom>> cuponsEncontrados = httpClient.exchange("http://localhost:3001/cupons",
+		ResponseEntity<Paginacao<Cupom>> cuponsEncontrados = httpClient.exchange(URL  + POST_ENDPOINT,
 				HttpMethod.GET, new HttpEntity<>(headers), new ParameterizedTypeReference<Paginacao<Cupom>>() {
 				});
 
