@@ -119,13 +119,22 @@ public class ViewCadastro extends JFrame {
 					String dataString = LocalDate.parse(txtDataNascimento.getText().toString(), formatterEntrada).format(formatterSaida);
 					LocalDate data = LocalDate.parse(dataString);
 					String email = txtEmail.getText();
-					UsuarioDto usuarioDto = new UsuarioDto();
-					usuarioDto.setEmail(email);
-					usuarioDto.setRole("Administrador");
-					NovoClienteDto cadastroDto = new NovoClienteDto(nome, sexo, data, usuarioDto);
+					if (nome != null
+					&& !nome.isBlank()
+					&& sexo != null
+					&& data != null
+					&& email != null) {
+						UsuarioDto usuarioDto = new UsuarioDto();
+						usuarioDto.setEmail(email);
+						usuarioDto.setRole("Administrador");
+						NovoClienteDto cadastroDto = new NovoClienteDto(nome, sexo, data, usuarioDto);
 
-					telaSenha.mostrarTela(cadastroDto);
-					dispose();
+						telaSenha.mostrarTela(cadastroDto);
+						dispose();
+					} else {
+						JOptionPane.showMessageDialog(contentPane, "Todos os campos são obrigatórios. ");
+					}
+					
 				} catch (Exception ex) {
 					JOptionPane.showMessageDialog(contentPane, "Todos os campos são obrigatórios. ");
 					ex.printStackTrace();
