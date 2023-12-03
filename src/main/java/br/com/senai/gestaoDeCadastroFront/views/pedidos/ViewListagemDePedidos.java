@@ -4,16 +4,19 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Font;
+import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.swing.GroupLayout;
-import javax.swing.GroupLayout.Alignment;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.LayoutStyle.ComponentPlacement;
+import javax.swing.JScrollPane;
+import javax.swing.LayoutStyle;
 import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.LineBorder;
@@ -25,7 +28,6 @@ import org.springframework.stereotype.Component;
 
 import br.com.senai.gestaoDeCadastroFront.client.decode.TokenDecoder;
 import br.com.senai.gestaoDeCadastroFront.client.pedidos.PedidosClient;
-import br.com.senai.gestaoDeCadastroFront.dto.Paginacao;
 import br.com.senai.gestaoDeCadastroFront.dto.enums.Status;
 import br.com.senai.gestaoDeCadastroFront.dto.pedidos.Pedido;
 
@@ -33,26 +35,23 @@ import br.com.senai.gestaoDeCadastroFront.dto.pedidos.Pedido;
 public class ViewListagemDePedidos extends JFrame {
 
     private static final long serialVersionUID = 1L;
-    
+
     private JPanel contentPane;
-    
+
     @Autowired
     private PedidosClient pedidosClient;
-    
+
     @Autowired
     @Lazy
     private ViewDetalhesDeUmPedido viewDetalhesDeUmPedido;
     
-    private String token;
-    
-    public void abrirTela(String token) {
-        this.token = token;
-        this.setVisible(true);
-    	gerarCards(token, new JPanel());
-    }
+    private JScrollPane scrollPane;
 
-    @Autowired
-    public ViewListagemDePedidos() {
+    private String token;
+
+    public ViewListagemDePedidos(PedidosClient pedidosClient) {
+        this.pedidosClient = pedidosClient;
+
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         setBounds(100, 100, 1366, 768);
         contentPane = new JPanel();
@@ -60,148 +59,161 @@ public class ViewListagemDePedidos extends JFrame {
         contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
         setContentPane(contentPane);
         contentPane.setLayout(null);
-        
+
         JPanel panelSuperior = new JPanel();
         panelSuperior.setBackground(Color.RED);
         panelSuperior.setBounds(0, 0, 1401, 103);
         contentPane.add(panelSuperior);
-        
+
         JLabel lblNewLabel = new JLabel("Gestor de Pedidos");
         lblNewLabel.setForeground(Color.WHITE);
         lblNewLabel.setBackground(Color.BLACK);
         lblNewLabel.setHorizontalAlignment(SwingConstants.CENTER);
         lblNewLabel.setFont(new Font("Dialog", Font.BOLD, 43));
-        GroupLayout gl_panelSuperior = new GroupLayout(panelSuperior);
-        gl_panelSuperior.setHorizontalGroup(
-            gl_panelSuperior.createParallelGroup(Alignment.LEADING)
-                .addGroup(Alignment.TRAILING, gl_panelSuperior.createSequentialGroup()
-                    .addContainerGap(543, Short.MAX_VALUE)
-                    .addComponent(lblNewLabel)
-                    .addGap(538))
-        );
-        gl_panelSuperior.setVerticalGroup(
-            gl_panelSuperior.createParallelGroup(Alignment.LEADING)
-                .addGroup(gl_panelSuperior.createSequentialGroup()
-                    .addGap(23)
-                    .addComponent(lblNewLabel)
-                    .addContainerGap(34, Short.MAX_VALUE))
-        );
-        panelSuperior.setLayout(gl_panelSuperior);
+        panelSuperior.add(lblNewLabel);
         
         setLocationRelativeTo(null);
     }
-    
-    
+
+    public void abrirTela(String token) {
+        this.token = token;
+        this.setVisible(true);
+        gerarCards(token, new JPanel());
+    }
+
     public void gerarCards(String token, JPanel columnOrganizePanel) {
-		columnOrganizePanel.setBounds(10, 115, 1344, 559);
-		contentPane.add(columnOrganizePanel);
-		
-		try {
-			TokenDecoder decoder = new TokenDecoder();
-			Integer id = Integer.parseInt(decoder.extrairIdRestauranteDo(token));
-			Paginacao<Pedido> paginas = pedidosClient.listarPor(id, 0, Status.REALIZADO);
-			
-			for (int i = 0; i < paginas.getListagem().size(); i++) {
-				columnOrganizePanel.add(gerarPedido(
-							new JPanel(), 
-							new JPanel(),
-							new JPanel(),
-							paginas.getListagem().get(i),
-							new JLabel("Cliente: " + paginas.getListagem().get(i).getCliente().getNome()),
-							new JLabel("Endereço: " + paginas.getListagem().get(i).getEndereco().getRua()),
-							new JLabel("Total: R$" + paginas.getListagem().get(i).getValorTotal().toString()),
-							new JButton("Detalhes"),
-							columnOrganizePanel
-						));
-			}
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-	}
-    
-    private java.awt.Component gerarPedido(
+        int colunas = 4; 
+        int espacoEntrePedidos = 10; 
+
+        columnOrganizePanel.setLayout(new GridLayout(0, colunas, espacoEntrePedidos, espacoEntrePedidos));
+        columnOrganizePanel.setBounds(10, 115, 1344, 559);
+
+        try {
+            TokenDecoder decoder = new TokenDecoder();
+            Integer id = Integer.parseInt(decoder.extrairIdRestauranteDo(token));
+
+            List<Pedido> todosPedidos = new ArrayList<>();
+            todosPedidos.addAll(pedidosClient.listarPor(id, 0, Status.REALIZADO).getListagem());
+            todosPedidos.addAll(pedidosClient.listarPor(id, 0, Status.ACEITO_PELO_RESTAURANTE).getListagem());
+            todosPedidos.addAll(pedidosClient.listarPor(id, 0, Status.PRONTO_PARA_COLETA).getListagem());
+
+            for (Pedido pedido : todosPedidos) {
+                Color background = Color.gray;
+                Color foreground = Color.white;
+
+                if (pedido.getStatus().equals(Status.REALIZADO.toString())) {
+                    background = Color.red;
+                } else if (pedido.getStatus().equals(Status.PRONTO_PARA_COLETA.toString())) {
+                	background = Color.green;
+                } else if (pedido.getStatus().equals(Status.ACEITO_PELO_RESTAURANTE.toString())) {
+                    background = Color.black;
+                }
+
+                JPanel panelPedido = gerarPedido(
+                        new JPanel(),
+                        new JPanel(),
+                        new JPanel(),
+                        pedido,
+                        new JLabel("Cliente: " + pedido.getCliente().getNome()),
+                        new JLabel("Endereço: " + pedido.getEndereco().getRua()),
+                        new JLabel("Total: R$" + pedido.getValorTotal().toString()),
+                        new JButton("Detalhes"),
+                        columnOrganizePanel,
+                        background,
+                        foreground,
+                        pedido.getStatus().toString()
+                );
+
+                columnOrganizePanel.add(panelPedido);
+            }
+
+            scrollPane = new JScrollPane(columnOrganizePanel,
+                    JScrollPane.VERTICAL_SCROLLBAR_ALWAYS, JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+            scrollPane.setBounds(10, 115, 1344, 559);
+            scrollPane.setBorder(new EmptyBorder(10, 10, 10, 10));
+            contentPane.add(scrollPane);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    private JPanel gerarPedido(
     		JPanel panelPedido,
     		JPanel panelInfo,
     		JPanel panel,
     		Pedido pedido,
     		JLabel lblCliente,
-    		JLabel lblEndereco,
-    		JLabel lblTotal,
-    		JButton btnDetalhes,
-    		JPanel columnOrganizePanel) {
-    	
-    	panelPedido.setBorder(new TitledBorder(new LineBorder(new Color(250, 0, 0)), "N\u00B0 do pedido", TitledBorder.CENTER, TitledBorder.TOP, null, new Color(250, 250, 250)));
-        panelPedido.setBackground(Color.RED);
+            JLabel lblEndereco,
+            JLabel lblTotal,
+            JButton btnDetalhes,
+            JPanel columnOrganizePanel,
+            Color backgoundColor,
+            Color foregroundCOlor,
+            String status
+    		) {
+
+        panelPedido.setBorder(new TitledBorder(new LineBorder(new Color(250, 0, 0)), "Tipo: " + status.toString(),
+                TitledBorder.CENTER, TitledBorder.TOP, null, new Color(250, 250, 250)));
         
-        panelInfo.setBackground(Color.RED);
-        
-        panel.setBackground(Color.RED);
-        
+        panelPedido.setBackground(backgoundColor);
+
+        panelInfo.setBackground(backgoundColor);
+
+        panel.setBackground(backgoundColor);
+
         GroupLayout gl_panelPedido = new GroupLayout(panelPedido);
-        gl_panelPedido.setHorizontalGroup(
-            gl_panelPedido.createParallelGroup(Alignment.CENTER)
-                .addGroup(gl_panelPedido.createSequentialGroup()
-                    .addContainerGap()
-                    .addGroup(gl_panelPedido.createParallelGroup(Alignment.LEADING)
-                        .addComponent(panel, GroupLayout.DEFAULT_SIZE, 196, Short.MAX_VALUE)
-                        .addGroup(gl_panelPedido.createSequentialGroup()
-                            .addComponent(panelInfo, GroupLayout.DEFAULT_SIZE, 135, Short.MAX_VALUE)
-                            .addGap(61))))
-        );
-        gl_panelPedido.setVerticalGroup(
-            gl_panelPedido.createParallelGroup(Alignment.LEADING)
-                .addGroup(gl_panelPedido.createSequentialGroup()
-                    .addContainerGap()
-                    .addComponent(panelInfo, GroupLayout.PREFERRED_SIZE, 75, GroupLayout.PREFERRED_SIZE)
-                    .addPreferredGap(ComponentPlacement.RELATED)
-                    .addComponent(panel, GroupLayout.PREFERRED_SIZE, 25, Short.MAX_VALUE)
-                    .addContainerGap())
-        );
-        panel.setLayout(new FlowLayout(FlowLayout.CENTER, 0, 0)); 
-        
+        gl_panelPedido.setHorizontalGroup(gl_panelPedido.createParallelGroup(GroupLayout.Alignment.CENTER)
+                .addGroup(gl_panelPedido.createSequentialGroup().addContainerGap()
+                        .addGroup(gl_panelPedido.createParallelGroup(GroupLayout.Alignment.LEADING)
+                                .addComponent(panel, GroupLayout.DEFAULT_SIZE, 196, Short.MAX_VALUE)
+                                .addGroup(gl_panelPedido.createSequentialGroup()
+                                        .addComponent(panelInfo, GroupLayout.DEFAULT_SIZE, 135, Short.MAX_VALUE)
+                                        .addGap(61)))));
+        gl_panelPedido.setVerticalGroup(gl_panelPedido.createParallelGroup(GroupLayout.Alignment.LEADING)
+                .addGroup(gl_panelPedido.createSequentialGroup().addContainerGap()
+                        .addComponent(panelInfo, GroupLayout.PREFERRED_SIZE, 75, GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(panel, GroupLayout.PREFERRED_SIZE, 25, Short.MAX_VALUE).addContainerGap()));
+
+        panel.setLayout(new FlowLayout(FlowLayout.CENTER, 0, 0));
+
         btnDetalhes.setVerticalAlignment(SwingConstants.CENTER);
         btnDetalhes.setPreferredSize(new Dimension(200, 25));
-        btnDetalhes.setForeground(Color.RED);
-        btnDetalhes.setBackground(Color.WHITE);
-		panel.add(btnDetalhes);
         
+        btnDetalhes.setForeground(backgoundColor);
+        btnDetalhes.setBackground(foregroundCOlor);
+        panel.add(btnDetalhes);
+
         btnDetalhes.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-            	dispose();
-            	viewDetalhesDeUmPedido.abrirTela(token, pedido);
-            	contentPane.remove(columnOrganizePanel);
-            	contentPane.remove(panelPedido);
-            	contentPane.remove(panelInfo);
-            	contentPane.remove(columnOrganizePanel);
+                dispose();
+                viewDetalhesDeUmPedido.abrirTela(token, pedido, status);
+                contentPane.remove(columnOrganizePanel);
+                contentPane.remove(panelPedido);
+                contentPane.remove(panelInfo);
+                contentPane.remove(columnOrganizePanel);
+                contentPane.remove(scrollPane);
             }
         });
 
         lblCliente.setForeground(new Color(255, 255, 255));
         lblEndereco.setForeground(new Color(255, 255, 255));
         lblTotal.setForeground(new Color(255, 255, 255));
-        
+
         GroupLayout gl_panelInfo = new GroupLayout(panelInfo);
-        gl_panelInfo.setHorizontalGroup(
-            gl_panelInfo.createParallelGroup(Alignment.LEADING)
-                .addGroup(gl_panelInfo.createSequentialGroup()
-                    .addGap(5)
-                    .addGroup(gl_panelInfo.createParallelGroup(Alignment.LEADING)
-                        .addComponent(lblCliente)
-                        .addComponent(lblEndereco)
-                        .addComponent(lblTotal))
-                    .addContainerGap(115, Short.MAX_VALUE))
-        );
-        gl_panelInfo.setVerticalGroup(
-            gl_panelInfo.createParallelGroup(Alignment.LEADING)
-                .addGroup(Alignment.TRAILING, gl_panelInfo.createSequentialGroup()
-                    .addContainerGap(18, Short.MAX_VALUE)
-                    .addComponent(lblCliente)
-                    .addPreferredGap(ComponentPlacement.RELATED)
-                    .addComponent(lblEndereco)
-                    .addPreferredGap(ComponentPlacement.RELATED)
-                    .addComponent(lblTotal))
-        );
+        gl_panelInfo.setHorizontalGroup(gl_panelInfo.createParallelGroup(GroupLayout.Alignment.LEADING)
+                .addGroup(gl_panelInfo.createSequentialGroup().addGap(5)
+                        .addGroup(gl_panelInfo.createParallelGroup(GroupLayout.Alignment.LEADING).addComponent(lblCliente)
+                                .addComponent(lblEndereco).addComponent(lblTotal))
+                        .addContainerGap(115, Short.MAX_VALUE)));
+        gl_panelInfo.setVerticalGroup(gl_panelInfo.createParallelGroup(GroupLayout.Alignment.LEADING)
+                .addGroup(GroupLayout.Alignment.TRAILING,
+                        gl_panelInfo.createSequentialGroup().addContainerGap(18, Short.MAX_VALUE)
+                                .addComponent(lblCliente).addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(lblEndereco).addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(lblTotal)));
         panelInfo.setLayout(gl_panelInfo);
         panelPedido.setLayout(gl_panelPedido);
         return panelPedido;

@@ -130,7 +130,7 @@ public class ViewEndereco extends JFrame {
 					dto.setNumeroDaCasa(txtNumeroDaCasa.getText());
 					dto.setComplemento(textComplemento.getText());
 					dto.setClienteDto(clienteDto);
-					enderecoClient.inserir(dto);
+					enderecoClient.inserir(dto, new CredencialDeAcesso(clienteDto.getUsuario().getEmail(), clienteDto.getUsuario().getSenha()));
 					CredencialDeAcesso credencialDeAcesso = new CredencialDeAcesso();
 					credencialDeAcesso.setEmail(clienteDto.getUsuario().getEmail());
 					credencialDeAcesso.setSenha(clienteDto.getUsuario().getSenha());
