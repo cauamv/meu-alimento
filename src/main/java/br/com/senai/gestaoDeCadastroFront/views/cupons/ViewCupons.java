@@ -126,16 +126,6 @@ public class ViewCupons extends JFrame {
 		btnCriar.setBounds(40, 233, 132, 44);
 		contentPane.add(btnCriar);
 		
-		JButton btnBuscar = new JButton("Buscar");
-		btnBuscar.setRolloverEnabled(true);
-		btnBuscar.setForeground(Color.WHITE);
-		btnBuscar.setFont(new Font("Tahoma", Font.PLAIN, 19));
-		btnBuscar.setBounds(new Rectangle(10, 10, 10, 10));
-		btnBuscar.setBorder(null);
-		btnBuscar.setBackground(Color.RED);
-		btnBuscar.setBounds(207, 235, 132, 41);
-		contentPane.add(btnBuscar);
-		
 		this.configurarCabecalhos(tbCupons);
 		
 		lblMeusCupons = new JLabel("Meus Cupons");
@@ -145,6 +135,34 @@ public class ViewCupons extends JFrame {
 		lblMeusCupons.setFont(new Font("Dialog", Font.BOLD, 43));
 		lblMeusCupons.setBounds(0, 0, 1363, 104);
 		contentPane.add(lblMeusCupons);
+		
+		JButton btnDesativar = new JButton("Desativar");
+		btnDesativar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+			}
+		});
+		btnDesativar.setRolloverEnabled(true);
+		btnDesativar.setForeground(Color.WHITE);
+		btnDesativar.setFont(new Font("Tahoma", Font.PLAIN, 19));
+		btnDesativar.setBounds(new Rectangle(10, 10, 10, 10));
+		btnDesativar.setBorder(null);
+		btnDesativar.setBackground(Color.RED);
+		btnDesativar.setBounds(324, 233, 132, 44);
+		contentPane.add(btnDesativar);
+		
+		JButton btnAlterar = new JButton("Alterar");
+		btnAlterar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+			}
+		});
+		btnAlterar.setRolloverEnabled(true);
+		btnAlterar.setForeground(Color.WHITE);
+		btnAlterar.setFont(new Font("Tahoma", Font.PLAIN, 19));
+		btnAlterar.setBounds(new Rectangle(10, 10, 10, 10));
+		btnAlterar.setBorder(null);
+		btnAlterar.setBackground(Color.RED);
+		btnAlterar.setBounds(182, 233, 132, 44);
+		contentPane.add(btnAlterar);
 		
 		setLocationRelativeTo(null);
 

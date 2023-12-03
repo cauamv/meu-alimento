@@ -87,9 +87,15 @@ public class ViewLogin extends JFrame {
 
             public void actionPerformed(ActionEvent e) {
                 try {
-                    String email = txtEmail.getText();
-                    String senha = new String(txtSenha.getPassword());
-                    if (!email.isBlank() && !senha.isBlank()) {
+                    //String email = txtEmail.getText();
+                    //String senha = new String(txtSenha.getPassword());
+                	
+                	
+                    String email = "cauamv@gmail.com";
+                	String senha = "12345678";
+                	
+                	
+                	if (!email.isBlank() && !senha.isBlank()) {
                         viewGestor.abrirTela(new CredencialDeAcesso(email, senha));
                         dispose();
                     } else {
