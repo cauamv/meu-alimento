@@ -23,13 +23,14 @@ public class InitApp {
 		builder.run(args);
 	} 
 	
+	
 	@Bean
 	public CommandLineRunner commandLineRunner(ApplicationContext ctx) {		
 		return args -> {			
 			EventQueue.invokeLater(new Runnable() {
 				public void run() {
 					try {		
-						viewLogin.setVisible(true);;
+						viewLogin.setVisible(true);
 					} catch (Exception e) {
 						e.printStackTrace();
 					}

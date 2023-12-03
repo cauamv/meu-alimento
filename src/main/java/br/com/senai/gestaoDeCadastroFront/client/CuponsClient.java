@@ -2,6 +2,7 @@ package br.com.senai.gestaoDeCadastroFront.client;
 
 import java.net.URI;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.HttpEntity;
@@ -19,27 +20,33 @@ import br.com.senai.gestaoDeCadastroFront.dto.Cupom;
 import br.com.senai.gestaoDeCadastroFront.dto.GetCupomDto;
 import br.com.senai.gestaoDeCadastroFront.dto.NovoCupomDto;
 import br.com.senai.gestaoDeCadastroFront.dto.Paginacao;
+import br.com.senai.gestaoDeCadastroFront.dto.enums.StatusDoCupom;
+import br.com.senai.gestaoDeCadastroFront.dto.pedidos.Pedido;
 
 @Component
 public class CuponsClient {
 
-	private AplicadorDeToken aplicadorDeToken = new AplicadorDeToken();
+	@Autowired
+	private AplicadorDeToken aplicadorDeToken;
 
-	private RestTemplate httpClient = new RestTemplate();
+	@Autowired
+	private RestTemplate httpClient;
 
-	private AutenticadorClient autenticadorClient = new AutenticadorClient();
+	@Autowired
+	private AutenticadorClient autenticadorClient;
 
 	@Value("${base.url}")
 	private String URL;
 
-	private String POST_ENDPOINT = "/cupons";
+	private String ENDPOINT = "/cupons";
 	
 	public Paginacao<Cupom> listarTodos(Integer pagina, CredencialDeAcesso credencialDeAcesso) {
+		
 		String token = autenticadorClient.getTokenPela(credencialDeAcesso).getValor();
 
 		HttpHeaders headers = aplicadorDeToken.aplicar(token);
 
-		ResponseEntity<Paginacao<Cupom>> cuponsEncontrados = httpClient.exchange("http://localhost:3001/cupons",
+		ResponseEntity<Paginacao<Cupom>> cuponsEncontrados = httpClient.exchange(URL  + ENDPOINT,
 				HttpMethod.GET, new HttpEntity<>(headers), new ParameterizedTypeReference<Paginacao<Cupom>>() {
 				});
 
@@ -61,7 +68,7 @@ public class CuponsClient {
 		
 		HttpEntity<NovoCupomDto> request = new HttpEntity<NovoCupomDto>(cupomCadastroDto, headers);		
 
-		URI location = httpClient.postForLocation(URL + POST_ENDPOINT, request);
+		URI location = httpClient.postForLocation(URL + ENDPOINT, request);
 		
 		ResponseEntity<GetCupomDto> cupomSalvo = httpClient.exchange(
 				URL + location,
@@ -71,6 +78,12 @@ public class CuponsClient {
 		);
 		
 		return cupomSalvo.getBody();
+	}
+	
+	public void atualizarPor(Integer idDoCupom, StatusDoCupom status, CredencialDeAcesso credencialDeAcesso) {
+		HttpEntity<Pedido> request = new HttpEntity<Pedido>(aplicadorDeToken.aplicar(autenticadorClient.getTokenPela(credencialDeAcesso).getValor()));
+		this.httpClient.patchForObject(URL + ENDPOINT + "/id/" + idDoCupom.toString() + "/status/" + status, request, Void.class);
+		
 	}
 
 }

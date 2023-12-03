@@ -1,7 +1,6 @@
 package br.com.senai.gestaoDeCadastroFront.views;
 
 import java.awt.Color;
-import java.awt.EventQueue;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -20,19 +19,6 @@ public class ViewInicial extends JFrame {
 
     private static final long serialVersionUID = 1L;
     private JPanel contentPane;
-
-    public static void main(String[] args) {
-        EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                try {
-                    ViewInicial frame = new ViewInicial();
-                    frame.setVisible(true);
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-            }
-        });
-    }
 
     public ViewInicial() {
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
