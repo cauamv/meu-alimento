@@ -15,12 +15,12 @@ import br.com.senai.gestaoDeCadastroFront.dto.TokenDto;
 @Component
 public class AutenticadorClient {
 	
-	@Value("${base.url}")
-	private String URL;
-	
 	private RestTemplate httpClient = new RestTemplate();
 	
 	private Token token;
+	
+	@Value("${base.url}")
+	private String URL;
 	
 	public Token getTokenPela(CredencialDeAcesso credencialDeAcesso) {
 		if (token != null && !token.isExpirado()) {

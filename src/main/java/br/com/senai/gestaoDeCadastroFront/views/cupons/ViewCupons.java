@@ -139,6 +139,7 @@ public class ViewCupons extends JFrame {
 		JButton btnDesativar = new JButton("Desativar");
 		btnDesativar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				int linhaSelecionada = tbCupons.getSelectedRow();
 			}
 		});
 		btnDesativar.setRolloverEnabled(true);

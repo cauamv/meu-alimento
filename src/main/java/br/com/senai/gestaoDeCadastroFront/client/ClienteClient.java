@@ -22,11 +22,13 @@ import br.com.senai.gestaoDeCadastroFront.dto.UsuarioDto;
 @Component
 public class ClienteClient {
 
-	private AplicadorDeToken aplicadorDeToken = new AplicadorDeToken();
+	@Autowired
+	private AplicadorDeToken aplicadorDeToken;
 	
 	private RestTemplate httpClient = new RestTemplate();
 	
-	private AutenticadorClient autenticadorClient = new AutenticadorClient();
+	@Autowired
+	private AutenticadorClient autenticadorClient;
 	
 	@Value("${base.url}")
 	private String URL;
