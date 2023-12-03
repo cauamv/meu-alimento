@@ -90,14 +90,18 @@ public class ViewSenha extends JFrame {
 		btnProximo.setForeground(Color.BLACK);
 		btnProximo.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				if (!String.valueOf(txtfConfirmeSenha.getPassword()).equals(String.valueOf(txtfSenha1.getPassword()))) {
-					JOptionPane.showMessageDialog(contentPane, "senhas não conferem. ");
+				if (txtfSenha1.getPassword() != null && txtfConfirmeSenha.getPassword() != null) {
+					if (!String.valueOf(txtfConfirmeSenha.getPassword()).equals(String.valueOf(txtfSenha1.getPassword()))) {
+						JOptionPane.showMessageDialog(contentPane, "senhas não conferem. ");
+					}
+					cadastroDto.getUsuario().setSenha(String.valueOf(txtfConfirmeSenha.getPassword()));
+					ClienteDto clienteDto = clienteClient.inserir(cadastroDto);
+					viewEndereco.abrirTela(clienteDto);
+					dispose();
+				} else {
+					JOptionPane.showMessageDialog(contentPane, "Todos os campos são obrigatórios");
 				}
-				cadastroDto.getUsuario().setSenha(String.valueOf(txtfConfirmeSenha.getPassword()));
-				ClienteDto clienteDto = clienteClient.inserir(cadastroDto);
-				viewEndereco.abrirTela(clienteDto);
-				dispose();
-
+				
 			}
 		});
 
