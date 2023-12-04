@@ -35,7 +35,7 @@ public class AutenticadorClient {
 		HttpEntity<CredencialDeAcesso> request = new HttpEntity<CredencialDeAcesso>(credencial);
 		
 		ResponseEntity<TokenDto> tokenGerado = httpClient.exchange(
-				"http://localhost:3001/auth",
+				URL + "/auth",
 				HttpMethod.POST,
 				request,
 				TokenDto.class

@@ -21,7 +21,6 @@ import br.com.senai.gestaoDeCadastroFront.dto.GetCupomDto;
 import br.com.senai.gestaoDeCadastroFront.dto.NovoCupomDto;
 import br.com.senai.gestaoDeCadastroFront.dto.Paginacao;
 import br.com.senai.gestaoDeCadastroFront.dto.enums.StatusDoCupom;
-import br.com.senai.gestaoDeCadastroFront.dto.pedidos.Pedido;
 
 @Component
 public class CuponsClient {
@@ -41,15 +40,11 @@ public class CuponsClient {
 	private String ENDPOINT = "/cupons";
 	
 	public Paginacao<Cupom> listarTodos(Integer pagina, CredencialDeAcesso credencialDeAcesso) {
-		
 		String token = autenticadorClient.getTokenPela(credencialDeAcesso).getValor();
-
 		HttpHeaders headers = aplicadorDeToken.aplicar(token);
-
 		ResponseEntity<Paginacao<Cupom>> cuponsEncontrados = httpClient.exchange(URL  + ENDPOINT,
 				HttpMethod.GET, new HttpEntity<>(headers), new ParameterizedTypeReference<Paginacao<Cupom>>() {
 				});
-
 		return cuponsEncontrados.getBody();
 
 	}
@@ -81,9 +76,18 @@ public class CuponsClient {
 	}
 	
 	public void atualizarPor(Integer idDoCupom, StatusDoCupom status, CredencialDeAcesso credencialDeAcesso) {
-		HttpEntity<Pedido> request = new HttpEntity<Pedido>(aplicadorDeToken.aplicar(autenticadorClient.getTokenPela(credencialDeAcesso).getValor()));
+		HttpEntity<Cupom> request = new HttpEntity<Cupom>(aplicadorDeToken.aplicar(autenticadorClient.getTokenPela(credencialDeAcesso).getValor()));
 		this.httpClient.patchForObject(URL + ENDPOINT + "/id/" + idDoCupom.toString() + "/status/" + status, request, Void.class);
+	}
+	
+	public Cupom alterar(Cupom cupom, CredencialDeAcesso credencialDeAcesso) {
+		HttpHeaders headers = aplicadorDeToken.aplicar(autenticadorClient.getTokenPela(credencialDeAcesso).getValor());
 		
+		HttpEntity<Cupom> request = new HttpEntity<Cupom>(cupom, headers);	
+		
+		ResponseEntity<Cupom> cupomAtualizado = httpClient.exchange(
+				URL + ENDPOINT, HttpMethod.PUT, request, Cupom.class);
+		return cupomAtualizado.getBody();
 	}
 
 }

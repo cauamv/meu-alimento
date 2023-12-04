@@ -96,10 +96,6 @@ public class ViewCupons extends JFrame {
 		contentPane.add(scrollPane);
 	}
 	
-	private void atualizarStatus(StatusDoCupom status) {
-		
-	}
-	
 	public ViewCupons() {
 		setResizable(false);
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
@@ -144,6 +140,7 @@ public class ViewCupons extends JFrame {
 		JButton btnDesativar = new JButton("Desativar");
 		btnDesativar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				
 				int linhaSelecionada = tbCupons.getSelectedRow();
 				if (linhaSelecionada >= 0) {
 					int opcao = JOptionPane.showConfirmDialog(contentPane,
@@ -189,6 +186,10 @@ public class ViewCupons extends JFrame {
 		JButton btnAlterar = new JButton("Alterar");
 		btnAlterar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				int linhaSelecionada = tbCupons.getSelectedRow();
+				CupomTableModel model = (CupomTableModel) tbCupons.getModel();
+				Cupom cupomSelecionado = model.getPor(linhaSelecionada);
+				viewFormularioCupom.colocarEmModoDeEdicao(cupomSelecionado);
 			}
 		});
 		btnAlterar.setRolloverEnabled(true);
