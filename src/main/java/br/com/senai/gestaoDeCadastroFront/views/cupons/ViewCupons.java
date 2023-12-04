@@ -95,7 +95,11 @@ public class ViewCupons extends JFrame {
 		scrollPane.setBounds(40, 305, 1284, 314);
 		contentPane.add(scrollPane);
 	}
-
+	
+	private void atualizarStatus(StatusDoCupom status) {
+		
+	}
+	
 	public ViewCupons() {
 		setResizable(false);
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
@@ -141,22 +145,18 @@ public class ViewCupons extends JFrame {
 		btnDesativar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				int linhaSelecionada = tbCupons.getSelectedRow();
-
 				if (linhaSelecionada >= 0) {
-
 					int opcao = JOptionPane.showConfirmDialog(contentPane,
 							"Deseja atualizar o status do cupom selecionado?", "Atualização",
 							JOptionPane.YES_NO_OPTION);
-
+					
 					boolean isConfirmacaoRealizada = opcao == 0;
-
+					
 					if (isConfirmacaoRealizada) {
-
 						try {
 							CupomTableModel model = (CupomTableModel) tbCupons.getModel();
 							Cupom cupomSelecionado = model.getPor(linhaSelecionada);
-							StatusDoCupom novoStatus = StatusDoCupom.I;
-							cuponsClient.atualizarPor(cupomSelecionado.getId(), novoStatus, credencial);
+							cuponsClient.atualizarPor(cupomSelecionado.getId(), StatusDoCupom.I, credencial);
 							listarCuponsDa(paginacao.getPaginaAtual(), credencial);
 							JOptionPane.showMessageDialog(contentPane, "O status do cupom foi atualizado com sucesso",
 									"Sucesso na Desativação", JOptionPane.INFORMATION_MESSAGE);
@@ -171,13 +171,10 @@ public class ViewCupons extends JFrame {
 							JOptionPane.showMessageDialog(contentPane, ex.getMessage(), "Erro na Atualização",
 									JOptionPane.ERROR_MESSAGE);
 						}
-
 					}
-
 				} else {
 					JOptionPane.showMessageDialog(contentPane, "Selecione uma linha para desativação");
 				}
-
 			}
 		});
 		btnDesativar.setRolloverEnabled(true);
