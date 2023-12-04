@@ -116,8 +116,6 @@ public class ViewLogin extends JFrame {
 					if (!email.isBlank() && !senha.isBlank()) {
 						viewGestor.abrirTela(new CredencialDeAcesso(email, senha));
 						dispose();
-					} else {
-						JOptionPane.showMessageDialog(contentPane, "Email e senha são obrigatórios. ");
 					}
 				} catch (Exception e2) {
 					JOptionPane.showMessageDialog(contentPane, "Email e/ou senha incorretos");
