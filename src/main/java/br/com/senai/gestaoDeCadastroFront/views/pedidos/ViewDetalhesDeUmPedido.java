@@ -33,7 +33,7 @@ public class ViewDetalhesDeUmPedido extends JFrame {
     private PedidosClient pedidosClient;
 
     @Autowired
-    private ViewListagemDePedidos viewListagemDePedidos;
+    private ViewListagemDePedidosAntigo viewListagemDePedidos;
 
     private String token;
 
@@ -183,15 +183,18 @@ public class ViewDetalhesDeUmPedido extends JFrame {
             contentPane.add(btnAceitar);
             btnRecusar.setText("Recusar");
             contentPane.add(btnRecusar);
+            
         } else if (status.equals(Status.ACEITO_PELO_RESTAURANTE.toString()) && pedido.getTipoDeEntrega().equals("RETIRADA")) {
         	this.statusAtual = Status.ACEITO_PELO_RESTAURANTE;
         	contentPane.remove(btnRecusar);
             btnAceitar.setText("Entregue");
             contentPane.add(btnAceitar);
+            
         } else if (status.equals(Status.ACEITO_PELO_RESTAURANTE.toString()) && pedido.getTipoDeEntrega().equals("DELIVERY")) {
         	contentPane.remove(btnRecusar);
             btnAceitar.setText("PRONTO PARA COLETA");
             contentPane.add(btnAceitar);
+            
         } else if (status.equals(Status.PRONTO_PARA_COLETA.toString()) && pedido.getTipoDeEntrega().equals("DELIVERY")) {
         	this.statusAtual = Status.PRONTO_PARA_COLETA;
         	contentPane.remove(btnRecusar);
@@ -208,36 +211,55 @@ public class ViewDetalhesDeUmPedido extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 try {
-                    if (statusAtual == Status.REALIZADO) {
-                        pedidosClient.atualizarPor(pedido.getIdPedido(), Status.ACEITO_PELO_RESTAURANTE);
-                        JOptionPane.showMessageDialog(contentPane, "Status alterado para: ACEITO_PELO_RESTAURANTE");
-                        statusAtual = Status.ACEITO_PELO_RESTAURANTE;
-                        
-                    } else if (statusAtual == Status.ACEITO_PELO_RESTAURANTE && pedido.getTipoDeEntrega().equals("RETIRADA")) {
-                        pedidosClient.atualizarPor(pedido.getIdPedido(), Status.ENTREGUE);
-                        JOptionPane.showMessageDialog(contentPane, "Status alterado para: ENTREGUE");
-                        statusAtual = Status.ENTREGUE;
-                        
-                    } else if (statusAtual == Status.ACEITO_PELO_RESTAURANTE && pedido.getTipoDeEntrega().equals("DELIVERY")) {
-                        pedidosClient.atualizarPor(pedido.getIdPedido(), Status.PRONTO_PARA_COLETA);
-                        JOptionPane.showMessageDialog(contentPane, "Status alterado para: PRONTO_PARA_COLETA");
-                        statusAtual = Status.PRONTO_PARA_COLETA;
-                        
-                    } else if (statusAtual == Status.ACEITO_PELO_RESTAURANTE || statusAtual == Status.PRONTO_PARA_COLETA) {
-                        pedidosClient.atualizarPor(pedido.getIdPedido(), Status.ENTREGUE);
-                        JOptionPane.showMessageDialog(contentPane, "Status alterado para: ENTREGUE");
-                        statusAtual = Status.ENTREGUE;
-                    } else {
-                        JOptionPane.showMessageDialog(contentPane, "Ação não permitida para o status atual.");
-                        return;
+                    switch (statusAtual) {
+                        case REALIZADO:
+                            aceitarOuRecusarPedido();
+                            break;
+                        case ACEITO_PELO_RESTAURANTE:
+                            if (pedido.getTipoDeEntrega().equals("RETIRADA")) {
+                                atualizarStatusEFechar(Status.ENTREGUE);
+                            } else {
+                                atualizarStatusEFechar(Status.PRONTO_PARA_COLETA);
+                            }
+                            break;
+                        case PRONTO_PARA_COLETA:
+                            atualizarStatusEFechar(Status.ENTREGUE);
+                            break;
+                        default:
+                            JOptionPane.showMessageDialog(contentPane, "Ação não permitida para o status atual.");
                     }
-
-                    dispose();
-                    viewListagemDePedidos.abrirTela(token);
                 } catch (Exception ex) {
                     JOptionPane.showMessageDialog(contentPane, "Ocorreu um erro ao atualizar o status: " + ex.getMessage());
                 }
             }
         });
+
+        btnRecusar.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if (statusAtual == Status.REALIZADO) {
+                    aceitarOuRecusarPedido();
+                } else {
+                    JOptionPane.showMessageDialog(contentPane, "Ação não permitida para o status atual.");
+                }
+            }
+        });
     }
+
+    private void aceitarOuRecusarPedido() {
+        int opcao = JOptionPane.showConfirmDialog(contentPane, "Deseja aceitar o pedido?", "Confirmação", JOptionPane.YES_NO_OPTION);
+        if (opcao == JOptionPane.YES_OPTION) {
+            atualizarStatusEFechar(Status.ACEITO_PELO_RESTAURANTE);
+        } else {
+            atualizarStatusEFechar(Status.CANCELADO);
+        }
+    }
+
+    private void atualizarStatusEFechar(Status novoStatus) {
+        pedidosClient.atualizarPor(pedido.getIdPedido(), novoStatus);
+        JOptionPane.showMessageDialog(contentPane, "Status alterado para: " + novoStatus);
+        dispose();
+        viewListagemDePedidos.abrirTela(token);
+    }
+
 }

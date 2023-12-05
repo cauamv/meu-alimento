@@ -99,10 +99,9 @@ public class ViewLogin extends JFrame {
 
 			public void actionPerformed(ActionEvent e) {
 				try {
-					String email = "kauanmello123@gmail.com";
-					String senha = "12345678";
-					//String email = txtEmail.getText();
-					//String senha = new String(txtSenha.getPassword());
+					
+					String email = txtEmail.getText();
+					String senha = new String(txtSenha.getPassword());
 					
 					if (email.isBlank()) {
 						lblEmailObrigatorio.setVisible(true);
