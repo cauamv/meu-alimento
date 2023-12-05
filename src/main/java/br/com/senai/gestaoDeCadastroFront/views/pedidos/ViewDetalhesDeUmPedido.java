@@ -33,7 +33,7 @@ public class ViewDetalhesDeUmPedido extends JFrame {
     private PedidosClient pedidosClient;
 
     @Autowired
-    private ViewListagemDePedidosAntigo viewListagemDePedidos;
+    private ViewListagemDePedidos viewListagemDePedidos;
 
     private String token;
 
@@ -63,9 +63,10 @@ public class ViewDetalhesDeUmPedido extends JFrame {
 
     private Status statusAtual;
 
-    public void abrirTela(String token, Pedido pedido, String status) {
+    public void abrirTela(String token, Pedido pedido, Status status) {
         this.token = token;
         this.pedido = pedido;
+        this.statusAtual = status;
         this.setVisible(true);
         montarPedido(this.pedido, status);
     }
@@ -153,7 +154,7 @@ public class ViewDetalhesDeUmPedido extends JFrame {
         atualizarStatus();
     }
 
-    private void montarPedido(Pedido pedido, String status) {
+    private void montarPedido(Pedido pedido, Status status) {
     	
         lblNumPedido.setText("Pedido Realizado - N° " + pedido.getIdPedido().toString());
 
@@ -177,25 +178,25 @@ public class ViewDetalhesDeUmPedido extends JFrame {
 
         lblPagamento.setText("Forma de Pagamento: " + pedido.getPagamento());
 
-        if (status.equals(Status.REALIZADO.toString())) {
+        if (status.equals(Status.REALIZADO)) {
         	this.statusAtual = Status.REALIZADO;
             btnAceitar.setText("Aceitar");
             contentPane.add(btnAceitar);
             btnRecusar.setText("Recusar");
             contentPane.add(btnRecusar);
             
-        } else if (status.equals(Status.ACEITO_PELO_RESTAURANTE.toString()) && pedido.getTipoDeEntrega().equals("RETIRADA")) {
+        } else if (status.equals(Status.ACEITO_PELO_RESTAURANTE) && pedido.getTipoDeEntrega().equals("RETIRADA")) {
         	this.statusAtual = Status.ACEITO_PELO_RESTAURANTE;
         	contentPane.remove(btnRecusar);
             btnAceitar.setText("Entregue");
             contentPane.add(btnAceitar);
             
-        } else if (status.equals(Status.ACEITO_PELO_RESTAURANTE.toString()) && pedido.getTipoDeEntrega().equals("DELIVERY")) {
+        } else if (status.equals(Status.ACEITO_PELO_RESTAURANTE) && pedido.getTipoDeEntrega().equals("DELIVERY")) {
         	contentPane.remove(btnRecusar);
             btnAceitar.setText("PRONTO PARA COLETA");
             contentPane.add(btnAceitar);
             
-        } else if (status.equals(Status.PRONTO_PARA_COLETA.toString()) && pedido.getTipoDeEntrega().equals("DELIVERY")) {
+        } else if (status.equals(Status.PRONTO_PARA_COLETA) && pedido.getTipoDeEntrega().equals("DELIVERY")) {
         	this.statusAtual = Status.PRONTO_PARA_COLETA;
         	contentPane.remove(btnRecusar);
             btnAceitar.setText("Entregue");

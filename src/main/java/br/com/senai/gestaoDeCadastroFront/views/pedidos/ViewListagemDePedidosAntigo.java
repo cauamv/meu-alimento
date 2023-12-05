@@ -30,6 +30,7 @@ import org.springframework.stereotype.Component;
 
 import br.com.senai.gestaoDeCadastroFront.client.decode.TokenDecoder;
 import br.com.senai.gestaoDeCadastroFront.client.pedidos.PedidosClient;
+import br.com.senai.gestaoDeCadastroFront.dto.Paginacao;
 import br.com.senai.gestaoDeCadastroFront.dto.enums.Status;
 import br.com.senai.gestaoDeCadastroFront.dto.pedidos.Pedido;
 
@@ -109,15 +110,22 @@ public class ViewListagemDePedidosAntigo extends JFrame {
             Integer id = Integer.parseInt(decoder.extrairIdRestauranteDo(token));
 
             List<Pedido> todosPedidos = new ArrayList<>();
-            todosPedidos.addAll(pedidosClient.listarPor(id, 0, Status.PRONTO_PARA_COLETA).getListagem());
-            todosPedidos.addAll(pedidosClient.listarPor(id, 0, Status.ACEITO_PELO_RESTAURANTE).getListagem());
-            todosPedidos.addAll(pedidosClient.listarPor(id, 0, Status.REALIZADO).getListagem());
-
+            
+            Paginacao<Pedido> realizados = pedidosClient.listarPor(id, 0, Status.REALIZADO);
+            Paginacao<Pedido> prontoParaColeta = pedidosClient.listarPor(id, 0, Status.PRONTO_PARA_COLETA);
+            Paginacao<Pedido> aceitoPeloRestaurante = pedidosClient.listarPor(id, 0, Status.ACEITO_PELO_RESTAURANTE);
+            
+            for (int i = 0; i < 4; i++) {
+            	todosPedidos.add(realizados.getListagem().get(i));
+            	todosPedidos.add(prontoParaColeta.getListagem().get(i));
+            	todosPedidos.add(aceitoPeloRestaurante.getListagem().get(i));
+			}
+            
             for (Pedido pedido : todosPedidos) {
                 Color background = Color.RED;
                 Color foreground = Color.WHITE;
 
-                if (pedido.getTipoDeEntrega().equals(Status.ACEITO_PELO_RESTAURANTE)) {
+                if (pedido.getTipoDeEntrega().equals(Status.ACEITO_PELO_RESTAURANTE.toString())) {
                 	background = Color.RED;
 				}
 
@@ -202,7 +210,7 @@ public class ViewListagemDePedidosAntigo extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 dispose();
-                viewDetalhesDeUmPedido.abrirTela(token, pedido, status);
+                viewDetalhesDeUmPedido.abrirTela(token, pedido, pedido.getStatus());
                 contentPane.remove(columnOrganizePanel);
                 contentPane.remove(panelPedido);
                 contentPane.remove(panelInfo);

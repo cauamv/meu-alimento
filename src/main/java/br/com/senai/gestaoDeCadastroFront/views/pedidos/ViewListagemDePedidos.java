@@ -14,16 +14,15 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.LayoutStyle.ComponentPlacement;
-import javax.swing.SwingWorker;
-import javax.swing.Timer;
 import javax.swing.border.EmptyBorder;
 
-import org.hibernate.secure.spi.JaccIntegrator;
 import org.hibernate.validator.internal.util.stereotypes.Lazy;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import br.com.senai.gestaoDeCadastroFront.client.decode.TokenDecoder;
 import br.com.senai.gestaoDeCadastroFront.client.pedidos.PedidosClient;
+import br.com.senai.gestaoDeCadastroFront.dto.Paginacao;
 import br.com.senai.gestaoDeCadastroFront.dto.enums.Status;
 import br.com.senai.gestaoDeCadastroFront.dto.pedidos.Pedido;
 
@@ -55,20 +54,7 @@ public class ViewListagemDePedidos extends JFrame {
     public void abrirTela(String token) {
         this.token = token;
         this.setVisible(true);
-        Timer timer = new Timer(5000, new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                SwingWorker<Void, Void> worker = new SwingWorker<Void, Void>() {
-                    @Override
-                    protected Void doInBackground() throws Exception {
-                        gerarCards();
-                        return null;
-                    }
-                };
-                worker.execute();
-            }
-        });
-        timer.start();
+        gerarCards();
     }
 
     public void gerarCards() {
@@ -76,10 +62,19 @@ public class ViewListagemDePedidos extends JFrame {
         cards.setBounds(10, 159, 1366, 768);
 
         List<Pedido> todosPedidos = new ArrayList<>();
-        todosPedidos.addAll(pedidosClient.listarPor(2, 0, Status.PRONTO_PARA_COLETA).getListagem());
-        todosPedidos.addAll(pedidosClient.listarPor(2, 0, Status.ACEITO_PELO_RESTAURANTE).getListagem());
-        todosPedidos.addAll(pedidosClient.listarPor(2, 0, Status.REALIZADO).getListagem());
+        
+        TokenDecoder decoder = new TokenDecoder();
+        Integer id = Integer.parseInt(decoder.extrairIdRestauranteDo(token));
 
+        Paginacao<Pedido> realizados = pedidosClient.listarPor(id, 0, Status.REALIZADO);
+        Paginacao<Pedido> prontoParaColeta = pedidosClient.listarPor(id, 0, Status.PRONTO_PARA_COLETA);
+        Paginacao<Pedido> aceitoPeloRestaurante = pedidosClient.listarPor(id, 0, Status.ACEITO_PELO_RESTAURANTE);
+        
+        for (int i = 0; i <= 4; i++) {
+        	todosPedidos.add(realizados.getListagem().get(i));
+        	todosPedidos.add(prontoParaColeta.getListagem().get(i));
+        	todosPedidos.add(aceitoPeloRestaurante.getListagem().get(i));
+		}
         
         for (int i = 0; i < 12; i++) {
         	JPanel panelPedido = criarCard(
