@@ -145,7 +145,7 @@ public class ViewCupons extends JFrame {
 		JButton btnCriar = new JButton("Criar");
 		btnCriar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				viewFormularioCupom.abrirTela(credencial);
+				viewFormularioCupom.colocarEmModoInsercao(credencial);
 			}
 		});
 		btnCriar.setRolloverEnabled(true);

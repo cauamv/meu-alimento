@@ -10,7 +10,6 @@ import java.time.format.DateTimeFormatter;
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
 import javax.swing.JButton;
-import javax.swing.JCheckBox;
 import javax.swing.JFormattedTextField;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -54,12 +53,15 @@ public class ViewFormularioCupom extends JFrame {
 	private RoundJTextField txtCodigo;
 
 	private RoundJTextField txtPercentual;
-
-	private JCheckBox chxInativo;
+	
+	private JButton btnSalvar;
+	
+	private JButton btnAlternarStatus;
 
 	private Cupom cupom;
 
 	public ViewFormularioCupom() {
+		
 		setResizable(false);
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setBounds(100, 100, 1366, 768);
@@ -103,7 +105,7 @@ public class ViewFormularioCupom extends JFrame {
 		txtPercentual = new RoundJTextField(0);
 		txtPercentual.setHorizontalAlignment(SwingConstants.CENTER);
 
-		JButton btnSalvar = new JButton("Salvar");
+		btnSalvar = new JButton("Salvar");
 		btnSalvar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 
@@ -129,12 +131,6 @@ public class ViewFormularioCupom extends JFrame {
 					LocalDate data = LocalDate.parse(dataString);
 					cupom.setValidade(data);
 					cupom.setPercentualDeDesconto(Double.parseDouble(txtPercentual.getText()));
-
-					if (chxInativo.isSelected()) {
-						cupom.setStatus(StatusDoCupom.I);
-					} else {
-						cupom.setStatus(StatusDoCupom.A);
-					}
 					
 					cupom.setId(cupom.getId());
 					cuponsClient.alterar(cupom, credencial);
@@ -146,65 +142,134 @@ public class ViewFormularioCupom extends JFrame {
 		btnSalvar.setFont(new Font("Tahoma", Font.PLAIN, 18));
 		btnSalvar.setBorder(null);
 		btnSalvar.setBackground(Color.WHITE);
+		
+		btnAlternarStatus = new JButton("");
+		btnAlternarStatus.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+		        if (cupom == null) {
+		            return;
+		        }
 
-		chxInativo = new JCheckBox("Inativo");
-		chxInativo.setVisible(false);
+		        int resposta = JOptionPane.showConfirmDialog(contentPane,
+		                "Tem certeza que deseja alterar o status do cupom?", "Confirmação",
+		                JOptionPane.YES_NO_OPTION);
+
+		        if (resposta == JOptionPane.YES_OPTION) {
+		            if (cupom.getStatus() == StatusDoCupom.A) {
+		                cupom.setStatus(StatusDoCupom.I);
+		                cuponsClient.atualizarPor(cupom.getId(), StatusDoCupom.I, credencial);
+		                btnAlternarStatus.setText("Ativar");
+		            } else {
+		                cupom.setStatus(StatusDoCupom.A);
+		            	cuponsClient.atualizarPor(cupom.getId(), StatusDoCupom.A, credencial);
+		            	btnAlternarStatus.setText("Inativar");
+		            }
+
+		            if (cupom.getStatus() == StatusDoCupom.I) {
+		            	dispose();
+		                JOptionPane.showMessageDialog(contentPane, "Cupom inativado com sucesso");
+		            } else {
+		            	dispose();
+		            	JOptionPane.showMessageDialog(contentPane, "Cupom ativado com sucesso");
+		            }
+		        }
+		    }
+		});
+		
+		btnAlternarStatus.setFont(new Font("Tahoma", Font.PLAIN, 18));
+		btnAlternarStatus.setBorder(null);
+		btnAlternarStatus.setBackground(Color.WHITE);
 
 		GroupLayout gl_contentPane = new GroupLayout(contentPane);
-		gl_contentPane.setHorizontalGroup(gl_contentPane.createParallelGroup(Alignment.TRAILING).addGroup(gl_contentPane
-				.createSequentialGroup().addContainerGap(367, Short.MAX_VALUE)
-				.addGroup(gl_contentPane.createParallelGroup(Alignment.TRAILING)
+		gl_contentPane.setHorizontalGroup(
+			gl_contentPane.createParallelGroup(Alignment.TRAILING)
+				.addGroup(gl_contentPane.createSequentialGroup()
+					.addContainerGap(367, Short.MAX_VALUE)
+					.addGroup(gl_contentPane.createParallelGroup(Alignment.TRAILING)
 						.addGroup(gl_contentPane.createSequentialGroup()
-								.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
-										.addComponent(lblPercentual, GroupLayout.PREFERRED_SIZE, 617,
-												GroupLayout.PREFERRED_SIZE)
-										.addComponent(txtPercentual, GroupLayout.PREFERRED_SIZE, 617,
-												GroupLayout.PREFERRED_SIZE)
-										.addGroup(gl_contentPane.createParallelGroup(Alignment.TRAILING, false)
-												.addComponent(txtValidade, Alignment.LEADING)
-												.addComponent(txtCodigo, Alignment.LEADING, GroupLayout.DEFAULT_SIZE,
-														617, Short.MAX_VALUE)
-												.addComponent(lblValidade, Alignment.LEADING, GroupLayout.DEFAULT_SIZE,
-														GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-												.addComponent(lblCodigo, Alignment.LEADING))
-										.addComponent(btnSalvar, Alignment.TRAILING, GroupLayout.PREFERRED_SIZE, 122,
-												GroupLayout.PREFERRED_SIZE)
-										.addComponent(chxInativo))
-								.addGap(356))
+							.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING, false)
+								.addComponent(lblPercentual, GroupLayout.PREFERRED_SIZE, 617, GroupLayout.PREFERRED_SIZE)
+								.addComponent(txtPercentual, GroupLayout.PREFERRED_SIZE, 617, GroupLayout.PREFERRED_SIZE)
+								.addComponent(txtValidade)
+								.addComponent(txtCodigo, GroupLayout.DEFAULT_SIZE, 617, Short.MAX_VALUE)
+								.addComponent(lblValidade, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+								.addComponent(lblCodigo)
+								.addGroup(Alignment.TRAILING, gl_contentPane.createSequentialGroup()
+									.addComponent(btnAlternarStatus, GroupLayout.PREFERRED_SIZE, 122, GroupLayout.PREFERRED_SIZE)
+									.addPreferredGap(ComponentPlacement.RELATED, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+									.addComponent(btnSalvar, GroupLayout.PREFERRED_SIZE, 122, GroupLayout.PREFERRED_SIZE)))
+							.addGap(356))
 						.addGroup(gl_contentPane.createSequentialGroup()
-								.addComponent(lblTitulo, GroupLayout.PREFERRED_SIZE, 596, GroupLayout.PREFERRED_SIZE)
-								.addGap(367)))));
-		gl_contentPane.setVerticalGroup(gl_contentPane.createParallelGroup(Alignment.LEADING).addGroup(gl_contentPane
-				.createSequentialGroup().addGap(75)
-				.addComponent(lblTitulo, GroupLayout.PREFERRED_SIZE, 82, GroupLayout.PREFERRED_SIZE).addGap(75)
-				.addComponent(lblCodigo).addPreferredGap(ComponentPlacement.RELATED)
-				.addComponent(txtCodigo, GroupLayout.PREFERRED_SIZE, 53, GroupLayout.PREFERRED_SIZE)
-				.addPreferredGap(ComponentPlacement.RELATED)
-				.addComponent(lblValidade, GroupLayout.PREFERRED_SIZE, 25, GroupLayout.PREFERRED_SIZE)
-				.addPreferredGap(ComponentPlacement.RELATED)
-				.addComponent(txtValidade, GroupLayout.PREFERRED_SIZE, 53, GroupLayout.PREFERRED_SIZE)
-				.addPreferredGap(ComponentPlacement.RELATED)
-				.addComponent(lblPercentual, GroupLayout.PREFERRED_SIZE, 25, GroupLayout.PREFERRED_SIZE).addGap(6)
-				.addComponent(txtPercentual, GroupLayout.PREFERRED_SIZE, 53, GroupLayout.PREFERRED_SIZE).addGap(32)
-				.addComponent(chxInativo).addPreferredGap(ComponentPlacement.RELATED, 80, Short.MAX_VALUE)
-				.addComponent(btnSalvar, GroupLayout.PREFERRED_SIZE, 46, GroupLayout.PREFERRED_SIZE).addGap(42)));
+							.addComponent(lblTitulo, GroupLayout.PREFERRED_SIZE, 596, GroupLayout.PREFERRED_SIZE)
+							.addGap(367))))
+		);
+		gl_contentPane.setVerticalGroup(
+			gl_contentPane.createParallelGroup(Alignment.LEADING)
+				.addGroup(gl_contentPane.createSequentialGroup()
+					.addGap(75)
+					.addComponent(lblTitulo, GroupLayout.PREFERRED_SIZE, 82, GroupLayout.PREFERRED_SIZE)
+					.addGap(75)
+					.addComponent(lblCodigo)
+					.addPreferredGap(ComponentPlacement.RELATED)
+					.addComponent(txtCodigo, GroupLayout.PREFERRED_SIZE, 53, GroupLayout.PREFERRED_SIZE)
+					.addPreferredGap(ComponentPlacement.RELATED)
+					.addComponent(lblValidade, GroupLayout.PREFERRED_SIZE, 25, GroupLayout.PREFERRED_SIZE)
+					.addPreferredGap(ComponentPlacement.RELATED)
+					.addComponent(txtValidade, GroupLayout.PREFERRED_SIZE, 53, GroupLayout.PREFERRED_SIZE)
+					.addPreferredGap(ComponentPlacement.RELATED)
+					.addComponent(lblPercentual, GroupLayout.PREFERRED_SIZE, 25, GroupLayout.PREFERRED_SIZE)
+					.addGap(6)
+					.addComponent(txtPercentual, GroupLayout.PREFERRED_SIZE, 53, GroupLayout.PREFERRED_SIZE)
+					.addPreferredGap(ComponentPlacement.RELATED, 135, Short.MAX_VALUE)
+					.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
+						.addComponent(btnSalvar, GroupLayout.PREFERRED_SIZE, 46, GroupLayout.PREFERRED_SIZE)
+						.addComponent(btnAlternarStatus, GroupLayout.PREFERRED_SIZE, 46, GroupLayout.PREFERRED_SIZE))
+					.addGap(42))
+		);
 		setLocationRelativeTo(null);
 		contentPane.setLayout(gl_contentPane);
 	}
 
+	public void colocarEmModoInsercao(CredencialDeAcesso credencial) {
+		this.credencial = credencial;
+		this.setVisible(true);
+		this.limparCampos();
+	}
+	
 	public void colocarEmModoDeEdicao(Cupom cupom) {
 		this.setVisible(true);
 		this.preencherFormularioCom(cupom);
+		this.btnAlternarStatus.setVisible(true);
+	}
+
+	private void limparCampos() {
+		this.cupom = cupom;
+		this.txtCodigo.setText("");
+		this.txtPercentual.setText("");
+		this.txtValidade.setText("");
+		this.btnAlternarStatus.setVisible(false);
 	}
 
 	private void preencherFormularioCom(Cupom cupom) {
 		this.cupom = cupom;
+		cupom.getStatus();
 		this.txtCodigo.setText(cupom.getCodigo().toString());
 		this.txtPercentual.setText(cupom.getPercentualDeDesconto().toString());
 		DateTimeFormatter formatterSaida = DateTimeFormatter.ofPattern("dd/MM/yyyy");
-		this.chxInativo.setVisible(true);
-		this.chxInativo.setSelected(cupom.getStatus().equals(StatusDoCupom.I));
 		this.txtValidade.setText(cupom.getValidade().format(formatterSaida));
-
+		if (cupom.getStatus() == StatusDoCupom.I) {
+	        this.txtCodigo.setEnabled(false);
+	        this.txtPercentual.setEnabled(false);
+	        this.txtValidade.setEnabled(false);
+	        this.btnSalvar.setEnabled(false);
+	        this.btnAlternarStatus.setText("Ativar");
+	    } else {
+	    	this.txtCodigo.setEnabled(true);
+	        this.txtPercentual.setEnabled(true);
+	        this.txtValidade.setEnabled(true);
+	        this.btnSalvar.setEnabled(true);
+	        this.btnAlternarStatus.setText("Inativar");
+	    }
 	}
+
 }
