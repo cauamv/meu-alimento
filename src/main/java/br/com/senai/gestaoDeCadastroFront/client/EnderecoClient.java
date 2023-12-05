@@ -25,7 +25,8 @@ public class EnderecoClient {
 	
 	private String POST_ENDPOINT = "/enderecos";
 	
-	private RestTemplate httpClient = new RestTemplate();
+	@Autowired
+	private RestTemplate httpClient;
 	
 	@Autowired
 	private AutenticadorClient autenticadorClient;
@@ -36,7 +37,7 @@ public class EnderecoClient {
 	public NovoEnderecoDto inserir(NovoEnderecoDto novoEnderecoDto, CredencialDeAcesso credencialDeAcesso) {
 		Preconditions.checkNotNull(novoEnderecoDto, "O endereço é obrigatório. ");
 		
-		
+
 		String token = autenticadorClient.getTokenPela(credencialDeAcesso).getValor();
 		HttpHeaders headers = aplicadorDeToken.aplicar(token);
 		
