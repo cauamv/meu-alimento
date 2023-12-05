@@ -30,6 +30,7 @@ import org.springframework.stereotype.Component;
 import br.com.senai.gestaoDeCadastroFront.components.RoundJTextField;
 import br.com.senai.gestaoDeCadastroFront.dto.NovoClienteDto;
 import br.com.senai.gestaoDeCadastroFront.dto.UsuarioDto;
+import br.com.senai.gestaoDeCadastroFront.views.login.ViewLogin;
 
 @Component
 public class ViewCadastro extends JFrame {
@@ -41,6 +42,9 @@ public class ViewCadastro extends JFrame {
 	@Lazy
 	ViewSenha telaSenha;
 
+	@Autowired
+	private ViewLogin viewLogin;
+	
 	private MaskFormatter dateFormatter;
 
 	public ViewCadastro() {
@@ -107,10 +111,35 @@ public class ViewCadastro extends JFrame {
 		txtEmail.setForeground(Color.BLACK);
 		txtEmail.setBackground(Color.WHITE);
 
+		JLabel lblNomeObrigatorio = new JLabel("O nome é obrigatório.");
+		lblNomeObrigatorio.setHorizontalAlignment(SwingConstants.LEFT);
+		lblNomeObrigatorio.setForeground(Color.WHITE);
+		lblNomeObrigatorio.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		lblNomeObrigatorio.setVisible(false);
+		
+		JLabel lblSexoObrigatorio = new JLabel("O sexo é obrigatório.");
+		lblSexoObrigatorio.setHorizontalAlignment(SwingConstants.LEFT);
+		lblSexoObrigatorio.setForeground(Color.WHITE);
+		lblSexoObrigatorio.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		lblSexoObrigatorio.setVisible(false);
+		
+		JLabel lblDataNascimentoObrigatorio = new JLabel("A data de nascimento é obrigatória.");
+		lblDataNascimentoObrigatorio.setHorizontalAlignment(SwingConstants.LEFT);
+		lblDataNascimentoObrigatorio.setForeground(Color.WHITE);
+		lblDataNascimentoObrigatorio.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		lblDataNascimentoObrigatorio.setVisible(false);
+		
+		JLabel lblEmailObrigatorio = new JLabel("O e-mail é obrigatório.");
+		lblEmailObrigatorio.setHorizontalAlignment(SwingConstants.LEFT);
+		lblEmailObrigatorio.setForeground(Color.WHITE);
+		lblEmailObrigatorio.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		lblEmailObrigatorio.setVisible(false);
+		
 		JButton btnProximo = new JButton("Próximo");
 		btnProximo.setFont(new Font("Tahoma", Font.PLAIN, 18));
 		btnProximo.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				
 				try {
 					String nome = txtNome.getText();
 					String sexo = cbxSexo.getSelectedItem().toString();
@@ -119,13 +148,42 @@ public class ViewCadastro extends JFrame {
 					String dataString = LocalDate.parse(txtDataNascimento.getText().toString(), formatterEntrada).format(formatterSaida);
 					LocalDate data = LocalDate.parse(dataString);
 					String email = txtEmail.getText();
-					UsuarioDto usuarioDto = new UsuarioDto();
-					usuarioDto.setEmail(email);
-					usuarioDto.setRole("Administrador");
-					NovoClienteDto cadastroDto = new NovoClienteDto(nome, sexo, data, usuarioDto);
+					
+					if (nome.isBlank()) {
+						lblNomeObrigatorio.setVisible(true);
+					} else {
+						lblNomeObrigatorio.setVisible(false);
+					}
+					if (sexo == null) {
+						lblSexoObrigatorio.setVisible(true);
+					} else {
+						lblSexoObrigatorio.setVisible(false);
+					}
+					if (data == null) {
+						lblDataNascimentoObrigatorio.setVisible(true);
+					} else {
+						lblDataNascimentoObrigatorio.setVisible(false);
+					}
+					if (email.isBlank()) {
+						lblEmailObrigatorio.setVisible(true);
+					} else {
+						lblEmailObrigatorio.setVisible(false);
+					}
+					
+					if (nome != null
+					&& !nome.isBlank()
+					&& sexo != null
+					&& data != null
+					&& email != null) {
+						UsuarioDto usuarioDto = new UsuarioDto();
+						usuarioDto.setEmail(email);
+						usuarioDto.setRole("Administrador");
+						NovoClienteDto cadastroDto = new NovoClienteDto(nome, sexo, data, usuarioDto);
 
-					telaSenha.mostrarTela(cadastroDto);
-					dispose();
+						telaSenha.mostrarTela(cadastroDto);
+						dispose();
+					} 
+					
 				} catch (Exception ex) {
 					JOptionPane.showMessageDialog(contentPane, "Todos os campos são obrigatórios. ");
 					ex.printStackTrace();
@@ -135,45 +193,81 @@ public class ViewCadastro extends JFrame {
 		});
 		btnProximo.setBackground(new Color(255, 255, 255));
 		btnProximo.setBorder(null);
+		
+		JButton btnVoltar = new JButton("Voltar");
+		btnVoltar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				viewLogin.setVisible(true);
+				dispose();
+			}
+		});
+		btnVoltar.setFont(new Font("Tahoma", Font.PLAIN, 18));
+		btnVoltar.setBorder(null);
+		btnVoltar.setBackground(Color.WHITE);
 
 		GroupLayout gl_panelDireito = new GroupLayout(panelDireito);
-		gl_panelDireito.setHorizontalGroup(gl_panelDireito.createParallelGroup(Alignment.TRAILING)
-				.addGroup(gl_panelDireito.createSequentialGroup().addContainerGap(205, Short.MAX_VALUE)
-						.addComponent(lblMeuCadastro).addGap(193))
-				.addGroup(gl_panelDireito.createSequentialGroup().addGroup(gl_panelDireito
-						.createParallelGroup(Alignment.TRAILING)
-						.addGroup(gl_panelDireito.createSequentialGroup().addContainerGap().addComponent(btnProximo,
-								GroupLayout.PREFERRED_SIZE, 122, GroupLayout.PREFERRED_SIZE))
-						.addGroup(gl_panelDireito.createSequentialGroup().addGap(60).addGroup(gl_panelDireito
-								.createParallelGroup(Alignment.LEADING)
-								.addComponent(lblNome, GroupLayout.PREFERRED_SIZE, 184, GroupLayout.PREFERRED_SIZE)
-								.addComponent(txtNome, GroupLayout.DEFAULT_SIZE, 551, Short.MAX_VALUE)
-								.addComponent(lblSexo, GroupLayout.PREFERRED_SIZE, 184, GroupLayout.PREFERRED_SIZE)
-								.addComponent(cbxSexo, GroupLayout.PREFERRED_SIZE, 151, GroupLayout.PREFERRED_SIZE)
-								.addComponent(lblDataNascimento, GroupLayout.DEFAULT_SIZE, 551, Short.MAX_VALUE)
-								.addComponent(txtDataNascimento, GroupLayout.PREFERRED_SIZE, 551,
-										GroupLayout.PREFERRED_SIZE)
-								.addComponent(lblDigiteSeuEmail, GroupLayout.PREFERRED_SIZE, 551,
-										GroupLayout.PREFERRED_SIZE)
-								.addComponent(txtEmail, GroupLayout.PREFERRED_SIZE, 551, GroupLayout.PREFERRED_SIZE))))
-						.addGap(72)));
-		gl_panelDireito.setVerticalGroup(gl_panelDireito.createParallelGroup(Alignment.LEADING)
-				.addGroup(gl_panelDireito.createSequentialGroup().addGap(49).addComponent(lblMeuCadastro).addGap(18)
-						.addComponent(lblNome, GroupLayout.PREFERRED_SIZE, 30, GroupLayout.PREFERRED_SIZE)
-						.addPreferredGap(ComponentPlacement.RELATED)
-						.addComponent(txtNome, GroupLayout.PREFERRED_SIZE, 53, GroupLayout.PREFERRED_SIZE).addGap(18)
-						.addComponent(lblSexo, GroupLayout.PREFERRED_SIZE, 30, GroupLayout.PREFERRED_SIZE)
-						.addPreferredGap(ComponentPlacement.UNRELATED)
-						.addComponent(cbxSexo, GroupLayout.PREFERRED_SIZE, 39, GroupLayout.PREFERRED_SIZE).addGap(18)
-						.addComponent(lblDataNascimento, GroupLayout.PREFERRED_SIZE, 30, GroupLayout.PREFERRED_SIZE)
-						.addGap(18)
-						.addComponent(txtDataNascimento, GroupLayout.PREFERRED_SIZE, 53, GroupLayout.PREFERRED_SIZE)
-						.addPreferredGap(ComponentPlacement.UNRELATED)
-						.addComponent(lblDigiteSeuEmail, GroupLayout.PREFERRED_SIZE, 30, GroupLayout.PREFERRED_SIZE)
-						.addPreferredGap(ComponentPlacement.UNRELATED)
-						.addComponent(txtEmail, GroupLayout.PREFERRED_SIZE, 53, GroupLayout.PREFERRED_SIZE).addGap(100)
+		gl_panelDireito.setHorizontalGroup(
+			gl_panelDireito.createParallelGroup(Alignment.TRAILING)
+				.addGroup(gl_panelDireito.createSequentialGroup()
+					.addContainerGap(191, Short.MAX_VALUE)
+					.addComponent(lblMeuCadastro)
+					.addGap(193))
+				.addGroup(gl_panelDireito.createSequentialGroup()
+					.addGap(60)
+					.addGroup(gl_panelDireito.createParallelGroup(Alignment.TRAILING)
+						.addGroup(gl_panelDireito.createSequentialGroup()
+							.addComponent(btnVoltar, GroupLayout.PREFERRED_SIZE, 122, GroupLayout.PREFERRED_SIZE)
+							.addPreferredGap(ComponentPlacement.RELATED, 307, Short.MAX_VALUE)
+							.addComponent(btnProximo, GroupLayout.PREFERRED_SIZE, 122, GroupLayout.PREFERRED_SIZE))
+						.addComponent(lblNome, Alignment.LEADING, GroupLayout.PREFERRED_SIZE, 184, GroupLayout.PREFERRED_SIZE)
+						.addComponent(txtNome, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, 551, Short.MAX_VALUE)
+						.addComponent(lblSexo, Alignment.LEADING, GroupLayout.PREFERRED_SIZE, 184, GroupLayout.PREFERRED_SIZE)
+						.addComponent(cbxSexo, Alignment.LEADING, GroupLayout.PREFERRED_SIZE, 151, GroupLayout.PREFERRED_SIZE)
+						.addComponent(lblDataNascimento, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, 551, Short.MAX_VALUE)
+						.addComponent(txtDataNascimento, Alignment.LEADING, GroupLayout.PREFERRED_SIZE, 551, GroupLayout.PREFERRED_SIZE)
+						.addComponent(lblDigiteSeuEmail, Alignment.LEADING, GroupLayout.PREFERRED_SIZE, 551, GroupLayout.PREFERRED_SIZE)
+						.addComponent(txtEmail, Alignment.LEADING, GroupLayout.PREFERRED_SIZE, 551, GroupLayout.PREFERRED_SIZE)
+						.addComponent(lblNomeObrigatorio, Alignment.LEADING, GroupLayout.PREFERRED_SIZE, 184, GroupLayout.PREFERRED_SIZE)
+						.addComponent(lblSexoObrigatorio, Alignment.LEADING, GroupLayout.PREFERRED_SIZE, 184, GroupLayout.PREFERRED_SIZE)
+						.addComponent(lblDataNascimentoObrigatorio, Alignment.LEADING, GroupLayout.PREFERRED_SIZE, 551, GroupLayout.PREFERRED_SIZE)
+						.addComponent(lblEmailObrigatorio, Alignment.LEADING, GroupLayout.PREFERRED_SIZE, 551, GroupLayout.PREFERRED_SIZE))
+					.addGap(72))
+		);
+		gl_panelDireito.setVerticalGroup(
+			gl_panelDireito.createParallelGroup(Alignment.LEADING)
+				.addGroup(gl_panelDireito.createSequentialGroup()
+					.addGap(49)
+					.addComponent(lblMeuCadastro)
+					.addGap(18)
+					.addComponent(lblNome, GroupLayout.PREFERRED_SIZE, 30, GroupLayout.PREFERRED_SIZE)
+					.addPreferredGap(ComponentPlacement.RELATED)
+					.addComponent(txtNome, GroupLayout.PREFERRED_SIZE, 53, GroupLayout.PREFERRED_SIZE)
+					.addPreferredGap(ComponentPlacement.RELATED)
+					.addComponent(lblNomeObrigatorio, GroupLayout.PREFERRED_SIZE, 30, GroupLayout.PREFERRED_SIZE)
+					.addPreferredGap(ComponentPlacement.RELATED)
+					.addComponent(lblSexo, GroupLayout.PREFERRED_SIZE, 30, GroupLayout.PREFERRED_SIZE)
+					.addPreferredGap(ComponentPlacement.UNRELATED)
+					.addComponent(cbxSexo, GroupLayout.PREFERRED_SIZE, 39, GroupLayout.PREFERRED_SIZE)
+					.addPreferredGap(ComponentPlacement.RELATED)
+					.addComponent(lblSexoObrigatorio, GroupLayout.PREFERRED_SIZE, 30, GroupLayout.PREFERRED_SIZE)
+					.addPreferredGap(ComponentPlacement.RELATED)
+					.addComponent(lblDataNascimento, GroupLayout.PREFERRED_SIZE, 30, GroupLayout.PREFERRED_SIZE)
+					.addGap(18)
+					.addComponent(txtDataNascimento, GroupLayout.PREFERRED_SIZE, 53, GroupLayout.PREFERRED_SIZE)
+					.addPreferredGap(ComponentPlacement.RELATED)
+					.addComponent(lblDataNascimentoObrigatorio, GroupLayout.PREFERRED_SIZE, 30, GroupLayout.PREFERRED_SIZE)
+					.addPreferredGap(ComponentPlacement.RELATED)
+					.addComponent(lblDigiteSeuEmail, GroupLayout.PREFERRED_SIZE, 30, GroupLayout.PREFERRED_SIZE)
+					.addPreferredGap(ComponentPlacement.UNRELATED)
+					.addComponent(txtEmail, GroupLayout.PREFERRED_SIZE, 53, GroupLayout.PREFERRED_SIZE)
+					.addPreferredGap(ComponentPlacement.RELATED)
+					.addComponent(lblEmailObrigatorio, GroupLayout.PREFERRED_SIZE, 30, GroupLayout.PREFERRED_SIZE)
+					.addGap(64)
+					.addGroup(gl_panelDireito.createParallelGroup(Alignment.LEADING)
 						.addComponent(btnProximo, GroupLayout.PREFERRED_SIZE, 46, GroupLayout.PREFERRED_SIZE)
-						.addContainerGap(89, Short.MAX_VALUE)));
+						.addComponent(btnVoltar, GroupLayout.PREFERRED_SIZE, 46, GroupLayout.PREFERRED_SIZE))
+					.addContainerGap(13, Short.MAX_VALUE))
+		);
 		panelDireito.setLayout(gl_panelDireito);
 
 		JLabel lblMeuAlimento = new JLabel("Meu Alimento");

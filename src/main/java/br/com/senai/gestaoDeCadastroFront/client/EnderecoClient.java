@@ -2,6 +2,7 @@ package br.com.senai.gestaoDeCadastroFront.client;
 
 import java.net.URI;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
@@ -24,20 +25,19 @@ public class EnderecoClient {
 	
 	private String POST_ENDPOINT = "/enderecos";
 	
-	private RestTemplate httpClient = new RestTemplate();
+	@Autowired
+	private RestTemplate httpClient;
 	
-	private AutenticadorClient autenticadorClient = new AutenticadorClient();
+	@Autowired
+	private AutenticadorClient autenticadorClient;
 	
-	private AplicadorDeToken aplicadorDeToken = new AplicadorDeToken();
+	@Autowired
+	private AplicadorDeToken aplicadorDeToken;
 	
-	public NovoEnderecoDto inserir(NovoEnderecoDto novoEnderecoDto) {
+	public NovoEnderecoDto inserir(NovoEnderecoDto novoEnderecoDto, CredencialDeAcesso credencialDeAcesso) {
 		Preconditions.checkNotNull(novoEnderecoDto, "O endereço é obrigatório. ");
 		
-		String email = "kauanmello123@gmail.com";
-		String senha = "12345678";
-		
-		CredencialDeAcesso credencialDeAcesso = new CredencialDeAcesso(email, senha);
-		
+
 		String token = autenticadorClient.getTokenPela(credencialDeAcesso).getValor();
 		HttpHeaders headers = aplicadorDeToken.aplicar(token);
 		

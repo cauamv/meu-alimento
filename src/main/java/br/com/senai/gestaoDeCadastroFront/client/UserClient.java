@@ -2,6 +2,7 @@ package br.com.senai.gestaoDeCadastroFront.client;
 
 import java.net.URI;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpMethod;
@@ -18,11 +19,14 @@ import br.com.senai.gestaoDeCadastroFront.dto.UsuarioDto;
 @Component
 public class UserClient {
 
-	private AplicadorDeToken aplicador = new AplicadorDeToken();
+	@Autowired
+	private AplicadorDeToken aplicador;
 	
-	private RestTemplate httpClient = new RestTemplate();
+	@Autowired
+	private RestTemplate httpClient;
 	
-	private AutenticadorClient autenticadorClient = new AutenticadorClient();
+	@Autowired
+	private AutenticadorClient autenticadorClient;
 	
 	@Value("${base.url}")
 	private String URL;

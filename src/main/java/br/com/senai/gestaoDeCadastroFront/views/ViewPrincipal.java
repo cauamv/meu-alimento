@@ -113,6 +113,7 @@ public class ViewPrincipal extends JFrame {
 		JButton btnPedidos = new JButton("Pedidos");
 		btnPedidos.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				System.out.println(role);
 				if (role.equals(Role.Restaurante.toString())) {
 					viewListagemDePedidos.abrirTela(token);
 				} else {

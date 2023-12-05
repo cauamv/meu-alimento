@@ -42,6 +42,9 @@ public class ViewSenha extends JFrame {
 
 	@Autowired
 	private ClienteClient clienteClient;
+	
+	@Autowired
+	private ViewCadastro viewCadastro;
 
 	private JPasswordField txtfConfirmeSenha;
 	private JPasswordField txtfSenha1;
@@ -90,14 +93,18 @@ public class ViewSenha extends JFrame {
 		btnProximo.setForeground(Color.BLACK);
 		btnProximo.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				if (!String.valueOf(txtfConfirmeSenha.getPassword()).equals(String.valueOf(txtfSenha1.getPassword()))) {
-					JOptionPane.showMessageDialog(contentPane, "senhas não conferem. ");
+				if (txtfSenha1.getPassword() != null && txtfConfirmeSenha.getPassword() != null) {
+					if (!String.valueOf(txtfConfirmeSenha.getPassword()).equals(String.valueOf(txtfSenha1.getPassword()))) {
+						JOptionPane.showMessageDialog(contentPane, "senhas não conferem. ");
+					}
+					cadastroDto.getUsuario().setSenha(String.valueOf(txtfConfirmeSenha.getPassword()));
+					ClienteDto clienteDto = clienteClient.inserir(cadastroDto);
+					viewEndereco.abrirTela(clienteDto);
+					dispose();
+				} else {
+					JOptionPane.showMessageDialog(contentPane, "Todos os campos são obrigatórios");
 				}
-				cadastroDto.getUsuario().setSenha(String.valueOf(txtfConfirmeSenha.getPassword()));
-				ClienteDto clienteDto = clienteClient.inserir(cadastroDto);
-				viewEndereco.abrirTela(clienteDto);
-				dispose();
-
+				
 			}
 		});
 
@@ -127,40 +134,68 @@ public class ViewSenha extends JFrame {
 				txtfConfirmeSenha.setEchoChar(source.isSelected() ? '\0' : '*');
 			}
 		});
+		
+		JButton btnVoltar = new JButton("Voltar");
+		btnVoltar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				viewCadastro.setVisible(true);
+				dispose();
+			}
+		});
+		btnVoltar.setForeground(Color.BLACK);
+		btnVoltar.setFont(new Font("Tahoma", Font.PLAIN, 19));
+		btnVoltar.setBorder(null);
+		btnVoltar.setBackground(Color.WHITE);
 
 		GroupLayout gl_panel = new GroupLayout(panel);
-		gl_panel.setHorizontalGroup(gl_panel.createParallelGroup(Alignment.LEADING).addGroup(gl_panel
-				.createSequentialGroup()
-				.addGroup(gl_panel.createParallelGroup(Alignment.LEADING).addGroup(gl_panel.createSequentialGroup()
-						.addGap(81)
-						.addGroup(gl_panel.createParallelGroup(Alignment.TRAILING)
-								.addComponent(btnProximo, GroupLayout.PREFERRED_SIZE, 114, GroupLayout.PREFERRED_SIZE)
+		gl_panel.setHorizontalGroup(
+			gl_panel.createParallelGroup(Alignment.LEADING)
+				.addGroup(gl_panel.createSequentialGroup()
+					.addGroup(gl_panel.createParallelGroup(Alignment.LEADING)
+						.addGroup(gl_panel.createSequentialGroup()
+							.addGap(208)
+							.addComponent(lblNewLabel))
+						.addGroup(gl_panel.createSequentialGroup()
+							.addGap(81)
+							.addGroup(gl_panel.createParallelGroup(Alignment.LEADING)
+								.addGroup(gl_panel.createParallelGroup(Alignment.TRAILING)
+									.addGroup(gl_panel.createSequentialGroup()
+										.addComponent(btnVoltar, GroupLayout.PREFERRED_SIZE, 114, GroupLayout.PREFERRED_SIZE)
+										.addGap(288)
+										.addComponent(btnProximo, GroupLayout.PREFERRED_SIZE, 114, GroupLayout.PREFERRED_SIZE))
+									.addGroup(gl_panel.createParallelGroup(Alignment.LEADING)
+										.addComponent(lblConfirmeSenha, GroupLayout.PREFERRED_SIZE, 184, GroupLayout.PREFERRED_SIZE)
+										.addComponent(txtfConfirmeSenha, GroupLayout.PREFERRED_SIZE, 516, GroupLayout.PREFERRED_SIZE)
+										.addComponent(txtfSenha1, GroupLayout.PREFERRED_SIZE, 516, GroupLayout.PREFERRED_SIZE)
+										.addComponent(lblSenha, GroupLayout.PREFERRED_SIZE, 184, GroupLayout.PREFERRED_SIZE)))
 								.addGroup(gl_panel.createParallelGroup(Alignment.LEADING)
-										.addComponent(lblConfirmeSenha, GroupLayout.PREFERRED_SIZE, 184,
-												GroupLayout.PREFERRED_SIZE)
-										.addComponent(txtfConfirmeSenha, GroupLayout.PREFERRED_SIZE, 516,
-												GroupLayout.PREFERRED_SIZE)
-										.addComponent(txtfSenha1, GroupLayout.PREFERRED_SIZE, 516,
-												GroupLayout.PREFERRED_SIZE)
-										.addComponent(lblSenha, GroupLayout.PREFERRED_SIZE, 184,
-												GroupLayout.PREFERRED_SIZE))))
-						.addGroup(gl_panel.createSequentialGroup().addGap(208).addComponent(lblNewLabel)).addGroup(
-								gl_panel.createSequentialGroup().addGap(81)
-										.addGroup(gl_panel.createParallelGroup(Alignment.LEADING)
-												.addComponent(chkMostrarSenha1).addComponent(chkMostrarSenha2))))
-				.addContainerGap(86, Short.MAX_VALUE)));
-		gl_panel.setVerticalGroup(gl_panel.createParallelGroup(Alignment.TRAILING)
-				.addGroup(gl_panel.createSequentialGroup().addGap(60).addComponent(lblNewLabel)
-						.addPreferredGap(ComponentPlacement.RELATED, 106, Short.MAX_VALUE)
-						.addComponent(lblSenha, GroupLayout.PREFERRED_SIZE, 30, GroupLayout.PREFERRED_SIZE).addGap(26)
-						.addComponent(txtfSenha1, GroupLayout.PREFERRED_SIZE, 66, GroupLayout.PREFERRED_SIZE)
-						.addPreferredGap(ComponentPlacement.RELATED).addComponent(chkMostrarSenha1).addGap(60)
-						.addComponent(lblConfirmeSenha, GroupLayout.PREFERRED_SIZE, 30, GroupLayout.PREFERRED_SIZE)
-						.addPreferredGap(ComponentPlacement.RELATED)
-						.addComponent(txtfConfirmeSenha, GroupLayout.PREFERRED_SIZE, 66, GroupLayout.PREFERRED_SIZE)
-						.addPreferredGap(ComponentPlacement.RELATED).addComponent(chkMostrarSenha2).addGap(60)
+									.addComponent(chkMostrarSenha1)
+									.addComponent(chkMostrarSenha2)))))
+					.addContainerGap(86, Short.MAX_VALUE))
+		);
+		gl_panel.setVerticalGroup(
+			gl_panel.createParallelGroup(Alignment.TRAILING)
+				.addGroup(gl_panel.createSequentialGroup()
+					.addGap(60)
+					.addComponent(lblNewLabel)
+					.addPreferredGap(ComponentPlacement.RELATED, 118, Short.MAX_VALUE)
+					.addComponent(lblSenha, GroupLayout.PREFERRED_SIZE, 30, GroupLayout.PREFERRED_SIZE)
+					.addGap(26)
+					.addComponent(txtfSenha1, GroupLayout.PREFERRED_SIZE, 66, GroupLayout.PREFERRED_SIZE)
+					.addPreferredGap(ComponentPlacement.RELATED)
+					.addComponent(chkMostrarSenha1)
+					.addGap(60)
+					.addComponent(lblConfirmeSenha, GroupLayout.PREFERRED_SIZE, 30, GroupLayout.PREFERRED_SIZE)
+					.addPreferredGap(ComponentPlacement.RELATED)
+					.addComponent(txtfConfirmeSenha, GroupLayout.PREFERRED_SIZE, 66, GroupLayout.PREFERRED_SIZE)
+					.addPreferredGap(ComponentPlacement.RELATED)
+					.addComponent(chkMostrarSenha2)
+					.addGap(60)
+					.addGroup(gl_panel.createParallelGroup(Alignment.LEADING)
 						.addComponent(btnProximo, GroupLayout.PREFERRED_SIZE, 55, GroupLayout.PREFERRED_SIZE)
-						.addGap(85)));
+						.addComponent(btnVoltar, GroupLayout.PREFERRED_SIZE, 55, GroupLayout.PREFERRED_SIZE))
+					.addGap(85))
+		);
 		panel.setLayout(gl_panel);
 
 		JLabel lblMeuAlimento = new JLabel("Meu Alimento");

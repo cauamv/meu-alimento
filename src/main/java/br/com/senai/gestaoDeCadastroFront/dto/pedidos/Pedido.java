@@ -3,8 +3,12 @@ package br.com.senai.gestaoDeCadastroFront.dto.pedidos;
 import java.math.BigDecimal;
 import java.util.List;
 
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
+
 import com.fasterxml.jackson.annotation.JsonProperty;
 
+import br.com.senai.gestaoDeCadastroFront.dto.enums.Status;
 import lombok.Data;
 
 @Data
@@ -47,7 +51,8 @@ public class Pedido {
 	private Integer idPedido;
 	
 	@JsonProperty("status")
-	private String status;
+	@Enumerated(EnumType.STRING)
+	private Status status;
 	
 	@JsonProperty("valor_total")
 	private BigDecimal valorTotal;

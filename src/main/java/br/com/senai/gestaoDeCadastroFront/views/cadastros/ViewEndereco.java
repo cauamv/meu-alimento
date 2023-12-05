@@ -38,6 +38,9 @@ public class ViewEndereco extends JFrame {
 
 	@Autowired
 	private EnderecoClient enderecoClient;
+	
+	@Autowired
+	private ViewSenha viewSenha;
 
 	public void abrirTela(ClienteDto clienteDto) {
 		this.clienteDto = clienteDto;
@@ -130,13 +133,16 @@ public class ViewEndereco extends JFrame {
 					dto.setNumeroDaCasa(txtNumeroDaCasa.getText());
 					dto.setComplemento(textComplemento.getText());
 					dto.setClienteDto(clienteDto);
-					enderecoClient.inserir(dto);
+					enderecoClient.inserir(dto, new CredencialDeAcesso(clienteDto.getUsuario().getEmail(), clienteDto.getUsuario().getSenha()));
+
 					CredencialDeAcesso credencialDeAcesso = new CredencialDeAcesso();
 					credencialDeAcesso.setEmail(clienteDto.getUsuario().getEmail());
 					credencialDeAcesso.setSenha(clienteDto.getUsuario().getSenha());
+					enderecoClient.inserir(dto, credencialDeAcesso);
 					viewPrincipal.abrirTela(credencialDeAcesso);
 				} catch (Exception ex) {
 					JOptionPane.showMessageDialog(contentPane, ex.getMessage());
+					ex.printStackTrace();
 				}
 
 			}
@@ -147,95 +153,84 @@ public class ViewEndereco extends JFrame {
 		lblTitulo.setForeground(Color.WHITE);
 		lblTitulo.setFont(new Font("Tahoma", Font.BOLD, 43));
 		GroupLayout gl_contentPane = new GroupLayout(contentPane);
-		gl_contentPane
-				.setHorizontalGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
-						.addGroup(
-								Alignment.TRAILING,
-								gl_contentPane
-										.createSequentialGroup().addContainerGap(270, Short.MAX_VALUE)
-										.addComponent(
-												lblTitulo, GroupLayout.PREFERRED_SIZE, 812,
-												GroupLayout.PREFERRED_SIZE)
-										.addGap(258))
-						.addGroup(gl_contentPane.createSequentialGroup().addGap(24).addGroup(gl_contentPane
-								.createParallelGroup(Alignment.LEADING)
-								.addComponent(txtCidade, GroupLayout.PREFERRED_SIZE, 617, GroupLayout.PREFERRED_SIZE)
-								.addComponent(lblCidade, GroupLayout.PREFERRED_SIZE, 193, GroupLayout.PREFERRED_SIZE)
-								.addComponent(txtBairro, GroupLayout.PREFERRED_SIZE, 617, GroupLayout.PREFERRED_SIZE)
-								.addComponent(lblBairro, GroupLayout.PREFERRED_SIZE, 193, GroupLayout.PREFERRED_SIZE)
-								.addComponent(lblRua, GroupLayout.PREFERRED_SIZE, 193, GroupLayout.PREFERRED_SIZE)
-								.addComponent(txtRua, GroupLayout.PREFERRED_SIZE, 617, GroupLayout.PREFERRED_SIZE)
-								.addComponent(lblCep, GroupLayout.PREFERRED_SIZE, 193, GroupLayout.PREFERRED_SIZE)
-								.addComponent(txtCep, GroupLayout.PREFERRED_SIZE, 617, GroupLayout.PREFERRED_SIZE)
-								.addComponent(txtNome, GroupLayout.PREFERRED_SIZE, 617,
-										GroupLayout.PREFERRED_SIZE)
-								.addComponent(lblNome, GroupLayout.PREFERRED_SIZE, 193, GroupLayout.PREFERRED_SIZE))
-								.addPreferredGap(ComponentPlacement.RELATED, 35, Short.MAX_VALUE)
-								.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
-										.addComponent(lblComplemento, GroupLayout.PREFERRED_SIZE, 193,
-												GroupLayout.PREFERRED_SIZE)
-										.addGroup(gl_contentPane.createParallelGroup(Alignment.TRAILING)
-												.addComponent(textComplemento, Alignment.LEADING)
-												.addGroup(Alignment.LEADING, gl_contentPane
-														.createParallelGroup(Alignment.LEADING, false)
-														.addComponent(txtEstado, GroupLayout.DEFAULT_SIZE, 617,
-																Short.MAX_VALUE)
-														.addComponent(lblEstado, GroupLayout.PREFERRED_SIZE, 193,
-																GroupLayout.PREFERRED_SIZE)
-														.addComponent(txtNumeroDaCasa, GroupLayout.DEFAULT_SIZE, 617,
-																Short.MAX_VALUE)
-														.addComponent(lblNumeroDaCasa, GroupLayout.PREFERRED_SIZE, 193,
-																GroupLayout.PREFERRED_SIZE)
-														.addComponent(btnSalvar, Alignment.TRAILING,
-																GroupLayout.PREFERRED_SIZE, 133,
-																GroupLayout.PREFERRED_SIZE))))
-								.addGap(47)));
-		gl_contentPane.setVerticalGroup(gl_contentPane.createParallelGroup(Alignment.LEADING).addGroup(gl_contentPane
-				.createSequentialGroup().addGap(21).addComponent(lblTitulo).addGap(51)
-				.addGroup(gl_contentPane.createParallelGroup(Alignment.BASELINE).addComponent(lblNome)
+		gl_contentPane.setHorizontalGroup(
+			gl_contentPane.createParallelGroup(Alignment.TRAILING)
+				.addGroup(gl_contentPane.createSequentialGroup()
+					.addContainerGap(270, Short.MAX_VALUE)
+					.addComponent(lblTitulo, GroupLayout.PREFERRED_SIZE, 812, GroupLayout.PREFERRED_SIZE)
+					.addGap(258))
+				.addGroup(gl_contentPane.createSequentialGroup()
+					.addGap(24)
+					.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
+						.addComponent(txtCidade, GroupLayout.PREFERRED_SIZE, 617, GroupLayout.PREFERRED_SIZE)
+						.addComponent(lblCidade, GroupLayout.PREFERRED_SIZE, 193, GroupLayout.PREFERRED_SIZE)
+						.addComponent(txtBairro, GroupLayout.PREFERRED_SIZE, 617, GroupLayout.PREFERRED_SIZE)
+						.addComponent(lblBairro, GroupLayout.PREFERRED_SIZE, 193, GroupLayout.PREFERRED_SIZE)
+						.addComponent(lblRua, GroupLayout.PREFERRED_SIZE, 193, GroupLayout.PREFERRED_SIZE)
+						.addComponent(txtRua, GroupLayout.PREFERRED_SIZE, 617, GroupLayout.PREFERRED_SIZE)
+						.addComponent(lblCep, GroupLayout.PREFERRED_SIZE, 193, GroupLayout.PREFERRED_SIZE)
+						.addComponent(txtCep, GroupLayout.PREFERRED_SIZE, 617, GroupLayout.PREFERRED_SIZE)
+						.addComponent(txtNome, GroupLayout.PREFERRED_SIZE, 617, GroupLayout.PREFERRED_SIZE)
+						.addComponent(lblNome, GroupLayout.PREFERRED_SIZE, 193, GroupLayout.PREFERRED_SIZE))
+					.addPreferredGap(ComponentPlacement.RELATED, 35, Short.MAX_VALUE)
+					.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING, false)
+						.addComponent(textComplemento)
+						.addGroup(Alignment.TRAILING, gl_contentPane.createParallelGroup(Alignment.LEADING)
+							.addComponent(lblComplemento, GroupLayout.PREFERRED_SIZE, 193, GroupLayout.PREFERRED_SIZE)
+							.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING, false)
+								.addComponent(txtEstado, GroupLayout.DEFAULT_SIZE, 617, Short.MAX_VALUE)
+								.addComponent(lblEstado, GroupLayout.PREFERRED_SIZE, 193, GroupLayout.PREFERRED_SIZE)
+								.addComponent(txtNumeroDaCasa, GroupLayout.DEFAULT_SIZE, 617, Short.MAX_VALUE)
+								.addComponent(lblNumeroDaCasa, GroupLayout.PREFERRED_SIZE, 193, GroupLayout.PREFERRED_SIZE)
+								.addComponent(btnSalvar, Alignment.TRAILING, GroupLayout.PREFERRED_SIZE, 133, GroupLayout.PREFERRED_SIZE))))
+					.addGap(47))
+		);
+		gl_contentPane.setVerticalGroup(
+			gl_contentPane.createParallelGroup(Alignment.LEADING)
+				.addGroup(gl_contentPane.createSequentialGroup()
+					.addGap(21)
+					.addComponent(lblTitulo)
+					.addGap(51)
+					.addGroup(gl_contentPane.createParallelGroup(Alignment.BASELINE)
+						.addComponent(lblNome)
 						.addComponent(lblEstado, GroupLayout.PREFERRED_SIZE, 24, GroupLayout.PREFERRED_SIZE))
-				.addPreferredGap(ComponentPlacement.RELATED)
-				.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
+					.addPreferredGap(ComponentPlacement.RELATED)
+					.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
 						.addGroup(gl_contentPane.createSequentialGroup()
-								.addComponent(txtNome, GroupLayout.PREFERRED_SIZE, 53, GroupLayout.PREFERRED_SIZE)
-								.addPreferredGap(ComponentPlacement.RELATED)
-								.addGroup(gl_contentPane.createParallelGroup(Alignment.BASELINE)
-										.addComponent(lblCep, GroupLayout.PREFERRED_SIZE, 24,
-												GroupLayout.PREFERRED_SIZE)
-										.addComponent(lblNumeroDaCasa, GroupLayout.PREFERRED_SIZE, 24,
-												GroupLayout.PREFERRED_SIZE))
-								.addGap(6)
-								.addGroup(gl_contentPane.createParallelGroup(Alignment.BASELINE)
-										.addComponent(txtCep, GroupLayout.PREFERRED_SIZE, 53,
-												GroupLayout.PREFERRED_SIZE)
-										.addComponent(txtNumeroDaCasa, GroupLayout.PREFERRED_SIZE, 53,
-												GroupLayout.PREFERRED_SIZE)))
+							.addComponent(txtNome, GroupLayout.PREFERRED_SIZE, 53, GroupLayout.PREFERRED_SIZE)
+							.addPreferredGap(ComponentPlacement.RELATED)
+							.addGroup(gl_contentPane.createParallelGroup(Alignment.BASELINE)
+								.addComponent(lblCep, GroupLayout.PREFERRED_SIZE, 24, GroupLayout.PREFERRED_SIZE)
+								.addComponent(lblNumeroDaCasa, GroupLayout.PREFERRED_SIZE, 24, GroupLayout.PREFERRED_SIZE))
+							.addGap(6)
+							.addGroup(gl_contentPane.createParallelGroup(Alignment.BASELINE)
+								.addComponent(txtCep, GroupLayout.PREFERRED_SIZE, 53, GroupLayout.PREFERRED_SIZE)
+								.addComponent(txtNumeroDaCasa, GroupLayout.PREFERRED_SIZE, 53, GroupLayout.PREFERRED_SIZE)))
 						.addComponent(txtEstado, GroupLayout.PREFERRED_SIZE, 53, GroupLayout.PREFERRED_SIZE))
-				.addPreferredGap(ComponentPlacement.RELATED)
-				.addGroup(
-						gl_contentPane.createParallelGroup(Alignment.TRAILING)
-								.addGroup(gl_contentPane.createSequentialGroup()
-										.addComponent(lblRua, GroupLayout.PREFERRED_SIZE, 24,
-												GroupLayout.PREFERRED_SIZE)
-										.addGap(6))
-								.addGroup(gl_contentPane.createSequentialGroup()
-										.addComponent(lblComplemento, GroupLayout.PREFERRED_SIZE, 24,
-												GroupLayout.PREFERRED_SIZE)
-										.addPreferredGap(ComponentPlacement.UNRELATED)))
-				.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING, false)
+					.addPreferredGap(ComponentPlacement.RELATED)
+					.addGroup(gl_contentPane.createParallelGroup(Alignment.TRAILING)
 						.addGroup(gl_contentPane.createSequentialGroup()
-								.addComponent(txtRua, GroupLayout.PREFERRED_SIZE, 53, GroupLayout.PREFERRED_SIZE)
-								.addPreferredGap(ComponentPlacement.UNRELATED)
-								.addComponent(lblBairro, GroupLayout.PREFERRED_SIZE, 24, GroupLayout.PREFERRED_SIZE)
-								.addPreferredGap(ComponentPlacement.UNRELATED)
-								.addComponent(txtBairro, GroupLayout.PREFERRED_SIZE, 53, GroupLayout.PREFERRED_SIZE)
-								.addPreferredGap(ComponentPlacement.UNRELATED)
-								.addComponent(lblCidade, GroupLayout.PREFERRED_SIZE, 24, GroupLayout.PREFERRED_SIZE)
-								.addPreferredGap(ComponentPlacement.UNRELATED)
-								.addComponent(txtCidade, GroupLayout.PREFERRED_SIZE, 53, GroupLayout.PREFERRED_SIZE))
+							.addComponent(lblRua, GroupLayout.PREFERRED_SIZE, 24, GroupLayout.PREFERRED_SIZE)
+							.addGap(6))
+						.addGroup(gl_contentPane.createSequentialGroup()
+							.addComponent(lblComplemento, GroupLayout.PREFERRED_SIZE, 24, GroupLayout.PREFERRED_SIZE)
+							.addPreferredGap(ComponentPlacement.UNRELATED)))
+					.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING, false)
+						.addGroup(gl_contentPane.createSequentialGroup()
+							.addComponent(txtRua, GroupLayout.PREFERRED_SIZE, 53, GroupLayout.PREFERRED_SIZE)
+							.addPreferredGap(ComponentPlacement.UNRELATED)
+							.addComponent(lblBairro, GroupLayout.PREFERRED_SIZE, 24, GroupLayout.PREFERRED_SIZE)
+							.addPreferredGap(ComponentPlacement.UNRELATED)
+							.addComponent(txtBairro, GroupLayout.PREFERRED_SIZE, 53, GroupLayout.PREFERRED_SIZE)
+							.addPreferredGap(ComponentPlacement.UNRELATED)
+							.addComponent(lblCidade, GroupLayout.PREFERRED_SIZE, 24, GroupLayout.PREFERRED_SIZE)
+							.addPreferredGap(ComponentPlacement.UNRELATED)
+							.addComponent(txtCidade, GroupLayout.PREFERRED_SIZE, 53, GroupLayout.PREFERRED_SIZE))
 						.addComponent(textComplemento))
-				.addGap(42).addComponent(btnSalvar, GroupLayout.PREFERRED_SIZE, 44, GroupLayout.PREFERRED_SIZE)
-				.addGap(42)));
+					.addGap(42)
+					.addComponent(btnSalvar, GroupLayout.PREFERRED_SIZE, 44, GroupLayout.PREFERRED_SIZE)
+					.addGap(42))
+		);
 		contentPane.setLayout(gl_contentPane);
 
 		setLocationRelativeTo(null);

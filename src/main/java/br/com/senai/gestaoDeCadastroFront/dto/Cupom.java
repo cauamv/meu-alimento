@@ -2,8 +2,12 @@ package br.com.senai.gestaoDeCadastroFront.dto;
 
 import java.time.LocalDate;
 
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
+
 import com.fasterxml.jackson.annotation.JsonProperty;
 
+import br.com.senai.gestaoDeCadastroFront.dto.enums.StatusDoCupom;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
@@ -15,11 +19,11 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class Cupom {
 
-	@JsonProperty("id_cupom")
+	@JsonProperty("id")
 	@NotNull(message = "O id é obrigatório. ")
 	private Integer id;
 	
-	@JsonProperty("percentual_de_desconto")
+	@JsonProperty("percentualDeDesconto")
 	@NotNull(message = "O valor é obrigatório. ")
 	private Double percentualDeDesconto;
 	
@@ -30,5 +34,10 @@ public class Cupom {
 	@JsonProperty("codigo")
 	@NotBlank(message = "O código é obrigatório. ")
 	private String codigo;
+	
+	@JsonProperty("status")
+	@NotBlank(message = "O código é obrigatório. ")
+	@Enumerated(EnumType.STRING)
+	private StatusDoCupom status;
 	
 }
