@@ -29,6 +29,7 @@ import br.com.senai.gestaoDeCadastroFront.components.table.CupomTableModel;
 import br.com.senai.gestaoDeCadastroFront.dto.Cupom;
 import br.com.senai.gestaoDeCadastroFront.dto.Paginacao;
 import br.com.senai.gestaoDeCadastroFront.dto.enums.StatusDoCupom;
+import br.com.senai.gestaoDeCadastroFront.views.ViewPrincipal;
 import jakarta.validation.ConstraintViolation;
 import jakarta.validation.ConstraintViolationException;
 
@@ -48,7 +49,9 @@ public class ViewCupons extends JFrame {
 	@Autowired
 	private CuponsClient cuponsClient;
 	private JLabel lblMeusCupons;
-	private final JSeparator separator = new JSeparator();
+	
+	@Autowired
+	private ViewPrincipal viewPrincipal;
 
 	@Autowired
 	@Lazy
@@ -105,9 +108,36 @@ public class ViewCupons extends JFrame {
 
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
-		separator.setForeground(new Color(0, 0, 0));
-		separator.setBounds(0, 105, 1402, 36);
-		contentPane.add(separator);
+		
+		JPanel panel = new JPanel();
+		panel.setBackground(Color.RED);
+		panel.setBounds(0, 0, 1350, 104);
+		contentPane.add(panel);
+				panel.setLayout(null);
+				
+				JButton btnVoltar = new JButton("<");
+				btnVoltar.setBounds(10, 37, 77, 37);
+				panel.add(btnVoltar);
+				btnVoltar.addActionListener(new ActionListener() {
+					public void actionPerformed(ActionEvent e) {
+						viewPrincipal.setVisible(true);
+						dispose();
+					}
+				});
+				btnVoltar.setRolloverEnabled(true);
+				btnVoltar.setForeground(Color.WHITE);
+				btnVoltar.setFont(new Font("Tahoma", Font.BOLD, 27));
+				btnVoltar.setBorder(null);
+				btnVoltar.setBackground(Color.RED);
+		
+				lblMeusCupons = new JLabel("Meus Cupons");
+				lblMeusCupons.setBounds(555, 22, 282, 55);
+				panel.add(lblMeusCupons);
+				lblMeusCupons.setAutoscrolls(true);
+				lblMeusCupons.setBackground(Color.RED);
+				lblMeusCupons.setHorizontalAlignment(SwingConstants.CENTER);
+				lblMeusCupons.setForeground(Color.WHITE);
+				lblMeusCupons.setFont(new Font("Dialog", Font.BOLD, 43));
 
 		tbCupons = new JTable(new CupomTableModel());
 		tbCupons.setBackground(new Color(240, 240, 240));
@@ -124,64 +154,10 @@ public class ViewCupons extends JFrame {
 		btnCriar.setBounds(new Rectangle(10, 10, 10, 10));
 		btnCriar.setBorder(null);
 		btnCriar.setBackground(Color.RED);
-		btnCriar.setBounds(40, 233, 132, 44);
+		btnCriar.setBounds(40, 141, 132, 44);
 		contentPane.add(btnCriar);
 
 		this.configurarCabecalhos(tbCupons);
-
-		lblMeusCupons = new JLabel("Meus Cupons");
-		lblMeusCupons.setBackground(new Color(255, 255, 255));
-		lblMeusCupons.setHorizontalAlignment(SwingConstants.CENTER);
-		lblMeusCupons.setForeground(new Color(255, 0, 0));
-		lblMeusCupons.setFont(new Font("Dialog", Font.BOLD, 43));
-		lblMeusCupons.setBounds(0, 0, 1363, 104);
-		contentPane.add(lblMeusCupons);
-
-		JButton btnDesativar = new JButton("Desativar");
-		btnDesativar.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				
-				int linhaSelecionada = tbCupons.getSelectedRow();
-				if (linhaSelecionada >= 0) {
-					int opcao = JOptionPane.showConfirmDialog(contentPane,
-							"Deseja atualizar o status do cupom selecionado?", "Atualização",
-							JOptionPane.YES_NO_OPTION);
-					
-					boolean isConfirmacaoRealizada = opcao == 0;
-					
-					if (isConfirmacaoRealizada) {
-						try {
-							CupomTableModel model = (CupomTableModel) tbCupons.getModel();
-							Cupom cupomSelecionado = model.getPor(linhaSelecionada);
-							cuponsClient.atualizarPor(cupomSelecionado.getId(), StatusDoCupom.I, credencial);
-							listarCuponsDa(paginacao.getPaginaAtual(), credencial);
-							JOptionPane.showMessageDialog(contentPane, "O status do cupom foi atualizado com sucesso",
-									"Sucesso na Desativação", JOptionPane.INFORMATION_MESSAGE);
-						} catch (ConstraintViolationException cve) {
-							StringBuilder msgErro = new StringBuilder("Os seguintes erros ocorreram:\n");
-							for (ConstraintViolation<?> cv : cve.getConstraintViolations()) {
-								msgErro.append("  -").append(cv.getMessage()).append("\n");
-							}
-							JOptionPane.showMessageDialog(contentPane, msgErro, "Falha na Listagem",
-									JOptionPane.ERROR_MESSAGE);
-						} catch (Exception ex) {
-							JOptionPane.showMessageDialog(contentPane, ex.getMessage(), "Erro na Atualização",
-									JOptionPane.ERROR_MESSAGE);
-						}
-					}
-				} else {
-					JOptionPane.showMessageDialog(contentPane, "Selecione uma linha para desativação");
-				}
-			}
-		});
-		btnDesativar.setRolloverEnabled(true);
-		btnDesativar.setForeground(Color.WHITE);
-		btnDesativar.setFont(new Font("Tahoma", Font.PLAIN, 19));
-		btnDesativar.setBounds(new Rectangle(10, 10, 10, 10));
-		btnDesativar.setBorder(null);
-		btnDesativar.setBackground(Color.RED);
-		btnDesativar.setBounds(324, 233, 132, 44);
-		contentPane.add(btnDesativar);
 
 		JButton btnAlterar = new JButton("Alterar");
 		btnAlterar.addActionListener(new ActionListener() {
@@ -198,7 +174,7 @@ public class ViewCupons extends JFrame {
 		btnAlterar.setBounds(new Rectangle(10, 10, 10, 10));
 		btnAlterar.setBorder(null);
 		btnAlterar.setBackground(Color.RED);
-		btnAlterar.setBounds(182, 233, 132, 44);
+		btnAlterar.setBounds(182, 141, 132, 44);
 		contentPane.add(btnAlterar);
 
 		setLocationRelativeTo(null);

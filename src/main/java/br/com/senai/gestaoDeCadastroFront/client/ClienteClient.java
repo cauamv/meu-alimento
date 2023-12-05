@@ -25,7 +25,8 @@ public class ClienteClient {
 	@Autowired
 	private AplicadorDeToken aplicadorDeToken;
 	
-	private RestTemplate httpClient = new RestTemplate();
+	@Autowired
+	private RestTemplate httpClient;
 	
 	@Autowired
 	private AutenticadorClient autenticadorClient;

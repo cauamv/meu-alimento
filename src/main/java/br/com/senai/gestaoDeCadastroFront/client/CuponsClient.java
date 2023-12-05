@@ -42,7 +42,8 @@ public class CuponsClient {
 	public Paginacao<Cupom> listarTodos(Integer pagina, CredencialDeAcesso credencialDeAcesso) {
 		String token = autenticadorClient.getTokenPela(credencialDeAcesso).getValor();
 		HttpHeaders headers = aplicadorDeToken.aplicar(token);
-		ResponseEntity<Paginacao<Cupom>> cuponsEncontrados = httpClient.exchange(URL  + ENDPOINT,
+
+		ResponseEntity<Paginacao<Cupom>> cuponsEncontrados = httpClient.exchange(URL + ENDPOINT,
 				HttpMethod.GET, new HttpEntity<>(headers), new ParameterizedTypeReference<Paginacao<Cupom>>() {
 				});
 		return cuponsEncontrados.getBody();

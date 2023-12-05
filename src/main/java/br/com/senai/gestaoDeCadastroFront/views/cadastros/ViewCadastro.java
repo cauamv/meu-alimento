@@ -6,7 +6,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
-import java.time.format.DateTimeParseException;
 
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.GroupLayout;
@@ -31,6 +30,7 @@ import org.springframework.stereotype.Component;
 import br.com.senai.gestaoDeCadastroFront.components.RoundJTextField;
 import br.com.senai.gestaoDeCadastroFront.dto.NovoClienteDto;
 import br.com.senai.gestaoDeCadastroFront.dto.UsuarioDto;
+import br.com.senai.gestaoDeCadastroFront.views.login.ViewLogin;
 
 @Component
 public class ViewCadastro extends JFrame {
@@ -42,6 +42,9 @@ public class ViewCadastro extends JFrame {
 	@Lazy
 	ViewSenha telaSenha;
 
+	@Autowired
+	private ViewLogin viewLogin;
+	
 	private MaskFormatter dateFormatter;
 
 	public ViewCadastro() {
@@ -190,6 +193,17 @@ public class ViewCadastro extends JFrame {
 		});
 		btnProximo.setBackground(new Color(255, 255, 255));
 		btnProximo.setBorder(null);
+		
+		JButton btnVoltar = new JButton("Voltar");
+		btnVoltar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				viewLogin.setVisible(true);
+				dispose();
+			}
+		});
+		btnVoltar.setFont(new Font("Tahoma", Font.PLAIN, 18));
+		btnVoltar.setBorder(null);
+		btnVoltar.setBackground(Color.WHITE);
 
 		GroupLayout gl_panelDireito = new GroupLayout(panelDireito);
 		gl_panelDireito.setHorizontalGroup(
@@ -199,25 +213,24 @@ public class ViewCadastro extends JFrame {
 					.addComponent(lblMeuCadastro)
 					.addGap(193))
 				.addGroup(gl_panelDireito.createSequentialGroup()
+					.addGap(60)
 					.addGroup(gl_panelDireito.createParallelGroup(Alignment.TRAILING)
 						.addGroup(gl_panelDireito.createSequentialGroup()
-							.addContainerGap()
+							.addComponent(btnVoltar, GroupLayout.PREFERRED_SIZE, 122, GroupLayout.PREFERRED_SIZE)
+							.addPreferredGap(ComponentPlacement.RELATED, 307, Short.MAX_VALUE)
 							.addComponent(btnProximo, GroupLayout.PREFERRED_SIZE, 122, GroupLayout.PREFERRED_SIZE))
-						.addGroup(gl_panelDireito.createSequentialGroup()
-							.addGap(60)
-							.addGroup(gl_panelDireito.createParallelGroup(Alignment.LEADING)
-								.addComponent(lblNome, GroupLayout.PREFERRED_SIZE, 184, GroupLayout.PREFERRED_SIZE)
-								.addComponent(txtNome, GroupLayout.DEFAULT_SIZE, 551, Short.MAX_VALUE)
-								.addComponent(lblSexo, GroupLayout.PREFERRED_SIZE, 184, GroupLayout.PREFERRED_SIZE)
-								.addComponent(cbxSexo, GroupLayout.PREFERRED_SIZE, 151, GroupLayout.PREFERRED_SIZE)
-								.addComponent(lblDataNascimento, GroupLayout.DEFAULT_SIZE, 551, Short.MAX_VALUE)
-								.addComponent(txtDataNascimento, GroupLayout.PREFERRED_SIZE, 551, GroupLayout.PREFERRED_SIZE)
-								.addComponent(lblDigiteSeuEmail, GroupLayout.PREFERRED_SIZE, 551, GroupLayout.PREFERRED_SIZE)
-								.addComponent(txtEmail, GroupLayout.PREFERRED_SIZE, 551, GroupLayout.PREFERRED_SIZE)
-								.addComponent(lblNomeObrigatorio, GroupLayout.PREFERRED_SIZE, 184, GroupLayout.PREFERRED_SIZE)
-								.addComponent(lblSexoObrigatorio, GroupLayout.PREFERRED_SIZE, 184, GroupLayout.PREFERRED_SIZE)
-								.addComponent(lblDataNascimentoObrigatorio, GroupLayout.PREFERRED_SIZE, 551, GroupLayout.PREFERRED_SIZE)
-								.addComponent(lblEmailObrigatorio, GroupLayout.PREFERRED_SIZE, 551, GroupLayout.PREFERRED_SIZE))))
+						.addComponent(lblNome, Alignment.LEADING, GroupLayout.PREFERRED_SIZE, 184, GroupLayout.PREFERRED_SIZE)
+						.addComponent(txtNome, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, 551, Short.MAX_VALUE)
+						.addComponent(lblSexo, Alignment.LEADING, GroupLayout.PREFERRED_SIZE, 184, GroupLayout.PREFERRED_SIZE)
+						.addComponent(cbxSexo, Alignment.LEADING, GroupLayout.PREFERRED_SIZE, 151, GroupLayout.PREFERRED_SIZE)
+						.addComponent(lblDataNascimento, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, 551, Short.MAX_VALUE)
+						.addComponent(txtDataNascimento, Alignment.LEADING, GroupLayout.PREFERRED_SIZE, 551, GroupLayout.PREFERRED_SIZE)
+						.addComponent(lblDigiteSeuEmail, Alignment.LEADING, GroupLayout.PREFERRED_SIZE, 551, GroupLayout.PREFERRED_SIZE)
+						.addComponent(txtEmail, Alignment.LEADING, GroupLayout.PREFERRED_SIZE, 551, GroupLayout.PREFERRED_SIZE)
+						.addComponent(lblNomeObrigatorio, Alignment.LEADING, GroupLayout.PREFERRED_SIZE, 184, GroupLayout.PREFERRED_SIZE)
+						.addComponent(lblSexoObrigatorio, Alignment.LEADING, GroupLayout.PREFERRED_SIZE, 184, GroupLayout.PREFERRED_SIZE)
+						.addComponent(lblDataNascimentoObrigatorio, Alignment.LEADING, GroupLayout.PREFERRED_SIZE, 551, GroupLayout.PREFERRED_SIZE)
+						.addComponent(lblEmailObrigatorio, Alignment.LEADING, GroupLayout.PREFERRED_SIZE, 551, GroupLayout.PREFERRED_SIZE))
 					.addGap(72))
 		);
 		gl_panelDireito.setVerticalGroup(
@@ -250,7 +263,9 @@ public class ViewCadastro extends JFrame {
 					.addPreferredGap(ComponentPlacement.RELATED)
 					.addComponent(lblEmailObrigatorio, GroupLayout.PREFERRED_SIZE, 30, GroupLayout.PREFERRED_SIZE)
 					.addGap(64)
-					.addComponent(btnProximo, GroupLayout.PREFERRED_SIZE, 46, GroupLayout.PREFERRED_SIZE)
+					.addGroup(gl_panelDireito.createParallelGroup(Alignment.LEADING)
+						.addComponent(btnProximo, GroupLayout.PREFERRED_SIZE, 46, GroupLayout.PREFERRED_SIZE)
+						.addComponent(btnVoltar, GroupLayout.PREFERRED_SIZE, 46, GroupLayout.PREFERRED_SIZE))
 					.addContainerGap(13, Short.MAX_VALUE))
 		);
 		panelDireito.setLayout(gl_panelDireito);

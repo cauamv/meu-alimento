@@ -114,11 +114,11 @@ public class ViewListagemDePedidos extends JFrame {
             todosPedidos.addAll(pedidosClient.listarPor(id, 0, Status.REALIZADO).getListagem());
 
             for (Pedido pedido : todosPedidos) {
-                Color background = Color.gray;
-                Color foreground = Color.black;
+                Color background = Color.RED;
+                Color foreground = Color.WHITE;
 
-                if (pedido.getTipoDeEntrega().equals("DELIVERY")) {
-                	background = Color.darkGray;
+                if (pedido.getTipoDeEntrega().equals(Status.ACEITO_PELO_RESTAURANTE)) {
+                	background = Color.RED;
 				}
 
                 JPanel panelPedido = gerarPedido(
@@ -161,6 +161,7 @@ public class ViewListagemDePedidos extends JFrame {
             JButton btnDetalhes,
             JPanel columnOrganizePanel,
             Color backgoundColor,
+            
             Color foregroundCOlor,
             String status
     		) {
