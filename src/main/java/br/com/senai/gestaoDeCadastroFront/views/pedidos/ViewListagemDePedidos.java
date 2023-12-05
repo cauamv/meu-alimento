@@ -18,6 +18,8 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.LayoutStyle;
 import javax.swing.SwingConstants;
+import javax.swing.SwingWorker;
+import javax.swing.Timer;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.LineBorder;
 import javax.swing.border.TitledBorder;
@@ -79,6 +81,20 @@ public class ViewListagemDePedidos extends JFrame {
         this.token = token;
         this.setVisible(true);
         gerarCards(token, new JPanel());
+        Timer timer = new Timer(5000, new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                SwingWorker<Void, Void> worker = new SwingWorker<Void, Void>() {
+                    @Override
+                    protected Void doInBackground() throws Exception {
+                        gerarCards(token, new JPanel());
+                        return null;
+                    }
+                };
+                worker.execute();
+            }
+        });
+        timer.start();
     }
 
     public void gerarCards(String token, JPanel columnOrganizePanel) {
@@ -93,9 +109,9 @@ public class ViewListagemDePedidos extends JFrame {
             Integer id = Integer.parseInt(decoder.extrairIdRestauranteDo(token));
 
             List<Pedido> todosPedidos = new ArrayList<>();
-            todosPedidos.addAll(pedidosClient.listarPor(id, 0, Status.REALIZADO).getListagem());
-            todosPedidos.addAll(pedidosClient.listarPor(id, 0, Status.ACEITO_PELO_RESTAURANTE).getListagem());
             todosPedidos.addAll(pedidosClient.listarPor(id, 0, Status.PRONTO_PARA_COLETA).getListagem());
+            todosPedidos.addAll(pedidosClient.listarPor(id, 0, Status.ACEITO_PELO_RESTAURANTE).getListagem());
+            todosPedidos.addAll(pedidosClient.listarPor(id, 0, Status.REALIZADO).getListagem());
 
             for (Pedido pedido : todosPedidos) {
                 Color background = Color.gray;
