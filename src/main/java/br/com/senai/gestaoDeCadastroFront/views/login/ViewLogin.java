@@ -29,6 +29,7 @@ import br.com.senai.gestaoDeCadastroFront.client.authenticate.server.CredencialD
 import br.com.senai.gestaoDeCadastroFront.components.RoundJTextField;
 import br.com.senai.gestaoDeCadastroFront.views.ViewPrincipal;
 import br.com.senai.gestaoDeCadastroFront.views.cadastros.ViewCadastro;
+import javax.swing.JCheckBox;
 
 @Component
 public class ViewLogin extends JFrame {
@@ -146,43 +147,70 @@ public class ViewLogin extends JFrame {
 		btnNovoAqui.setFont(new Font("Tahoma", Font.ITALIC, 18));
 		btnNovoAqui.setBorder(null);
 		btnNovoAqui.setBackground(Color.RED);
+		
+		JCheckBox chckMostrarSenha = new JCheckBox("Mostrar Senha");
+		chckMostrarSenha.setForeground(Color.WHITE);
+		chckMostrarSenha.setBackground(Color.RED);
+		chckMostrarSenha.setForeground(Color.WHITE);
+		chckMostrarSenha.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		chckMostrarSenha.setOpaque(false);
+		chckMostrarSenha.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				JCheckBox source = (JCheckBox) e.getSource();
+				txtSenha.setEchoChar(source.isSelected() ? '\0' : '*');
+			}
+		});
 
 		GroupLayout gl_rightPanel = new GroupLayout(rightPanel);
-		gl_rightPanel.setHorizontalGroup(gl_rightPanel.createParallelGroup(Alignment.LEADING).addGroup(gl_rightPanel
-				.createSequentialGroup()
-				.addGroup(gl_rightPanel.createParallelGroup(Alignment.LEADING)
-						.addGroup(gl_rightPanel.createSequentialGroup().addGap(170).addComponent(lblMeuLogin,
-								GroupLayout.PREFERRED_SIZE, 357, GroupLayout.PREFERRED_SIZE))
-						.addGroup(gl_rightPanel.createSequentialGroup().addGap(28).addGroup(gl_rightPanel
-								.createParallelGroup(Alignment.LEADING)
-								.addComponent(bntEntrar, Alignment.TRAILING, GroupLayout.PREFERRED_SIZE, 126,
-										GroupLayout.PREFERRED_SIZE)
-								.addComponent(btnNovoAqui, Alignment.TRAILING, GroupLayout.PREFERRED_SIZE, 126,
-										GroupLayout.PREFERRED_SIZE)
+		gl_rightPanel.setHorizontalGroup(
+			gl_rightPanel.createParallelGroup(Alignment.LEADING)
+				.addGroup(gl_rightPanel.createSequentialGroup()
+					.addGroup(gl_rightPanel.createParallelGroup(Alignment.LEADING)
+						.addGroup(gl_rightPanel.createSequentialGroup()
+							.addGap(170)
+							.addComponent(lblMeuLogin, GroupLayout.PREFERRED_SIZE, 357, GroupLayout.PREFERRED_SIZE))
+						.addGroup(gl_rightPanel.createSequentialGroup()
+							.addGap(28)
+							.addGroup(gl_rightPanel.createParallelGroup(Alignment.LEADING)
+								.addComponent(bntEntrar, Alignment.TRAILING, GroupLayout.PREFERRED_SIZE, 126, GroupLayout.PREFERRED_SIZE)
+								.addComponent(btnNovoAqui, Alignment.TRAILING, GroupLayout.PREFERRED_SIZE, 126, GroupLayout.PREFERRED_SIZE)
 								.addComponent(txtEmail, GroupLayout.DEFAULT_SIZE, 629, Short.MAX_VALUE)
 								.addComponent(lblEmail, GroupLayout.PREFERRED_SIZE, 406, GroupLayout.PREFERRED_SIZE)
 								.addComponent(txtSenha, GroupLayout.DEFAULT_SIZE, 629, Short.MAX_VALUE)
 								.addComponent(lblSenha, GroupLayout.PREFERRED_SIZE, 184, GroupLayout.PREFERRED_SIZE)
-								.addComponent(lblEmailObrigatorio, GroupLayout.PREFERRED_SIZE, 195,
-										GroupLayout.PREFERRED_SIZE)
-								.addComponent(lblSenhaObrigatoria, GroupLayout.PREFERRED_SIZE, 195,
-										GroupLayout.PREFERRED_SIZE))))
-				.addContainerGap(26, Short.MAX_VALUE)));
-		gl_rightPanel.setVerticalGroup(gl_rightPanel.createParallelGroup(Alignment.LEADING)
-				.addGroup(gl_rightPanel.createSequentialGroup().addGap(66).addComponent(lblMeuLogin).addGap(74)
-						.addComponent(lblEmail, GroupLayout.PREFERRED_SIZE, 30, GroupLayout.PREFERRED_SIZE)
-						.addPreferredGap(ComponentPlacement.UNRELATED)
-						.addComponent(txtEmail, GroupLayout.PREFERRED_SIZE, 64, GroupLayout.PREFERRED_SIZE)
-						.addPreferredGap(ComponentPlacement.RELATED)
-						.addComponent(lblEmailObrigatorio, GroupLayout.PREFERRED_SIZE, 27, GroupLayout.PREFERRED_SIZE)
-						.addGap(27).addComponent(lblSenha).addPreferredGap(ComponentPlacement.RELATED)
-						.addComponent(txtSenha, GroupLayout.PREFERRED_SIZE, 61, GroupLayout.PREFERRED_SIZE)
-						.addPreferredGap(ComponentPlacement.RELATED)
+								.addComponent(lblEmailObrigatorio, GroupLayout.PREFERRED_SIZE, 195, GroupLayout.PREFERRED_SIZE)
+								.addGroup(gl_rightPanel.createSequentialGroup()
+									.addComponent(lblSenhaObrigatoria, GroupLayout.PREFERRED_SIZE, 195, GroupLayout.PREFERRED_SIZE)
+									.addPreferredGap(ComponentPlacement.RELATED, 328, Short.MAX_VALUE)
+									.addComponent(chckMostrarSenha)
+									.addGap(9)))))
+					.addContainerGap(26, Short.MAX_VALUE))
+		);
+		gl_rightPanel.setVerticalGroup(
+			gl_rightPanel.createParallelGroup(Alignment.LEADING)
+				.addGroup(gl_rightPanel.createSequentialGroup()
+					.addGap(66)
+					.addComponent(lblMeuLogin)
+					.addGap(74)
+					.addComponent(lblEmail, GroupLayout.PREFERRED_SIZE, 30, GroupLayout.PREFERRED_SIZE)
+					.addPreferredGap(ComponentPlacement.UNRELATED)
+					.addComponent(txtEmail, GroupLayout.PREFERRED_SIZE, 64, GroupLayout.PREFERRED_SIZE)
+					.addPreferredGap(ComponentPlacement.RELATED)
+					.addComponent(lblEmailObrigatorio, GroupLayout.PREFERRED_SIZE, 27, GroupLayout.PREFERRED_SIZE)
+					.addGap(27)
+					.addComponent(lblSenha)
+					.addPreferredGap(ComponentPlacement.RELATED)
+					.addComponent(txtSenha, GroupLayout.PREFERRED_SIZE, 61, GroupLayout.PREFERRED_SIZE)
+					.addPreferredGap(ComponentPlacement.RELATED)
+					.addGroup(gl_rightPanel.createParallelGroup(Alignment.BASELINE)
 						.addComponent(lblSenhaObrigatoria, GroupLayout.PREFERRED_SIZE, 27, GroupLayout.PREFERRED_SIZE)
-						.addGap(33).addComponent(bntEntrar, GroupLayout.PREFERRED_SIZE, 39, GroupLayout.PREFERRED_SIZE)
-						.addGap(104)
-						.addComponent(btnNovoAqui, GroupLayout.PREFERRED_SIZE, 39, GroupLayout.PREFERRED_SIZE)
-						.addGap(118)));
+						.addComponent(chckMostrarSenha))
+					.addGap(33)
+					.addComponent(bntEntrar, GroupLayout.PREFERRED_SIZE, 39, GroupLayout.PREFERRED_SIZE)
+					.addGap(104)
+					.addComponent(btnNovoAqui, GroupLayout.PREFERRED_SIZE, 39, GroupLayout.PREFERRED_SIZE)
+					.addGap(118))
+		);
 		rightPanel.setLayout(gl_rightPanel);
 
 		JLabel lblMeuAlimento = new JLabel("Meu Alimento");
