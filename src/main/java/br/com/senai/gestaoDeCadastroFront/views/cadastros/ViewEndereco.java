@@ -38,9 +38,6 @@ public class ViewEndereco extends JFrame {
 
 	@Autowired
 	private EnderecoClient enderecoClient;
-	
-	@Autowired
-	private ViewSenha viewSenha;
 
 	public void abrirTela(ClienteDto clienteDto) {
 		this.clienteDto = clienteDto;

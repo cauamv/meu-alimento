@@ -42,7 +42,6 @@ public class ViewPrincipal extends JFrame {
 	private String role;
 	
 	@Autowired
-	@Lazy
 	private ViewCupons viewCupons;
 	
 	private String token;

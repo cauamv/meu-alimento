@@ -23,14 +23,12 @@ import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
 import javax.swing.text.MaskFormatter;
 
-import org.hibernate.validator.internal.util.stereotypes.Lazy;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import br.com.senai.gestaoDeCadastroFront.components.RoundJTextField;
 import br.com.senai.gestaoDeCadastroFront.dto.NovoClienteDto;
 import br.com.senai.gestaoDeCadastroFront.dto.UsuarioDto;
-import br.com.senai.gestaoDeCadastroFront.views.login.ViewLogin;
 
 @Component
 public class ViewCadastro extends JFrame {
@@ -39,11 +37,11 @@ public class ViewCadastro extends JFrame {
 	private JPanel contentPane;
 
 	@Autowired
-	@Lazy
-	ViewSenha telaSenha;
+	private ViewSenha telaSenha;
 
-	@Autowired
-	private ViewLogin viewLogin;
+	/*@Autowired
+	@Lazy
+	private ViewLogin viewLogin;*/
 	
 	private MaskFormatter dateFormatter;
 
@@ -197,7 +195,7 @@ public class ViewCadastro extends JFrame {
 		JButton btnVoltar = new JButton("Voltar");
 		btnVoltar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				viewLogin.setVisible(true);
+				//viewLogin.setVisible(true);
 				dispose();
 			}
 		});

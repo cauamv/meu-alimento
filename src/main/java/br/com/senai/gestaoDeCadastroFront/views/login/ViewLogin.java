@@ -42,7 +42,6 @@ public class ViewLogin extends JFrame {
 	private ViewPrincipal viewGestor;
 
 	@Autowired
-	@Lazy
 	private ViewCadastro viewCadastro;
 
 	public ViewLogin() {

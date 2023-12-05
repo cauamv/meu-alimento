@@ -10,10 +10,8 @@ import java.awt.event.ActionListener;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
-import javax.swing.JSeparator;
 import javax.swing.JTable;
 import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
@@ -28,10 +26,7 @@ import br.com.senai.gestaoDeCadastroFront.client.authenticate.server.CredencialD
 import br.com.senai.gestaoDeCadastroFront.components.table.CupomTableModel;
 import br.com.senai.gestaoDeCadastroFront.dto.Cupom;
 import br.com.senai.gestaoDeCadastroFront.dto.Paginacao;
-import br.com.senai.gestaoDeCadastroFront.dto.enums.StatusDoCupom;
 import br.com.senai.gestaoDeCadastroFront.views.ViewPrincipal;
-import jakarta.validation.ConstraintViolation;
-import jakarta.validation.ConstraintViolationException;
 
 @Component
 public class ViewCupons extends JFrame {
@@ -51,6 +46,7 @@ public class ViewCupons extends JFrame {
 	private JLabel lblMeusCupons;
 	
 	@Autowired
+	@Lazy
 	private ViewPrincipal viewPrincipal;
 
 	@Autowired

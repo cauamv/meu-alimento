@@ -19,8 +19,8 @@ import javax.swing.LayoutStyle.ComponentPlacement;
 import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
 
-import org.hibernate.validator.internal.util.stereotypes.Lazy;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Component;
 
 import br.com.senai.gestaoDeCadastroFront.client.ClienteClient;
@@ -44,6 +44,7 @@ public class ViewSenha extends JFrame {
 	private ClienteClient clienteClient;
 	
 	@Autowired
+	@Lazy
 	private ViewCadastro viewCadastro;
 
 	private JPasswordField txtfConfirmeSenha;

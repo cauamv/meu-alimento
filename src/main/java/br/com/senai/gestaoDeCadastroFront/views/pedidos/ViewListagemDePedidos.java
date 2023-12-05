@@ -16,7 +16,6 @@ import javax.swing.JPanel;
 import javax.swing.LayoutStyle.ComponentPlacement;
 import javax.swing.border.EmptyBorder;
 
-import org.hibernate.validator.internal.util.stereotypes.Lazy;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -33,14 +32,13 @@ public class ViewListagemDePedidos extends JFrame {
     private JPanel contentPane;
     
     @Autowired
-    @Lazy
     private ViewDetalhesDeUmPedido viewDetalhesDeUmPedido;
 
     @Autowired
     private PedidosClient pedidosClient;
 
     public ViewListagemDePedidos() {
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         setBounds(100, 100, 1366, 768);
         contentPane = new JPanel();
         contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -70,13 +68,25 @@ public class ViewListagemDePedidos extends JFrame {
         Paginacao<Pedido> prontoParaColeta = pedidosClient.listarPor(id, 0, Status.PRONTO_PARA_COLETA);
         Paginacao<Pedido> aceitoPeloRestaurante = pedidosClient.listarPor(id, 0, Status.ACEITO_PELO_RESTAURANTE);
         
-        for (int i = 0; i <= 4; i++) {
-        	todosPedidos.add(realizados.getListagem().get(i));
-        	todosPedidos.add(prontoParaColeta.getListagem().get(i));
-        	todosPedidos.add(aceitoPeloRestaurante.getListagem().get(i));
-		}
+        for (int i = 0; i < realizados.getTotalDeItens(); i++) {
+        	if (i < 4) {        		
+        		todosPedidos.add(realizados.getListagem().get(i));
+        	}
+        }
         
-        for (int i = 0; i < 12; i++) {
+        for (int i = 0; i < prontoParaColeta.getTotalDeItens(); i++) {
+        	if (i < 4) {        		
+        		todosPedidos.add(prontoParaColeta.getListagem().get(i));
+        	}
+        }
+        
+        for (int i = 0; i < aceitoPeloRestaurante.getTotalDeItens(); i++) {
+        	if (i < 4) {        		
+        		todosPedidos.add(aceitoPeloRestaurante.getListagem().get(i));
+        	}
+        }
+        
+        for (int i = 0; i < todosPedidos.size(); i++) {
         	JPanel panelPedido = criarCard(
         			new JPanel(),
         			new JLabel(),

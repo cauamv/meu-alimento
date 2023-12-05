@@ -14,6 +14,7 @@ import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Component;
 
 import br.com.senai.gestaoDeCadastroFront.client.pedidos.PedidosClient;
@@ -33,6 +34,7 @@ public class ViewDetalhesDeUmPedido extends JFrame {
     private PedidosClient pedidosClient;
 
     @Autowired
+    @Lazy
     private ViewListagemDePedidos viewListagemDePedidos;
 
     private String token;
