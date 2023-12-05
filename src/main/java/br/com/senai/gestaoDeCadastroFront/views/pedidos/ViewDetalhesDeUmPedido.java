@@ -13,7 +13,6 @@ import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
 
-import org.hibernate.validator.internal.util.stereotypes.Lazy;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -24,201 +23,221 @@ import br.com.senai.gestaoDeCadastroFront.dto.pedidos.Pedido;
 @Component
 public class ViewDetalhesDeUmPedido extends JFrame {
 
-	private static final long serialVersionUID = 1L;
-	
-	private JPanel contentPane;
-	
-	private Pedido pedido;
-	
-	@Autowired
-	private PedidosClient pedidosClient;
-	
-	@Autowired
-	@Lazy
-	private ViewListagemDePedidos viewListagemDePedidos;
-	
-	private String token;
-	
-	private JLabel lblNumPedido;
-	
-	private JLabel lblNomeRestaurante;
-	
-	private JLabel lblCliente;
-	
-	private JLabel lblTotal;
-	
-	private JLabel lblHorario;
-	
-	private JLabel lblCep;
-	
-	private JLabel lblNumero;
-	
-	private JLabel lblRua;
-	 
-	private JLabel lblCupom;
-	
-	private JLabel lblPagamento;
-	
-	private JButton btnAceitar;
-	
-	private JButton btnRecusar;
-	
-	public void abrirTela(String token, Pedido pedido, String status) {
-		this.token = token;
-		this.pedido = pedido;
-		this.setVisible(true);
-		montarPedido(this.pedido, status);
-	}
-	
-	public ViewDetalhesDeUmPedido() {
-		setResizable(false);
-		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-		setBounds(100, 100, 1366, 768);
-		contentPane = new JPanel();
-		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
-	
-		setContentPane(contentPane);
-		contentPane.setLayout(null);
-	
-		lblNumPedido = new JLabel();
-		lblNumPedido.setHorizontalAlignment(SwingConstants.LEFT);
-		lblNumPedido.setForeground(Color.RED);
-		lblNumPedido.setFont(new Font("Tahoma", Font.PLAIN, 13));
-		lblNumPedido.setBackground(new Color(248, 244, 244));
-		lblNumPedido.setBounds(31, 301, 471, 27);
-		contentPane.add(lblNumPedido);
-		
-		lblNomeRestaurante = new JLabel();
-		lblNomeRestaurante.setHorizontalAlignment(SwingConstants.LEFT);
-		lblNomeRestaurante.setFont(new Font("Tahoma", Font.BOLD, 43));
-		lblNomeRestaurante.setBackground(new Color(248, 244, 244));
-		lblNomeRestaurante.setBounds(31, 227, 549, 52);
-		contentPane.add(lblNomeRestaurante);
-		
-		lblCliente = new JLabel();
-		lblCliente.setFont(new Font("Dialog", Font.PLAIN, 20));
-		lblCliente.setBounds(31, 373, 427, 27);
-		contentPane.add(lblCliente);
-		
-		lblTotal = new JLabel();
-		lblTotal.setForeground(Color.BLACK);
-		lblTotal.setFont(new Font("Dialog", Font.PLAIN, 20));
-		lblTotal.setBounds(31, 535, 427, 27);
-		contentPane.add(lblTotal);
-		
-		lblHorario = new JLabel();
-		lblHorario.setFont(new Font("Dialog", Font.PLAIN, 20));
-		lblHorario.setBounds(31, 339, 441, 23);
-		contentPane.add(lblHorario);
-		
-		lblNumero = new JLabel();
-		lblNumero.setFont(new Font("Dialog", Font.PLAIN, 20));
-		lblNumero.setBounds(31, 411, 471, 27);
-		contentPane.add(lblNumero);
-		
-		
-		lblCep = new JLabel();
-		lblCep.setFont(new Font("Dialog", Font.PLAIN, 20));
-		lblCep.setBounds(31, 449, 441, 27);
-		contentPane.add(lblCep);
-		
-		lblRua = new JLabel();
-		lblRua.setFont(new Font("Dialog", Font.PLAIN, 20));
-		lblRua.setBounds(31, 487, 441, 27);
-		contentPane.add(lblRua);
-		
-		lblCupom = new JLabel();
-		lblCupom.setForeground(Color.GRAY);
-		lblCupom.setFont(new Font("Dialog", Font.BOLD, 20));
-		lblCupom.setBounds(31, 588, 427, 27);
-		contentPane.add(lblCupom);
-		
-		lblPagamento = new JLabel();
-		lblPagamento.setFont(new Font("Dialog", Font.PLAIN, 20));
-		lblPagamento.setBounds(31, 626, 549, 27);
-		contentPane.add(lblPagamento);
-		
-		btnAceitar = new JButton();
-		btnAceitar.setForeground(Color.BLACK);
-		btnAceitar.setBackground(new Color(127, 255, 0));
-		btnAceitar.setFont(new Font("Tahoma", Font.BOLD, 13));
-		btnAceitar.setBounds(1048, 659, 126, 44);
-		
-		btnRecusar = new JButton();
-		btnRecusar.setForeground(Color.WHITE);
-		btnRecusar.setFont(new Font("Tahoma", Font.BOLD, 13));
-		btnRecusar.setBorder(null);
-		btnRecusar.setBackground(Color.RED);
-		btnRecusar.setBounds(1214, 659, 126, 44);
-		
-		
-		setLocationRelativeTo(null);
-	}
-	
-	private void montarPedido(Pedido pedido, String status) {
-		
-		lblNumPedido.setText("Pedido Realizado - N° " + pedido.getIdPedido().toString());
-		
-		lblNomeRestaurante.setText(pedido.getRestaurante().getNome());
-		
-		lblCliente.setText("Cliente:" + pedido.getCliente().getNome());
-		
-		lblTotal.setText("Total:" + pedido.getValorTotal().toString());
-		
-		lblHorario.setText("Data do pedido:" + pedido.getDataPedido().toString());
-		
-		lblNumero.setText("Número da residência: " + pedido.getEndereco().getNumero());
-		
-		lblCep.setText("CEP: " + pedido.getEndereco().getCep());
-		
-		lblNumero.setText("Número da residência: " + pedido.getEndereco().getNumero());
-		
-		lblRua.setText("Rua: " + pedido.getEndereco().getRua());
-		
-		lblCupom.setText("Cupom: " + pedido.getCupom().getCodigo());
-		
-		lblPagamento.setText("Forma de Pagamento: " + pedido.getPagamento());
-		
-		
-		if (status.equals(Status.REALIZADO.toString())) {
-			
-			btnAceitar.setText("Aceitar");
-			contentPane.add(btnAceitar);
-			btnRecusar.setText("Recusar");
-			contentPane.add(btnRecusar);
-			atualizarStatus(Status.ACEITO_PELO_RESTAURANTE);
-			
-		} else if (status.equals(Status.ACEITO_PELO_RESTAURANTE.toString())) {
-			contentPane.remove(btnRecusar);
-			btnAceitar.setText("Pronto para coleta");
-			contentPane.add(btnAceitar);
-			atualizarStatus(Status.PRONTO_PARA_COLETA);
-			
-		} else if (status.equals(Status.PRONTO_PARA_COLETA.toString())) {
-			contentPane.remove(btnRecusar);
-			btnAceitar.setText("Finalizar");
-			contentPane.add(btnAceitar);
-			atualizarStatus(Status.ENTREGUE);
-		} else {
-			contentPane.remove(btnAceitar);
-			contentPane.remove(btnRecusar);
-		}
-		
-	}
-	
-	private void atualizarStatus(Status status) {
-		btnAceitar.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				try {
-					pedidosClient.atualizarPor(pedido.getIdPedido(), status);
-					JOptionPane.showMessageDialog(contentPane, "Status alterado para: " + status.toString());
-					dispose();
-					viewListagemDePedidos.abrirTela(token);
-				} catch (Exception ex) {
-					JOptionPane.showMessageDialog(contentPane, "Ocorreu um erro ao atualizar o status: " + ex.getMessage());
-				}
-			}
-		});
-	}
+    private static final long serialVersionUID = 1L;
+
+    private JPanel contentPane;
+
+    private Pedido pedido;
+
+    @Autowired
+    private PedidosClient pedidosClient;
+
+    @Autowired
+    private ViewListagemDePedidos viewListagemDePedidos;
+
+    private String token;
+
+    private JLabel lblNumPedido;
+
+    private JLabel lblNomeRestaurante;
+
+    private JLabel lblCliente;
+
+    private JLabel lblTotal;
+
+    private JLabel lblHorario;
+
+    private JLabel lblCep;
+
+    private JLabel lblNumero;
+
+    private JLabel lblRua;
+
+    private JLabel lblCupom;
+
+    private JLabel lblPagamento;
+
+    private JButton btnAceitar;
+
+    private JButton btnRecusar;
+
+    private Status statusAtual;
+
+    public void abrirTela(String token, Pedido pedido, String status) {
+        this.token = token;
+        this.pedido = pedido;
+        this.setVisible(true);
+        montarPedido(this.pedido, status);
+    }
+
+    public ViewDetalhesDeUmPedido() {
+        setResizable(false);
+        setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        setBounds(100, 100, 1366, 768);
+        contentPane = new JPanel();
+        contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
+
+        setContentPane(contentPane);
+        contentPane.setLayout(null);
+
+        lblNumPedido = new JLabel();
+        lblNumPedido.setHorizontalAlignment(SwingConstants.LEFT);
+        lblNumPedido.setForeground(Color.RED);
+        lblNumPedido.setFont(new Font("Tahoma", Font.PLAIN, 13));
+        lblNumPedido.setBounds(31, 301, 471, 27);
+        contentPane.add(lblNumPedido);
+
+        lblNomeRestaurante = new JLabel();
+        lblNomeRestaurante.setHorizontalAlignment(SwingConstants.LEFT);
+        lblNomeRestaurante.setFont(new Font("Tahoma", Font.BOLD, 43));
+        lblNomeRestaurante.setBounds(31, 227, 549, 52);
+        contentPane.add(lblNomeRestaurante);
+
+        lblCliente = new JLabel();
+        lblCliente.setFont(new Font("Dialog", Font.PLAIN, 20));
+        lblCliente.setBounds(31, 373, 427, 27);
+        contentPane.add(lblCliente);
+
+        lblTotal = new JLabel();
+        lblTotal.setForeground(Color.BLACK);
+        lblTotal.setFont(new Font("Dialog", Font.PLAIN, 20));
+        lblTotal.setBounds(31, 535, 427, 27);
+        contentPane.add(lblTotal);
+
+        lblHorario = new JLabel();
+        lblHorario.setFont(new Font("Dialog", Font.PLAIN, 20));
+        lblHorario.setBounds(31, 339, 441, 23);
+        contentPane.add(lblHorario);
+
+        lblNumero = new JLabel();
+        lblNumero.setFont(new Font("Dialog", Font.PLAIN, 20));
+        lblNumero.setBounds(31, 411, 471, 27);
+        contentPane.add(lblNumero);
+
+        lblCep = new JLabel();
+        lblCep.setFont(new Font("Dialog", Font.PLAIN, 20));
+        lblCep.setBounds(31, 449, 441, 27);
+        contentPane.add(lblCep);
+
+        lblRua = new JLabel();
+        lblRua.setFont(new Font("Dialog", Font.PLAIN, 20));
+        lblRua.setBounds(31, 487, 441, 27);
+        contentPane.add(lblRua);
+
+        lblCupom = new JLabel();
+        lblCupom.setForeground(Color.GRAY);
+        lblCupom.setFont(new Font("Dialog", Font.BOLD, 20));
+        lblCupom.setBounds(31, 588, 427, 27);
+        contentPane.add(lblCupom);
+
+        lblPagamento = new JLabel();
+        lblPagamento.setFont(new Font("Dialog", Font.PLAIN, 20));
+        lblPagamento.setBounds(31, 626, 549, 27);
+        contentPane.add(lblPagamento);
+
+        btnAceitar = new JButton();
+        btnAceitar.setForeground(Color.BLACK);
+        btnAceitar.setBackground(new Color(127, 255, 0));
+        btnAceitar.setFont(new Font("Tahoma", Font.BOLD, 13));
+        btnAceitar.setBounds(1048, 659, 126, 44);
+
+        btnRecusar = new JButton();
+        btnRecusar.setForeground(Color.WHITE);
+        btnRecusar.setFont(new Font("Tahoma", Font.BOLD, 13));
+        btnRecusar.setBorder(null);
+        btnRecusar.setBackground(Color.RED);
+        btnRecusar.setBounds(1214, 659, 126, 44);
+
+        setLocationRelativeTo(null);
+
+        atualizarStatus();
+    }
+
+    private void montarPedido(Pedido pedido, String status) {
+    	
+        lblNumPedido.setText("Pedido Realizado - N° " + pedido.getIdPedido().toString());
+
+        lblNomeRestaurante.setText(pedido.getRestaurante().getNome());
+
+        lblCliente.setText("Cliente:" + pedido.getCliente().getNome());
+
+        lblTotal.setText("Total:" + pedido.getValorTotal().toString());
+
+        lblHorario.setText("Data do pedido:" + pedido.getDataPedido().toString());
+
+        lblNumero.setText("Número da residência: " + pedido.getEndereco().getNumero());
+
+        lblCep.setText("CEP: " + pedido.getEndereco().getCep());
+
+        lblNumero.setText("Número da residência: " + pedido.getEndereco().getNumero());
+
+        lblRua.setText("Rua: " + pedido.getEndereco().getRua());
+
+        lblCupom.setText("Cupom: " + pedido.getCupom().getCodigo());
+
+        lblPagamento.setText("Forma de Pagamento: " + pedido.getPagamento());
+
+        if (status.equals(Status.REALIZADO.toString())) {
+        	this.statusAtual = Status.REALIZADO;
+            btnAceitar.setText("Aceitar");
+            contentPane.add(btnAceitar);
+            btnRecusar.setText("Recusar");
+            contentPane.add(btnRecusar);
+        } else if (status.equals(Status.ACEITO_PELO_RESTAURANTE.toString()) && pedido.getTipoDeEntrega().equals("RETIRADA")) {
+        	this.statusAtual = Status.ACEITO_PELO_RESTAURANTE;
+        	contentPane.remove(btnRecusar);
+            btnAceitar.setText("Entregue");
+            contentPane.add(btnAceitar);
+        } else if (status.equals(Status.ACEITO_PELO_RESTAURANTE.toString()) && pedido.getTipoDeEntrega().equals("DELIVERY")) {
+        	contentPane.remove(btnRecusar);
+            btnAceitar.setText("PRONTO PARA COLETA");
+            contentPane.add(btnAceitar);
+        } else if (status.equals(Status.PRONTO_PARA_COLETA.toString()) && pedido.getTipoDeEntrega().equals("DELIVERY")) {
+        	this.statusAtual = Status.PRONTO_PARA_COLETA;
+        	contentPane.remove(btnRecusar);
+            btnAceitar.setText("Entregue");
+            contentPane.add(btnAceitar);
+        } else {
+            contentPane.remove(btnAceitar);
+            contentPane.remove(btnRecusar);
+        }
+    }
+
+    private void atualizarStatus() {
+        btnAceitar.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                try {
+                    if (statusAtual == Status.REALIZADO) {
+                        pedidosClient.atualizarPor(pedido.getIdPedido(), Status.ACEITO_PELO_RESTAURANTE);
+                        JOptionPane.showMessageDialog(contentPane, "Status alterado para: ACEITO_PELO_RESTAURANTE");
+                        statusAtual = Status.ACEITO_PELO_RESTAURANTE;
+                        
+                    } else if (statusAtual == Status.ACEITO_PELO_RESTAURANTE && pedido.getTipoDeEntrega().equals("RETIRADA")) {
+                        pedidosClient.atualizarPor(pedido.getIdPedido(), Status.ENTREGUE);
+                        JOptionPane.showMessageDialog(contentPane, "Status alterado para: ENTREGUE");
+                        statusAtual = Status.ENTREGUE;
+                        
+                    } else if (statusAtual == Status.ACEITO_PELO_RESTAURANTE && pedido.getTipoDeEntrega().equals("DELIVERY")) {
+                        pedidosClient.atualizarPor(pedido.getIdPedido(), Status.PRONTO_PARA_COLETA);
+                        JOptionPane.showMessageDialog(contentPane, "Status alterado para: PRONTO_PARA_COLETA");
+                        statusAtual = Status.PRONTO_PARA_COLETA;
+                        
+                    } else if (statusAtual == Status.ACEITO_PELO_RESTAURANTE || statusAtual == Status.PRONTO_PARA_COLETA) {
+                        pedidosClient.atualizarPor(pedido.getIdPedido(), Status.ENTREGUE);
+                        JOptionPane.showMessageDialog(contentPane, "Status alterado para: ENTREGUE");
+                        statusAtual = Status.ENTREGUE;
+                    } else {
+                        JOptionPane.showMessageDialog(contentPane, "Ação não permitida para o status atual.");
+                        return;
+                    }
+
+                    dispose();
+                    viewListagemDePedidos.abrirTela(token);
+                } catch (Exception ex) {
+                    JOptionPane.showMessageDialog(contentPane, "Ocorreu um erro ao atualizar o status: " + ex.getMessage());
+                }
+            }
+        });
+    }
 }

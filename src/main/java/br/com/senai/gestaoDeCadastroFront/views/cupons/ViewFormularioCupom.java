@@ -138,7 +138,7 @@ public class ViewFormularioCupom extends JFrame {
 					
 					cupom.setId(cupom.getId());
 					cuponsClient.alterar(cupom, credencial);
-					JOptionPane.showMessageDialog(contentPane, "Salvou");
+					JOptionPane.showMessageDialog(contentPane, "Alterado");
 					dispose();
 				}
 			}
