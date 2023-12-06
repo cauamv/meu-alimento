@@ -5,33 +5,30 @@ import java.util.List;
 
 import javax.swing.table.AbstractTableModel;
 
-import org.springframework.stereotype.Component;
+import br.com.senai.gestaoDeCadastroFront.dto.pedidos.Pedido;
 
-import br.com.senai.gestaoDeCadastroFront.dto.Cupom;
-
-@Component
-public class CupomTableModel extends AbstractTableModel {
+public class PedidosTableModel extends AbstractTableModel {
 
 private static final long serialVersionUID = 1L;
 	
 	private final int QTDE_COLUNAS = 4;
 	
-	private List<Cupom> cupons;
+	private List<Pedido> pedidos;
 
-	public CupomTableModel() {
-		this.cupons = new ArrayList<>();
+	public PedidosTableModel() {
+		this.pedidos = new ArrayList<>();
 	}
 	
-	public CupomTableModel(List<Cupom> cupons) {
+	public PedidosTableModel(List<Pedido> pedidos) {
 		this();
-		if (cupons != null && !cupons.isEmpty()) {		
-			this.cupons = cupons;
+		if (pedidos != null && !pedidos.isEmpty()) {		
+			this.pedidos = pedidos;
 		}
 	}
 
 	@Override
 	public int getRowCount() {	
-		return cupons.size();
+		return pedidos.size();
 	}
 	
 	@Override
@@ -42,13 +39,13 @@ private static final long serialVersionUID = 1L;
 	@Override
 	public String getColumnName(int column) {
 		if (column == 0) {
-			return "ID";
+			return "Numero do pedido";
 		} else if (column == 1) {
-			return "Valor";
+			return "Cliente";
 		} else if (column == 2) {
-			return "Validade";
+			return "Endereço";
 		} else if (column == 3) {
-			return "Código";
+			return "Status";
 		}
 		throw new IllegalArgumentException("Indíce inválido");
 	}
@@ -56,19 +53,19 @@ private static final long serialVersionUID = 1L;
 	@Override
 	public Object getValueAt(int rowIndex, int columnIndex) {
 		if (columnIndex == 0) {
-			return cupons.get(rowIndex).getId();
+			return pedidos.get(rowIndex).getIdPedido();
 		} else if (columnIndex == 1) {
-			return cupons.get(rowIndex).getPercentualDeDesconto();
+			return pedidos.get(rowIndex).getCliente().getNome();
 		} else if (columnIndex == 2) {
-			return cupons.get(rowIndex).getValidade();
+			return pedidos.get(rowIndex).getEndereco().getNumero();
 		} else if (columnIndex == 3) {
-			return cupons.get(rowIndex).getCodigo();
+			return pedidos.get(rowIndex).getStatus();
 		}
 		throw new IllegalArgumentException("Índice inválido");
 	}
 	
-	public Cupom getPor(int rowIndex) {
-		return cupons.get(rowIndex);
+	public Pedido getPor(int rowIndex) {
+		return pedidos.get(rowIndex);
 	}	
 
 }

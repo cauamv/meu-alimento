@@ -27,7 +27,7 @@ import br.com.senai.gestaoDeCadastroFront.client.authenticate.server.CredencialD
 import br.com.senai.gestaoDeCadastroFront.client.decode.TokenDecoder;
 import br.com.senai.gestaoDeCadastroFront.dto.enums.Role;
 import br.com.senai.gestaoDeCadastroFront.views.cupons.ViewCupons;
-import br.com.senai.gestaoDeCadastroFront.views.pedidos.ViewListagemDePedidos;
+import br.com.senai.gestaoDeCadastroFront.views.pedidos.ViewTablePedidos;
 
 @Component
 public class ViewPrincipal extends JFrame {
@@ -53,7 +53,7 @@ public class ViewPrincipal extends JFrame {
 	
 	@Autowired
 	@Lazy
-	private ViewListagemDePedidos viewListagemDePedidos;
+	private ViewTablePedidos viewListagemDePedidos;
 	
 	public void abrirTela(CredencialDeAcesso credencialDeAcesso) {
 		this.credencialDeAcesso = credencialDeAcesso;
@@ -114,7 +114,7 @@ public class ViewPrincipal extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				System.out.println(role);
 				if (role.equals(Role.Restaurante.toString())) {
-					viewListagemDePedidos.abrirTela(token);
+					viewListagemDePedidos.abrirTela(token, credencialDeAcesso);
 				} else {
 					JOptionPane.showMessageDialog(contentPane, "Permissão negada. Apenas restaurantes podem acessar o espaço de pedidos.");
 				}

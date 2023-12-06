@@ -38,7 +38,6 @@ public class PedidosClient {
 		queryParams.append("?status=").append(status.toString());
 		queryParams.append("&pagina=").append(pagina);
 		queryParams.append("&id-restaurante=").append(idRestaurante);
-		queryParams.append("&status=ACEITO_PELO_RESTAURANTE");
 
 		String token = autenticadorClient.getToken().getValor();
 
