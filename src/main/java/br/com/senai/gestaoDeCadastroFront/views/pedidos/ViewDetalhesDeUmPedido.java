@@ -14,7 +14,6 @@ import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Component;
 
 import br.com.senai.gestaoDeCadastroFront.client.pedidos.PedidosClient;
@@ -33,11 +32,6 @@ public class ViewDetalhesDeUmPedido extends JFrame {
     @Autowired
     private PedidosClient pedidosClient;
 
-    @Autowired
-    @Lazy
-    private ViewListagemDePedidos viewListagemDePedidos;
-
-    private String token;
 
     private JLabel lblNumPedido;
 
@@ -65,8 +59,7 @@ public class ViewDetalhesDeUmPedido extends JFrame {
 
     private Status statusAtual;
 
-    public void abrirTela(String token, Pedido pedido, Status status) {
-        this.token = token;
+    public void abrirTela(Pedido pedido, Status status) {
         this.pedido = pedido;
         this.statusAtual = status;
         this.setVisible(true);
@@ -262,7 +255,6 @@ public class ViewDetalhesDeUmPedido extends JFrame {
         pedidosClient.atualizarPor(pedido.getIdPedido(), novoStatus);
         JOptionPane.showMessageDialog(contentPane, "Status alterado para: " + novoStatus);
         dispose();
-        viewListagemDePedidos.abrirTela(token);
     }
 
 }

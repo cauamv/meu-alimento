@@ -11,7 +11,7 @@ public class PedidosTableModel extends AbstractTableModel {
 
 private static final long serialVersionUID = 1L;
 	
-	private final int QTDE_COLUNAS = 4;
+	private final int QTDE_COLUNAS = 5;
 	
 	private List<Pedido> pedidos;
 
@@ -39,13 +39,15 @@ private static final long serialVersionUID = 1L;
 	@Override
 	public String getColumnName(int column) {
 		if (column == 0) {
-			return "Numero do pedido";
+			return "N° Pedido";
 		} else if (column == 1) {
 			return "Cliente";
 		} else if (column == 2) {
 			return "Endereço";
 		} else if (column == 3) {
 			return "Status";
+		} else if (column == 4) {
+			return "Tipo de entrega";
 		}
 		throw new IllegalArgumentException("Indíce inválido");
 	}
@@ -60,6 +62,8 @@ private static final long serialVersionUID = 1L;
 			return pedidos.get(rowIndex).getEndereco().getNumero();
 		} else if (columnIndex == 3) {
 			return pedidos.get(rowIndex).getStatus();
+		} else if(columnIndex == 4) {
+			return pedidos.get(rowIndex).getTipoDeEntrega();
 		}
 		throw new IllegalArgumentException("Índice inválido");
 	}

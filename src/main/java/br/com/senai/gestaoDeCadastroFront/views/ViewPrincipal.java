@@ -27,6 +27,7 @@ import br.com.senai.gestaoDeCadastroFront.client.authenticate.server.CredencialD
 import br.com.senai.gestaoDeCadastroFront.client.decode.TokenDecoder;
 import br.com.senai.gestaoDeCadastroFront.dto.enums.Role;
 import br.com.senai.gestaoDeCadastroFront.views.cupons.ViewCupons;
+import br.com.senai.gestaoDeCadastroFront.views.login.ViewLogin;
 import br.com.senai.gestaoDeCadastroFront.views.pedidos.ViewTablePedidos;
 
 @Component
@@ -54,6 +55,10 @@ public class ViewPrincipal extends JFrame {
 	@Autowired
 	@Lazy
 	private ViewTablePedidos viewListagemDePedidos;
+	
+	@Autowired
+	@Lazy
+	private ViewLogin viewLogin;
 	
 	public void abrirTela(CredencialDeAcesso credencialDeAcesso) {
 		this.credencialDeAcesso = credencialDeAcesso;
@@ -142,9 +147,23 @@ public class ViewPrincipal extends JFrame {
 		JSeparator separator = new JSeparator();
 		separator.setBackground(new Color(0, 0, 0));
 		separator.setForeground(new Color(0, 0, 0));
+		
+		JButton btnLogout = new JButton("Logout");
+		btnLogout.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				Integer escolha = JOptionPane.showConfirmDialog(contentPane, "Deseja mesmo sair?");
+				if (JOptionPane.YES_OPTION == escolha) {
+					viewLogin.setVisible(true);
+				}
+			}
+		});
+		btnLogout.setForeground(Color.WHITE);
+		btnLogout.setFont(new Font("Tahoma", Font.ITALIC, 18));
+		btnLogout.setBorder(null);
+		btnLogout.setBackground(Color.RED);
 		GroupLayout gl_panel = new GroupLayout(panel);
 		gl_panel.setHorizontalGroup(
-			gl_panel.createParallelGroup(Alignment.LEADING)
+			gl_panel.createParallelGroup(Alignment.TRAILING)
 				.addGroup(gl_panel.createSequentialGroup()
 					.addGap(93)
 					.addComponent(btnPedidos, GroupLayout.PREFERRED_SIZE, 388, GroupLayout.PREFERRED_SIZE)
@@ -159,11 +178,17 @@ public class ViewPrincipal extends JFrame {
 					.addGap(556)
 					.addComponent(separator, GroupLayout.PREFERRED_SIZE, 242, GroupLayout.PREFERRED_SIZE)
 					.addContainerGap(559, Short.MAX_VALUE))
+				.addGroup(gl_panel.createSequentialGroup()
+					.addContainerGap(1204, Short.MAX_VALUE)
+					.addComponent(btnLogout, GroupLayout.PREFERRED_SIZE, 126, GroupLayout.PREFERRED_SIZE)
+					.addGap(27))
 		);
 		gl_panel.setVerticalGroup(
 			gl_panel.createParallelGroup(Alignment.LEADING)
 				.addGroup(gl_panel.createSequentialGroup()
-					.addGap(100)
+					.addContainerGap()
+					.addComponent(btnLogout, GroupLayout.PREFERRED_SIZE, 39, GroupLayout.PREFERRED_SIZE)
+					.addGap(50)
 					.addComponent(lblMeuGestor, GroupLayout.PREFERRED_SIZE, 55, GroupLayout.PREFERRED_SIZE)
 					.addPreferredGap(ComponentPlacement.RELATED)
 					.addComponent(separator, GroupLayout.PREFERRED_SIZE, 17, GroupLayout.PREFERRED_SIZE)
@@ -171,7 +196,7 @@ public class ViewPrincipal extends JFrame {
 					.addGroup(gl_panel.createParallelGroup(Alignment.BASELINE)
 						.addComponent(btnPedidos, GroupLayout.PREFERRED_SIZE, 93, GroupLayout.PREFERRED_SIZE)
 						.addComponent(btnCupons, GroupLayout.PREFERRED_SIZE, 93, GroupLayout.PREFERRED_SIZE))
-					.addContainerGap(377, Short.MAX_VALUE))
+					.addContainerGap(103, Short.MAX_VALUE))
 		);
 		panel.setLayout(gl_panel);
 		contentPane.setLayout(gl_contentPane);
