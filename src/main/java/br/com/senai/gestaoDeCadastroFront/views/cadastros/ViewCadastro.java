@@ -39,10 +39,6 @@ public class ViewCadastro extends JFrame {
 	@Autowired
 	private ViewSenha telaSenha;
 
-	/*@Autowired
-	@Lazy
-	private ViewLogin viewLogin;*/
-	
 	private MaskFormatter dateFormatter;
 
 	public ViewCadastro() {
@@ -141,10 +137,17 @@ public class ViewCadastro extends JFrame {
 				try {
 					String nome = txtNome.getText();
 					String sexo = cbxSexo.getSelectedItem().toString();
-			        DateTimeFormatter formatterEntrada = DateTimeFormatter.ofPattern("dd/MM/yyyy");
-					DateTimeFormatter formatterSaida = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-					String dataString = LocalDate.parse(txtDataNascimento.getText().toString(), formatterEntrada).format(formatterSaida);
-					LocalDate data = LocalDate.parse(dataString);
+					
+					LocalDate data = null;
+					try {
+						DateTimeFormatter formatterEntrada = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+						DateTimeFormatter formatterSaida = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+						String dataString = LocalDate.parse(txtDataNascimento.getText().toString(), formatterEntrada).format(formatterSaida);
+						data = LocalDate.parse(dataString);
+					} catch (Exception e2) {
+						lblDataNascimentoObrigatorio.setVisible(true);
+					}
+					
 					String email = txtEmail.getText();
 					
 					if (nome.isBlank()) {
@@ -152,27 +155,23 @@ public class ViewCadastro extends JFrame {
 					} else {
 						lblNomeObrigatorio.setVisible(false);
 					}
-					if (sexo == null) {
+					if (sexo.isBlank()) {
 						lblSexoObrigatorio.setVisible(true);
 					} else {
 						lblSexoObrigatorio.setVisible(false);
 					}
-					if (data == null) {
-						lblDataNascimentoObrigatorio.setVisible(true);
-					} else {
-						lblDataNascimentoObrigatorio.setVisible(false);
-					}
+					
 					if (email.isBlank()) {
 						lblEmailObrigatorio.setVisible(true);
 					} else {
 						lblEmailObrigatorio.setVisible(false);
 					}
 					
-					if (nome != null
-					&& !nome.isBlank()
-					&& sexo != null
-					&& data != null
-					&& email != null) {
+					if (
+						!nome.isBlank() 
+						&& !sexo.isBlank()
+						&& data != null
+						&& !email.isBlank()) {
 						UsuarioDto usuarioDto = new UsuarioDto();
 						usuarioDto.setEmail(email);
 						usuarioDto.setRole("Administrador");
@@ -205,31 +204,35 @@ public class ViewCadastro extends JFrame {
 
 		GroupLayout gl_panelDireito = new GroupLayout(panelDireito);
 		gl_panelDireito.setHorizontalGroup(
-			gl_panelDireito.createParallelGroup(Alignment.TRAILING)
+			gl_panelDireito.createParallelGroup(Alignment.LEADING)
 				.addGroup(gl_panelDireito.createSequentialGroup()
-					.addContainerGap(191, Short.MAX_VALUE)
+					.addContainerGap(153, Short.MAX_VALUE)
 					.addComponent(lblMeuCadastro)
 					.addGap(193))
 				.addGroup(gl_panelDireito.createSequentialGroup()
 					.addGap(60)
-					.addGroup(gl_panelDireito.createParallelGroup(Alignment.TRAILING)
+					.addGroup(gl_panelDireito.createParallelGroup(Alignment.LEADING)
 						.addGroup(gl_panelDireito.createSequentialGroup()
-							.addComponent(btnVoltar, GroupLayout.PREFERRED_SIZE, 122, GroupLayout.PREFERRED_SIZE)
-							.addPreferredGap(ComponentPlacement.RELATED, 307, Short.MAX_VALUE)
-							.addComponent(btnProximo, GroupLayout.PREFERRED_SIZE, 122, GroupLayout.PREFERRED_SIZE))
-						.addComponent(lblNome, Alignment.LEADING, GroupLayout.PREFERRED_SIZE, 184, GroupLayout.PREFERRED_SIZE)
-						.addComponent(txtNome, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, 551, Short.MAX_VALUE)
-						.addComponent(lblSexo, Alignment.LEADING, GroupLayout.PREFERRED_SIZE, 184, GroupLayout.PREFERRED_SIZE)
-						.addComponent(cbxSexo, Alignment.LEADING, GroupLayout.PREFERRED_SIZE, 151, GroupLayout.PREFERRED_SIZE)
-						.addComponent(lblDataNascimento, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, 551, Short.MAX_VALUE)
-						.addComponent(txtDataNascimento, Alignment.LEADING, GroupLayout.PREFERRED_SIZE, 551, GroupLayout.PREFERRED_SIZE)
-						.addComponent(lblDigiteSeuEmail, Alignment.LEADING, GroupLayout.PREFERRED_SIZE, 551, GroupLayout.PREFERRED_SIZE)
-						.addComponent(txtEmail, Alignment.LEADING, GroupLayout.PREFERRED_SIZE, 551, GroupLayout.PREFERRED_SIZE)
-						.addComponent(lblNomeObrigatorio, Alignment.LEADING, GroupLayout.PREFERRED_SIZE, 184, GroupLayout.PREFERRED_SIZE)
-						.addComponent(lblSexoObrigatorio, Alignment.LEADING, GroupLayout.PREFERRED_SIZE, 184, GroupLayout.PREFERRED_SIZE)
-						.addComponent(lblDataNascimentoObrigatorio, Alignment.LEADING, GroupLayout.PREFERRED_SIZE, 551, GroupLayout.PREFERRED_SIZE)
-						.addComponent(lblEmailObrigatorio, Alignment.LEADING, GroupLayout.PREFERRED_SIZE, 551, GroupLayout.PREFERRED_SIZE))
-					.addGap(72))
+							.addComponent(lblDataNascimento, GroupLayout.DEFAULT_SIZE, 611, Short.MAX_VALUE)
+							.addContainerGap())
+						.addGroup(gl_panelDireito.createSequentialGroup()
+							.addGroup(gl_panelDireito.createParallelGroup(Alignment.TRAILING)
+								.addComponent(lblNome, Alignment.LEADING, GroupLayout.PREFERRED_SIZE, 184, GroupLayout.PREFERRED_SIZE)
+								.addComponent(txtNome, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, 551, Short.MAX_VALUE)
+								.addComponent(lblSexo, Alignment.LEADING, GroupLayout.PREFERRED_SIZE, 184, GroupLayout.PREFERRED_SIZE)
+								.addComponent(cbxSexo, Alignment.LEADING, GroupLayout.PREFERRED_SIZE, 151, GroupLayout.PREFERRED_SIZE)
+								.addComponent(txtDataNascimento, Alignment.LEADING, GroupLayout.PREFERRED_SIZE, 551, GroupLayout.PREFERRED_SIZE)
+								.addComponent(lblDigiteSeuEmail, Alignment.LEADING, GroupLayout.PREFERRED_SIZE, 551, GroupLayout.PREFERRED_SIZE)
+								.addComponent(txtEmail, Alignment.LEADING, GroupLayout.PREFERRED_SIZE, 551, GroupLayout.PREFERRED_SIZE)
+								.addComponent(lblNomeObrigatorio, Alignment.LEADING, GroupLayout.PREFERRED_SIZE, 184, GroupLayout.PREFERRED_SIZE)
+								.addComponent(lblSexoObrigatorio, Alignment.LEADING, GroupLayout.PREFERRED_SIZE, 184, GroupLayout.PREFERRED_SIZE)
+								.addComponent(lblDataNascimentoObrigatorio, Alignment.LEADING, GroupLayout.PREFERRED_SIZE, 551, GroupLayout.PREFERRED_SIZE)
+								.addComponent(lblEmailObrigatorio, Alignment.LEADING, GroupLayout.PREFERRED_SIZE, 551, GroupLayout.PREFERRED_SIZE)
+								.addGroup(gl_panelDireito.createSequentialGroup()
+									.addComponent(btnVoltar, GroupLayout.PREFERRED_SIZE, 122, GroupLayout.PREFERRED_SIZE)
+									.addPreferredGap(ComponentPlacement.RELATED, 307, Short.MAX_VALUE)
+									.addComponent(btnProximo, GroupLayout.PREFERRED_SIZE, 122, GroupLayout.PREFERRED_SIZE)))
+							.addGap(72))))
 		);
 		gl_panelDireito.setVerticalGroup(
 			gl_panelDireito.createParallelGroup(Alignment.LEADING)
@@ -248,9 +251,9 @@ public class ViewCadastro extends JFrame {
 					.addComponent(cbxSexo, GroupLayout.PREFERRED_SIZE, 39, GroupLayout.PREFERRED_SIZE)
 					.addPreferredGap(ComponentPlacement.RELATED)
 					.addComponent(lblSexoObrigatorio, GroupLayout.PREFERRED_SIZE, 30, GroupLayout.PREFERRED_SIZE)
-					.addPreferredGap(ComponentPlacement.RELATED)
-					.addComponent(lblDataNascimento, GroupLayout.PREFERRED_SIZE, 30, GroupLayout.PREFERRED_SIZE)
 					.addGap(18)
+					.addComponent(lblDataNascimento, GroupLayout.PREFERRED_SIZE, 30, GroupLayout.PREFERRED_SIZE)
+					.addPreferredGap(ComponentPlacement.RELATED)
 					.addComponent(txtDataNascimento, GroupLayout.PREFERRED_SIZE, 53, GroupLayout.PREFERRED_SIZE)
 					.addPreferredGap(ComponentPlacement.RELATED)
 					.addComponent(lblDataNascimentoObrigatorio, GroupLayout.PREFERRED_SIZE, 30, GroupLayout.PREFERRED_SIZE)
@@ -260,11 +263,11 @@ public class ViewCadastro extends JFrame {
 					.addComponent(txtEmail, GroupLayout.PREFERRED_SIZE, 53, GroupLayout.PREFERRED_SIZE)
 					.addPreferredGap(ComponentPlacement.RELATED)
 					.addComponent(lblEmailObrigatorio, GroupLayout.PREFERRED_SIZE, 30, GroupLayout.PREFERRED_SIZE)
-					.addGap(64)
-					.addGroup(gl_panelDireito.createParallelGroup(Alignment.LEADING)
+					.addPreferredGap(ComponentPlacement.RELATED)
+					.addGroup(gl_panelDireito.createParallelGroup(Alignment.BASELINE)
 						.addComponent(btnProximo, GroupLayout.PREFERRED_SIZE, 46, GroupLayout.PREFERRED_SIZE)
 						.addComponent(btnVoltar, GroupLayout.PREFERRED_SIZE, 46, GroupLayout.PREFERRED_SIZE))
-					.addContainerGap(13, Short.MAX_VALUE))
+					.addContainerGap(70, Short.MAX_VALUE))
 		);
 		panelDireito.setLayout(gl_panelDireito);
 

@@ -112,31 +112,49 @@ public class ViewEndereco extends JFrame {
 		JLabel lblComplemento = new JLabel("Complemento:");
 		lblComplemento.setForeground(Color.WHITE);
 		lblComplemento.setFont(new Font("Tahoma", Font.PLAIN, 20));
-
+		
+		JLabel lblTodosOsCamposObrigatorios = new JLabel("* Todos os campos são obrigatórios");
+		lblTodosOsCamposObrigatorios.setVisible(false);
+		
 		JButton btnSalvar = new JButton("Salvar");
 		btnSalvar.setFont(new Font("Tahoma", Font.BOLD, 15));
 		btnSalvar.setBackground(Color.WHITE);
 		btnSalvar.setBorder(null);
 		btnSalvar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				boolean isInvalido = 
+						txtNome.getText().isBlank() ||
+						txtCep.getText().isBlank() ||
+						txtRua.getText().isBlank() ||
+						txtBairro.getText().isBlank() ||
+						txtCidade.getText().isBlank() ||
+						txtEstado.getText().isBlank() ||
+						txtNumeroDaCasa.getText().isBlank();
 				try {
-					NovoEnderecoDto dto = new NovoEnderecoDto();
-					dto.setNome(txtNome.getText());
-					dto.setCep(txtCep.getText());
-					dto.setRua(txtRua.getText());
-					dto.setBairro(txtBairro.getText());
-					dto.setCidade(txtCidade.getText());
-					dto.setEstado(txtEstado.getText());
-					dto.setNumeroDaCasa(txtNumeroDaCasa.getText());
-					dto.setComplemento(textComplemento.getText());
-					dto.setClienteDto(clienteDto);
-					enderecoClient.inserir(dto, new CredencialDeAcesso(clienteDto.getUsuario().getEmail(), clienteDto.getUsuario().getSenha()));
-
-					CredencialDeAcesso credencialDeAcesso = new CredencialDeAcesso();
-					credencialDeAcesso.setEmail(clienteDto.getUsuario().getEmail());
-					credencialDeAcesso.setSenha(clienteDto.getUsuario().getSenha());
-					enderecoClient.inserir(dto, credencialDeAcesso);
-					viewPrincipal.abrirTela(credencialDeAcesso);
+					if (isInvalido) {
+						lblTodosOsCamposObrigatorios.setVisible(true);
+					} else if (!txtCep.getText().matches(("\\d{5}-\\d{3}"))) {
+						JOptionPane.showMessageDialog(contentPane, "O cep deve seguir o padrão 12345-678");
+					} else {
+						NovoEnderecoDto dto = new NovoEnderecoDto();
+						dto.setNome(txtNome.getText());
+						dto.setCep(txtCep.getText());
+						dto.setRua(txtRua.getText());
+						dto.setBairro(txtBairro.getText());
+						dto.setCidade(txtCidade.getText());
+						dto.setEstado(txtEstado.getText());
+						dto.setNumeroDaCasa(txtNumeroDaCasa.getText());
+						dto.setComplemento(textComplemento.getText());
+						dto.setClienteDto(clienteDto);
+						enderecoClient.inserir(dto, new CredencialDeAcesso(clienteDto.getUsuario().getEmail(), clienteDto.getUsuario().getSenha()));
+						
+						CredencialDeAcesso credencialDeAcesso = new CredencialDeAcesso();
+						credencialDeAcesso.setEmail(clienteDto.getUsuario().getEmail());
+						credencialDeAcesso.setSenha(clienteDto.getUsuario().getSenha());
+						enderecoClient.inserir(dto, credencialDeAcesso);
+						dispose();
+						viewPrincipal.abrirTela(credencialDeAcesso);
+					}
 				} catch (Exception ex) {
 					JOptionPane.showMessageDialog(contentPane, ex.getMessage());
 					ex.printStackTrace();
@@ -149,37 +167,44 @@ public class ViewEndereco extends JFrame {
 		lblTitulo.setHorizontalAlignment(SwingConstants.CENTER);
 		lblTitulo.setForeground(Color.WHITE);
 		lblTitulo.setFont(new Font("Tahoma", Font.BOLD, 43));
+		
+		
+		lblTodosOsCamposObrigatorios.setForeground(Color.WHITE);
 		GroupLayout gl_contentPane = new GroupLayout(contentPane);
 		gl_contentPane.setHorizontalGroup(
 			gl_contentPane.createParallelGroup(Alignment.TRAILING)
 				.addGroup(gl_contentPane.createSequentialGroup()
-					.addContainerGap(270, Short.MAX_VALUE)
+					.addContainerGap(286, Short.MAX_VALUE)
 					.addComponent(lblTitulo, GroupLayout.PREFERRED_SIZE, 812, GroupLayout.PREFERRED_SIZE)
 					.addGap(258))
 				.addGroup(gl_contentPane.createSequentialGroup()
-					.addGap(24)
 					.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
-						.addComponent(txtCidade, GroupLayout.PREFERRED_SIZE, 617, GroupLayout.PREFERRED_SIZE)
-						.addComponent(lblCidade, GroupLayout.PREFERRED_SIZE, 193, GroupLayout.PREFERRED_SIZE)
-						.addComponent(txtBairro, GroupLayout.PREFERRED_SIZE, 617, GroupLayout.PREFERRED_SIZE)
-						.addComponent(lblBairro, GroupLayout.PREFERRED_SIZE, 193, GroupLayout.PREFERRED_SIZE)
-						.addComponent(lblRua, GroupLayout.PREFERRED_SIZE, 193, GroupLayout.PREFERRED_SIZE)
-						.addComponent(txtRua, GroupLayout.PREFERRED_SIZE, 617, GroupLayout.PREFERRED_SIZE)
-						.addComponent(lblCep, GroupLayout.PREFERRED_SIZE, 193, GroupLayout.PREFERRED_SIZE)
-						.addComponent(txtCep, GroupLayout.PREFERRED_SIZE, 617, GroupLayout.PREFERRED_SIZE)
-						.addComponent(txtNome, GroupLayout.PREFERRED_SIZE, 617, GroupLayout.PREFERRED_SIZE)
-						.addComponent(lblNome, GroupLayout.PREFERRED_SIZE, 193, GroupLayout.PREFERRED_SIZE))
-					.addPreferredGap(ComponentPlacement.RELATED, 35, Short.MAX_VALUE)
-					.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING, false)
-						.addComponent(textComplemento)
-						.addGroup(Alignment.TRAILING, gl_contentPane.createParallelGroup(Alignment.LEADING)
-							.addComponent(lblComplemento, GroupLayout.PREFERRED_SIZE, 193, GroupLayout.PREFERRED_SIZE)
-							.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING, false)
-								.addComponent(txtEstado, GroupLayout.DEFAULT_SIZE, 617, Short.MAX_VALUE)
-								.addComponent(lblEstado, GroupLayout.PREFERRED_SIZE, 193, GroupLayout.PREFERRED_SIZE)
-								.addComponent(txtNumeroDaCasa, GroupLayout.DEFAULT_SIZE, 617, Short.MAX_VALUE)
-								.addComponent(lblNumeroDaCasa, GroupLayout.PREFERRED_SIZE, 193, GroupLayout.PREFERRED_SIZE)
-								.addComponent(btnSalvar, Alignment.TRAILING, GroupLayout.PREFERRED_SIZE, 133, GroupLayout.PREFERRED_SIZE))))
+						.addGroup(gl_contentPane.createSequentialGroup()
+							.addGap(24)
+							.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
+								.addComponent(txtCidade, GroupLayout.PREFERRED_SIZE, 617, GroupLayout.PREFERRED_SIZE)
+								.addComponent(lblCidade, GroupLayout.PREFERRED_SIZE, 193, GroupLayout.PREFERRED_SIZE)
+								.addComponent(txtBairro, GroupLayout.PREFERRED_SIZE, 617, GroupLayout.PREFERRED_SIZE)
+								.addComponent(lblBairro, GroupLayout.PREFERRED_SIZE, 193, GroupLayout.PREFERRED_SIZE)
+								.addComponent(lblRua, GroupLayout.PREFERRED_SIZE, 193, GroupLayout.PREFERRED_SIZE)
+								.addComponent(txtRua, GroupLayout.PREFERRED_SIZE, 617, GroupLayout.PREFERRED_SIZE)
+								.addComponent(lblCep, GroupLayout.PREFERRED_SIZE, 193, GroupLayout.PREFERRED_SIZE)
+								.addComponent(txtCep, GroupLayout.PREFERRED_SIZE, 617, GroupLayout.PREFERRED_SIZE)
+								.addComponent(txtNome, GroupLayout.PREFERRED_SIZE, 617, GroupLayout.PREFERRED_SIZE)
+								.addComponent(lblNome, GroupLayout.PREFERRED_SIZE, 193, GroupLayout.PREFERRED_SIZE)))
+						.addGroup(gl_contentPane.createSequentialGroup()
+							.addGap(32)
+							.addComponent(lblTodosOsCamposObrigatorios)))
+					.addGap(51)
+					.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
+						.addComponent(lblComplemento, GroupLayout.PREFERRED_SIZE, 193, GroupLayout.PREFERRED_SIZE)
+						.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
+							.addComponent(txtEstado, GroupLayout.DEFAULT_SIZE, 617, Short.MAX_VALUE)
+							.addComponent(lblEstado, GroupLayout.PREFERRED_SIZE, 193, GroupLayout.PREFERRED_SIZE)
+							.addComponent(txtNumeroDaCasa, GroupLayout.DEFAULT_SIZE, 617, Short.MAX_VALUE)
+							.addComponent(lblNumeroDaCasa, GroupLayout.PREFERRED_SIZE, 193, GroupLayout.PREFERRED_SIZE)
+							.addComponent(btnSalvar, Alignment.TRAILING, GroupLayout.PREFERRED_SIZE, 133, GroupLayout.PREFERRED_SIZE)
+							.addComponent(textComplemento, Alignment.TRAILING, GroupLayout.DEFAULT_SIZE, 617, Short.MAX_VALUE)))
 					.addGap(47))
 		);
 		gl_contentPane.setVerticalGroup(
@@ -212,7 +237,7 @@ public class ViewEndereco extends JFrame {
 						.addGroup(gl_contentPane.createSequentialGroup()
 							.addComponent(lblComplemento, GroupLayout.PREFERRED_SIZE, 24, GroupLayout.PREFERRED_SIZE)
 							.addPreferredGap(ComponentPlacement.UNRELATED)))
-					.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING, false)
+					.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
 						.addGroup(gl_contentPane.createSequentialGroup()
 							.addComponent(txtRua, GroupLayout.PREFERRED_SIZE, 53, GroupLayout.PREFERRED_SIZE)
 							.addPreferredGap(ComponentPlacement.UNRELATED)
@@ -223,9 +248,11 @@ public class ViewEndereco extends JFrame {
 							.addComponent(lblCidade, GroupLayout.PREFERRED_SIZE, 24, GroupLayout.PREFERRED_SIZE)
 							.addPreferredGap(ComponentPlacement.UNRELATED)
 							.addComponent(txtCidade, GroupLayout.PREFERRED_SIZE, 53, GroupLayout.PREFERRED_SIZE))
-						.addComponent(textComplemento))
+						.addComponent(textComplemento, GroupLayout.PREFERRED_SIZE, 246, GroupLayout.PREFERRED_SIZE))
 					.addGap(42)
-					.addComponent(btnSalvar, GroupLayout.PREFERRED_SIZE, 44, GroupLayout.PREFERRED_SIZE)
+					.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
+						.addComponent(btnSalvar, GroupLayout.PREFERRED_SIZE, 44, GroupLayout.PREFERRED_SIZE)
+						.addComponent(lblTodosOsCamposObrigatorios))
 					.addGap(42))
 		);
 		contentPane.setLayout(gl_contentPane);

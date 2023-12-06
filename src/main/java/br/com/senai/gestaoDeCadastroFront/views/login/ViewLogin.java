@@ -12,6 +12,7 @@ import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
+import javax.swing.JCheckBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -21,7 +22,6 @@ import javax.swing.LayoutStyle.ComponentPlacement;
 import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
 
-import org.hibernate.validator.internal.util.stereotypes.Lazy;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -29,7 +29,6 @@ import br.com.senai.gestaoDeCadastroFront.client.authenticate.server.CredencialD
 import br.com.senai.gestaoDeCadastroFront.components.RoundJTextField;
 import br.com.senai.gestaoDeCadastroFront.views.ViewPrincipal;
 import br.com.senai.gestaoDeCadastroFront.views.cadastros.ViewCadastro;
-import javax.swing.JCheckBox;
 
 @Component
 public class ViewLogin extends JFrame {
@@ -38,11 +37,30 @@ public class ViewLogin extends JFrame {
 	private JPanel contentPane;
 
 	@Autowired
-	@Lazy
 	private ViewPrincipal viewGestor;
 
 	@Autowired
 	private ViewCadastro viewCadastro;
+	
+	private RoundJTextField txtEmail;
+	
+	private JPasswordField txtSenha;
+	
+	private String email;
+	
+	private String senha;
+	
+	public void abrirTela() {
+		this.limparCampos();
+		this.setVisible(true);
+	}
+	
+	private void limparCampos() {
+		senha = "";
+		email = "";
+		this.txtEmail.setText("");
+		this.txtSenha.setText("");
+	}
 
 	public ViewLogin() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -64,7 +82,7 @@ public class ViewLogin extends JFrame {
 		lblEmail.setHorizontalAlignment(SwingConstants.LEFT);
 		lblEmail.setFont(new Font("Dialog", Font.BOLD, 18));
 
-		RoundJTextField txtEmail = new RoundJTextField(0);
+		txtEmail = new RoundJTextField(0);
 		txtEmail.setCaretColor(Color.RED);
 		txtEmail.setBorder(null);
 		txtEmail.setForeground(Color.BLACK);
@@ -77,7 +95,7 @@ public class ViewLogin extends JFrame {
 		lblSenha.setHorizontalAlignment(SwingConstants.LEFT);
 		lblSenha.setFont(new Font("Dialog", Font.BOLD, 18));
 
-		JPasswordField txtSenha = new RoundJPasswordField();
+		txtSenha = new RoundJPasswordField();
 		txtSenha.setBorder(null);
 		txtSenha.setForeground(Color.BLACK);
 		txtSenha.setColumns(4);
@@ -99,9 +117,10 @@ public class ViewLogin extends JFrame {
 
 			public void actionPerformed(ActionEvent e) {
 				try {
-					
-					String email = txtEmail.getText();
-					String senha = new String(txtSenha.getPassword());
+					email = "";
+					senha = "";
+					email = txtEmail.getText();
+					senha = new String(txtSenha.getPassword());
 					
 					if (email.isBlank()) {
 						lblEmailObrigatorio.setVisible(true);
@@ -115,7 +134,7 @@ public class ViewLogin extends JFrame {
 					}
 					
 					if (!email.isBlank() && !senha.isBlank()) {
-						viewGestor.abrirTela(new CredencialDeAcesso(email, senha));
+						viewGestor.abrirTela(new CredencialDeAcesso(txtEmail.getText(), new String(txtSenha.getPassword())));
 						dispose();
 					}
 				} catch (Exception e2) {

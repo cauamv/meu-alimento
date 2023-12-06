@@ -57,7 +57,6 @@ public class ViewPrincipal extends JFrame {
 	private ViewTablePedidos viewListagemDePedidos;
 	
 	@Autowired
-	@Lazy
 	private ViewLogin viewLogin;
 	
 	public void abrirTela(CredencialDeAcesso credencialDeAcesso) {
@@ -153,7 +152,8 @@ public class ViewPrincipal extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				Integer escolha = JOptionPane.showConfirmDialog(contentPane, "Deseja mesmo sair?");
 				if (JOptionPane.YES_OPTION == escolha) {
-					viewLogin.setVisible(true);
+					dispose();
+					viewLogin.abrirTela();
 				}
 			}
 		});

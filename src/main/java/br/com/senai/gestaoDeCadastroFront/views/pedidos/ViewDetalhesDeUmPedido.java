@@ -234,7 +234,7 @@ public class ViewDetalhesDeUmPedido extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 if (statusAtual == Status.REALIZADO) {
-                    aceitarOuRecusarPedido();
+                	atualizarStatusEFechar(Status.CANCELADO);
                 } else {
                     JOptionPane.showMessageDialog(contentPane, "Ação não permitida para o status atual.");
                 }
@@ -246,8 +246,6 @@ public class ViewDetalhesDeUmPedido extends JFrame {
         int opcao = JOptionPane.showConfirmDialog(contentPane, "Deseja aceitar o pedido?", "Confirmação", JOptionPane.YES_NO_OPTION);
         if (opcao == JOptionPane.YES_OPTION) {
             atualizarStatusEFechar(Status.ACEITO_PELO_RESTAURANTE);
-        } else {
-            atualizarStatusEFechar(Status.CANCELADO);
         }
     }
 

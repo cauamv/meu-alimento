@@ -94,17 +94,27 @@ public class ViewSenha extends JFrame {
 		btnProximo.setForeground(Color.BLACK);
 		btnProximo.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				if (txtfSenha1.getPassword() != null && txtfConfirmeSenha.getPassword() != null) {
-					if (!String.valueOf(txtfConfirmeSenha.getPassword()).equals(String.valueOf(txtfSenha1.getPassword()))) {
-						JOptionPane.showMessageDialog(contentPane, "senhas não conferem. ");
-					}
-					cadastroDto.getUsuario().setSenha(String.valueOf(txtfConfirmeSenha.getPassword()));
-					ClienteDto clienteDto = clienteClient.inserir(cadastroDto);
-					viewEndereco.abrirTela(clienteDto);
-					dispose();
+				String senha1 = new String(txtfSenha1.getPassword());
+				String senha2 = new String(txtfConfirmeSenha.getPassword());
+				boolean isSenha1Invalida = senha1.isBlank() || senha1.length() < 3;
+				boolean isSenha2Invalida = senha2.isBlank() || senha2.length() < 3;
+				if (isSenha1Invalida || isSenha2Invalida) {
+					JOptionPane.showMessageDialog(contentPane, "As senhas são obrigatórias.");
 				} else {
-					JOptionPane.showMessageDialog(contentPane, "Todos os campos são obrigatórios");
+					if (txtfSenha1.getPassword() != null && txtfConfirmeSenha.getPassword() != null) {
+						if (!String.valueOf(txtfConfirmeSenha.getPassword()).equals(String.valueOf(txtfSenha1.getPassword()))) {
+							JOptionPane.showMessageDialog(contentPane, "senhas não conferem. ");
+						}
+						cadastroDto.getUsuario().setSenha(String.valueOf(txtfConfirmeSenha.getPassword()));
+						ClienteDto clienteDto = clienteClient.inserir(cadastroDto);
+						viewEndereco.abrirTela(clienteDto);
+						dispose();
+					} else {
+						JOptionPane.showMessageDialog(contentPane, "Todos os campos são obrigatórios");
+					}
 				}
+				
+				
 				
 			}
 		});
@@ -113,7 +123,6 @@ public class ViewSenha extends JFrame {
 		lblNewLabel.setFont(new Font("Tahoma", Font.BOLD, 43));
 		lblNewLabel.setForeground(Color.WHITE);
 
-		// Checkboxes para mostrar/ocultar as senhas
 		JCheckBox chkMostrarSenha1 = new JCheckBox("Mostrar senha");
 		chkMostrarSenha1.setForeground(Color.WHITE);
 		chkMostrarSenha1.setFont(new Font("Tahoma", Font.PLAIN, 14));
@@ -147,6 +156,8 @@ public class ViewSenha extends JFrame {
 		btnVoltar.setFont(new Font("Tahoma", Font.PLAIN, 19));
 		btnVoltar.setBorder(null);
 		btnVoltar.setBackground(Color.WHITE);
+		
+		JLabel label = new JLabel("");
 
 		GroupLayout gl_panel = new GroupLayout(panel);
 		gl_panel.setHorizontalGroup(
@@ -159,43 +170,47 @@ public class ViewSenha extends JFrame {
 						.addGroup(gl_panel.createSequentialGroup()
 							.addGap(81)
 							.addGroup(gl_panel.createParallelGroup(Alignment.LEADING)
-								.addGroup(gl_panel.createParallelGroup(Alignment.TRAILING)
+								.addComponent(lblConfirmeSenha, GroupLayout.PREFERRED_SIZE, 184, GroupLayout.PREFERRED_SIZE)
+								.addComponent(txtfSenha1, GroupLayout.PREFERRED_SIZE, 516, GroupLayout.PREFERRED_SIZE)
+								.addComponent(label)
+								.addComponent(lblSenha, GroupLayout.PREFERRED_SIZE, 184, GroupLayout.PREFERRED_SIZE)
+								.addGroup(gl_panel.createParallelGroup(Alignment.TRAILING, false)
 									.addGroup(gl_panel.createSequentialGroup()
 										.addComponent(btnVoltar, GroupLayout.PREFERRED_SIZE, 114, GroupLayout.PREFERRED_SIZE)
-										.addGap(288)
+										.addPreferredGap(ComponentPlacement.RELATED, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
 										.addComponent(btnProximo, GroupLayout.PREFERRED_SIZE, 114, GroupLayout.PREFERRED_SIZE))
-									.addGroup(gl_panel.createParallelGroup(Alignment.LEADING)
-										.addComponent(lblConfirmeSenha, GroupLayout.PREFERRED_SIZE, 184, GroupLayout.PREFERRED_SIZE)
-										.addComponent(txtfConfirmeSenha, GroupLayout.PREFERRED_SIZE, 516, GroupLayout.PREFERRED_SIZE)
-										.addComponent(txtfSenha1, GroupLayout.PREFERRED_SIZE, 516, GroupLayout.PREFERRED_SIZE)
-										.addComponent(lblSenha, GroupLayout.PREFERRED_SIZE, 184, GroupLayout.PREFERRED_SIZE)))
-								.addGroup(gl_panel.createParallelGroup(Alignment.LEADING)
-									.addComponent(chkMostrarSenha1)
-									.addComponent(chkMostrarSenha2)))))
+									.addComponent(txtfConfirmeSenha, GroupLayout.PREFERRED_SIZE, 516, GroupLayout.PREFERRED_SIZE)
+									.addComponent(chkMostrarSenha2, Alignment.LEADING))
+								.addComponent(chkMostrarSenha1))))
 					.addContainerGap(86, Short.MAX_VALUE))
 		);
 		gl_panel.setVerticalGroup(
 			gl_panel.createParallelGroup(Alignment.TRAILING)
 				.addGroup(gl_panel.createSequentialGroup()
-					.addGap(60)
-					.addComponent(lblNewLabel)
-					.addPreferredGap(ComponentPlacement.RELATED, 118, Short.MAX_VALUE)
-					.addComponent(lblSenha, GroupLayout.PREFERRED_SIZE, 30, GroupLayout.PREFERRED_SIZE)
-					.addGap(26)
+					.addGroup(gl_panel.createParallelGroup(Alignment.LEADING)
+						.addGroup(gl_panel.createSequentialGroup()
+							.addGap(60)
+							.addComponent(lblNewLabel)
+							.addGap(38)
+							.addComponent(lblSenha, GroupLayout.PREFERRED_SIZE, 30, GroupLayout.PREFERRED_SIZE))
+						.addGroup(gl_panel.createSequentialGroup()
+							.addContainerGap()
+							.addComponent(label)))
+					.addPreferredGap(ComponentPlacement.RELATED)
 					.addComponent(txtfSenha1, GroupLayout.PREFERRED_SIZE, 66, GroupLayout.PREFERRED_SIZE)
 					.addPreferredGap(ComponentPlacement.RELATED)
 					.addComponent(chkMostrarSenha1)
-					.addGap(60)
+					.addGap(69)
 					.addComponent(lblConfirmeSenha, GroupLayout.PREFERRED_SIZE, 30, GroupLayout.PREFERRED_SIZE)
 					.addPreferredGap(ComponentPlacement.RELATED)
 					.addComponent(txtfConfirmeSenha, GroupLayout.PREFERRED_SIZE, 66, GroupLayout.PREFERRED_SIZE)
-					.addPreferredGap(ComponentPlacement.RELATED)
+					.addPreferredGap(ComponentPlacement.UNRELATED)
 					.addComponent(chkMostrarSenha2)
-					.addGap(60)
-					.addGroup(gl_panel.createParallelGroup(Alignment.LEADING)
+					.addGap(160)
+					.addGroup(gl_panel.createParallelGroup(Alignment.BASELINE)
 						.addComponent(btnProximo, GroupLayout.PREFERRED_SIZE, 55, GroupLayout.PREFERRED_SIZE)
 						.addComponent(btnVoltar, GroupLayout.PREFERRED_SIZE, 55, GroupLayout.PREFERRED_SIZE))
-					.addGap(85))
+					.addGap(82))
 		);
 		panel.setLayout(gl_panel);
 

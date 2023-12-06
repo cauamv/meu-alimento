@@ -6,6 +6,8 @@ import java.awt.Font;
 import java.awt.Rectangle;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -24,6 +26,7 @@ import org.springframework.stereotype.Component;
 import br.com.senai.gestaoDeCadastroFront.client.CuponsClient;
 import br.com.senai.gestaoDeCadastroFront.client.authenticate.server.CredencialDeAcesso;
 import br.com.senai.gestaoDeCadastroFront.components.table.CupomTableModel;
+import br.com.senai.gestaoDeCadastroFront.components.table.PedidosTableModel;
 import br.com.senai.gestaoDeCadastroFront.dto.Cupom;
 import br.com.senai.gestaoDeCadastroFront.dto.Paginacao;
 import br.com.senai.gestaoDeCadastroFront.views.ViewPrincipal;
@@ -66,13 +69,20 @@ public class ViewCupons extends JFrame {
 
 	public void abrirTela(String token, CredencialDeAcesso credencialDeAcesso) {
 		this.credencial = credencialDeAcesso;
-		this.listarCuponsDa(1, credencialDeAcesso);
+		this.listarCuponsDa(credencialDeAcesso);
 		this.setVisible(true);
 	}
 
-	private void listarCuponsDa(int pagina, CredencialDeAcesso credencialDeAcesso) {
+	private void listarCuponsDa(CredencialDeAcesso credencialDeAcesso) {
+		List<Cupom> cupons = new ArrayList<Cupom>();
 		paginacao = cuponsClient.listarTodos(0, credencialDeAcesso);
-		CupomTableModel model = new CupomTableModel(paginacao.getListagem());
+		
+		cupons.addAll(cupons);
+		for (int i = 0; i <= paginacao.getTotalDePaginas(); i++) {
+        	cupons.addAll(cuponsClient.listarTodos(i, credencialDeAcesso).getListagem());
+        }
+		
+		CupomTableModel model = new CupomTableModel(cupons);
 		tbCupons.setModel(model);
 
 		DefaultTableCellRenderer centerRenderer = new DefaultTableCellRenderer();
@@ -95,6 +105,14 @@ public class ViewCupons extends JFrame {
 		contentPane.add(scrollPane);
 	}
 	
+	private void limparDadosAntigos() {
+		if (scrollPane != null) {
+			contentPane.remove(scrollPane);
+		}
+		contentPane.remove(tbCupons);
+		tbCupons.setModel(new PedidosTableModel());
+	}
+	
 	public ViewCupons() {
 		
 		setResizable(false);
@@ -113,7 +131,7 @@ public class ViewCupons extends JFrame {
 				panel.setLayout(null);
 				
 				JButton btnVoltar = new JButton("<");
-				btnVoltar.setBounds(10, 37, 77, 37);
+				btnVoltar.setBounds(10, 22, 77, 52);
 				panel.add(btnVoltar);
 				btnVoltar.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent e) {
@@ -128,13 +146,27 @@ public class ViewCupons extends JFrame {
 				btnVoltar.setBackground(Color.RED);
 		
 				lblMeusCupons = new JLabel("Meus Cupons");
-				lblMeusCupons.setBounds(555, 22, 282, 55);
+				lblMeusCupons.setBounds(226, 22, 945, 55);
 				panel.add(lblMeusCupons);
 				lblMeusCupons.setAutoscrolls(true);
 				lblMeusCupons.setBackground(Color.RED);
 				lblMeusCupons.setHorizontalAlignment(SwingConstants.CENTER);
 				lblMeusCupons.setForeground(Color.WHITE);
 				lblMeusCupons.setFont(new Font("Dialog", Font.BOLD, 43));
+				
+				JButton btnNewButton_1 = new JButton("Atualizar");
+				btnNewButton_1.addActionListener(new ActionListener() {
+					public void actionPerformed(ActionEvent e) {
+						limparDadosAntigos();
+						listarCuponsDa(credencial);
+					}
+				});
+				btnNewButton_1.setBounds(1232, 36, 106, 37);
+				panel.add(btnNewButton_1);
+				btnNewButton_1.setForeground(Color.WHITE);
+				btnNewButton_1.setFont(new Font("Dialog", Font.PLAIN, 11));
+				btnNewButton_1.setBorder(new EmptyBorder(0,0,0,0));
+				btnNewButton_1.setBackground(Color.RED);
 
 		tbCupons = new JTable(new CupomTableModel());
 		tbCupons.setBackground(new Color(240, 240, 240));
